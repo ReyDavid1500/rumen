@@ -1,16 +1,18 @@
+import { Link } from "react-router-dom";
+
 export function Navbar() {
   return (
     <header className="grid grid-cols-2 grid-flow-row xl:grid xl:grid-cols-3">
       <section className="flex flex-row items-center p-4 mb-3 sm:pl-12 md:pl-40 xl:order-1">
         <div>
-          <a href="/">
+          <Link to="/">
             <img
               src="/rumen-logo.png"
               alt="Rumen Carnes Ahumadas"
               width={96}
               height={54}
             />
-          </a>
+          </Link>
         </div>
       </section>
       <section className="flex flex-row items-center justify-end p-4 mb-3 sm:pr-12 md:pr-[8rem] xl:order-3">
@@ -24,16 +26,16 @@ export function Navbar() {
         <nav>
           <ul className="flex flex-row justify-around gap-3 p-3 ">
             <li className="hover:text-black">
-              <a href="/">LOCALES</a>
+              <Link to="/locations">LOCALES</Link>
             </li>
             <li className="hover:text-black">
-              <a href="/">MENU</a>
+              <Link to="/menu">MENU</Link>
             </li>
             <li className="hover:text-black">
-              <a href="/">NOSOTROS</a>
+              <Link to="/about">NOSOTROS</Link>
             </li>
             <li className="hover:text-black">
-              <a href="/">CONTACTO</a>
+              <Link to="/contact">CONTACTO</Link>
             </li>
           </ul>
         </nav>

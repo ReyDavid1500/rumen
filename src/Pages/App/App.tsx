@@ -19,11 +19,11 @@ function AppRoutes() {
 
 function App() {
   return (
-    <Layout>
-      <BrowserRouter>
+    <BrowserRouter>
+      <Layout>
         <AppRoutes />
-      </BrowserRouter>
-    </Layout>
+      </Layout>
+    </BrowserRouter>
   );
 }
 
