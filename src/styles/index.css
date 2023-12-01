@@ -1,7 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Acme&family=Metal&family=Permanent+Marker&family=Saira+Extra+Condensed:wght@300;400;500;600&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  background-color: #fcfcf4;
+  background-color: #f1f0e1;
 }

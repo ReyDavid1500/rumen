@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export function Navbar() {
   return (
     <header className="grid grid-cols-2 grid-flow-row md:grid md:grid-cols-3 font-body">
-      <section className="flex flex-row items-center p-4 mb-3 sm:pl-12 md:pl-[7rem] md:order-1">
+      <section className="flex flex-row items-center p-4 mb-3 sm:pl-12 md:pl-[5rem] md:order-1">
         <div>
           <Link to="/">
             <img
@@ -22,9 +22,9 @@ export function Navbar() {
           </a>
         </div>
       </section>
-      <section className="col-span-2 md:col-span-1 bg-gray-300 text-gray-600 font-semibold md:w-[100%] md:bg-[#fcfcf4] md:m-auto md:order-2 sm:text-xl md:text-2xl xl:text-3xl">
+      <section className="col-span-2 md:col-span-1 bg-gray-300 text-gray-600 font-semibold md:w-[100%] md:bg-inherit md:m-auto md:order-2 sm:text-xl md:text-3xl">
         <nav>
-          <ul className="flex flex-row justify-around gap-3 p-3 ">
+          <ul className="flex flex-row justify-around gap-3 xl:gap-[3.75rem] p-3 ">
             <li className="hover:text-black">
               <Link to="/locations">LOCALES</Link>
             </li>

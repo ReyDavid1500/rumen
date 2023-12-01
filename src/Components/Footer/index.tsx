@@ -19,17 +19,17 @@ export function Footer() {
         <section>
           <div className="social-media mb-3 text-green-800 font-bold">
             <ul className="flex flex-row gap-3">
-              <li className="hover:text-yellow-800/60 hover:font-extrabold transition duration-1000 delay-500">
+              <li className="hover:text-yellow-800/60 transform hover:scale-110 transition ease-out duration-1000">
                 <a href="/">
                   <p>FACEBOOK</p>
                 </a>
               </li>
-              <li className="hover:text-yellow-800/60 hover:font-extrabold transition duration-1000 delay-500">
+              <li className="hover:text-yellow-800/60 transform hover:scale-110 transition ease-out duration-1000">
                 <a href="/">
                   <p>INSTAGRAM</p>
                 </a>
               </li>
-              <li className="hover:text-yellow-800/60 hover:font-extrabold transition-all duration-1000 delay-500">
+              <li className="hover:text-yellow-800/60 transform hover:scale-110 transition ease-out duration-1000">
                 <a href="/">
                   <p>CONTACTO</p>
                 </a>

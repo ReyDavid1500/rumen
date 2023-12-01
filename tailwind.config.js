@@ -5,7 +5,7 @@ export default {
     extend: {
       fontFamily: {
         "buttons": 'Permanent Marker, cursive',
-        "body": 'Saira Extra Condensed, sans-serif'
+        "body": 'Saira Extra Condensed'
       },
     },
   },
