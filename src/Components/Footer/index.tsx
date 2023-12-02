@@ -1,4 +1,4 @@
-export function Footer() {
+function Footer() {
   return (
     <footer className="bg-gray-800 pt-10 pl-3 font-body">
       <div className="text-white  flex flex-col gap-3 pb-10 sm:flex-row-reverse sm:justify-center sm:gap-20">
@@ -66,3 +66,5 @@ export function Footer() {
     </footer>
   );
 }
+
+export default Footer;

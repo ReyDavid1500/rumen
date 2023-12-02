@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export function Navbar() {
+function Navbar() {
   return (
     <header className="grid grid-cols-2 grid-flow-row md:grid md:grid-cols-3 font-body">
       <section className="flex flex-row items-center p-4 mb-3 sm:pl-12 md:pl-[5rem] md:order-1">
@@ -17,7 +17,7 @@ export function Navbar() {
       </section>
       <section className="flex flex-row items-center justify-end p-4 mb-3 sm:pr-12 md:pr-[7rem] md:order-3">
         <div className="bg-orange-500/80 hover:bg-orange-500 text-white font-bold p-2 rounded-md w-fit mt-3">
-          <a target="_blank" rel="noopener noreferrer" href="/">
+          <a target="_blank" rel="noopener noreferrer" href="/shopping">
             PIDE AQUÍ!!
           </a>
         </div>
@@ -46,3 +46,5 @@ export function Navbar() {
     </header>
   );
 }
+
+export default Navbar;

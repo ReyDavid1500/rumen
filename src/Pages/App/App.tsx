@@ -1,10 +1,10 @@
 import { useRoutes, BrowserRouter } from "react-router-dom";
-import { Layout } from "../../Components/Layout";
 import Home from "../Home";
-import { Locations } from "../Locations";
-import { Menu } from "../Menu";
-import { About } from "../About";
-import { Contact } from "../Contact";
+import Locations from "../Locations";
+import Menu from "../Menu";
+import About from "../About";
+import Contact from "../Contact";
+import Shopping from "../Shopping";
 
 function AppRoutes() {
   let routes = useRoutes([
@@ -13,6 +13,7 @@ function AppRoutes() {
     { path: "/menu", element: <Menu /> },
     { path: "/about", element: <About /> },
     { path: "/contact", element: <Contact /> },
+    { path: "/shopping", element: <Shopping /> },
   ]);
   return routes;
 }
@@ -20,9 +21,7 @@ function AppRoutes() {
 function App() {
   return (
     <BrowserRouter>
-      <Layout>
-        <AppRoutes />
-      </Layout>
+      <AppRoutes />
     </BrowserRouter>
   );
 }
