@@ -1,10 +1,10 @@
 import { useRoutes, BrowserRouter } from "react-router-dom";
 import { Layout } from "../../Components/Layout";
 import Home from "../Home";
-import { Locations } from "../../Components/Locations";
-import { Menu } from "../../Components/Menu";
-import { About } from "../../Components/About";
-import { Contact } from "../../Components/Contact";
+import { Locations } from "../Locations";
+import { Menu } from "../Menu";
+import { About } from "../About";
+import { Contact } from "../Contact";
 
 function AppRoutes() {
   let routes = useRoutes([

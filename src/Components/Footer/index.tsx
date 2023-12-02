@@ -20,17 +20,25 @@ export function Footer() {
           <div className="social-media mb-3 text-green-800 font-bold">
             <ul className="flex flex-row gap-3">
               <li className="hover:text-yellow-800/60 transform hover:scale-110 transition ease-out duration-1000">
-                <a href="/">
+                <a
+                  target="-blank"
+                  rel="noreferrer"
+                  href="https://web.facebook.com/profile.php?id=100021213121012"
+                >
                   <p>FACEBOOK</p>
                 </a>
               </li>
               <li className="hover:text-yellow-800/60 transform hover:scale-110 transition ease-out duration-1000">
-                <a href="/">
+                <a
+                  target="-blank"
+                  rel="noreferrer"
+                  href="https://www.instagram.com/rumenahumados/"
+                >
                   <p>INSTAGRAM</p>
                 </a>
               </li>
               <li className="hover:text-yellow-800/60 transform hover:scale-110 transition ease-out duration-1000">
-                <a href="/">
+                <a href="/contact">
                   <p>CONTACTO</p>
                 </a>
               </li>
