@@ -1,6 +1,6 @@
-interface DataProps {
-  key: number;
-  image: string;
+export interface DataProps {
+  id: number;
+  images: string;
   title: string;
   description: string;
   price: number;
@@ -9,17 +9,17 @@ interface DataProps {
 function Card(props: DataProps) {
   return (
     <div
-      key={props.key}
-      className="border-2 border-gray-400 rounded-lg overflow-hidden bg-white h-[500px] w-[400px] m-auto"
+      key={props.id}
+      className="border-2 border-gray-400 rounded-lg overflow-hidden bg-white h-[350px] w-[267px] m-auto"
     >
       <div className="h-[67%] w-[100%]">
         <img
           className="w-full h-full object-cover "
-          src={props.image}
+          src={props.images}
           alt={props.title}
         />
       </div>
-      <div className="p-6">
+      <div className="p-2">
         <div className="flex flex-row justify-between">
           <div>
             <h3 className="font-bold text-sm">{props.title}</h3>
