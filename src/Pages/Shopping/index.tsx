@@ -1,24 +1,19 @@
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import ShopLayout from "../../Components/ShopLayout";
-import Card, { DataProps } from "../../Components/card";
+import Card from "../../Components/card";
+import fakeData from "../../mockData/fakedata.json";
+
+const products = fakeData.data;
 
 function Shopping() {
-  const [products, setProducts] = useState<DataProps[]>([]);
-
-  useEffect(() => {
-    fetch("https://api.escuelajs.co/api/v1/products")
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
-  }, []);
-
   return (
     <ShopLayout>
       <div className="md:flex md:flex-row p-4">
-        <div className="p-4 bg-white w-[90vw] m-auto mt-4">
-          <h1 className="text-center font-bold text-2xl">
+        <div className="p-4 bg-white w-[90vw] m-auto mt-4 md:w-[50vw] md:m-0 xl:w-[70vw]">
+          <h1 className="text-center font-bold text-2xl mb-[50px]">
             Carnes Ahumadas y Sandwich
           </h1>
-          <div className="card mt-4 grid grid-cols-1 min-[915px]:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div className="card mt-4">
             {products.map((product) => (
               <Card
                 key={product.id}
@@ -31,7 +26,7 @@ function Shopping() {
             ))}
           </div>
         </div>
-        <div className="m-4 bg-white p-6 md:h-fit">
+        <div className="m-4 bg-white p-6 md:h-fit md:fixed md:right-0 md:top-[78px]">
           <div className="flex flex-col gap-4 mb-4">
             <h2 className="text-xl font-bold">PEDIDO</h2>
             <p className="bg-gray-100 p-2 text-sm hidden">
@@ -83,9 +78,9 @@ function Shopping() {
             <span className="text-end font-bold">$29.000</span>
           </div>
           <div className="flex justify-center fixed bottom-0 right-[-6px] w-[100vw] z-10 bg-gray-300 p-2 md:relative md:w-[100%] md:bg-white">
-            <button className="bg-orange-500/80 hover:bg-orange-500 text-white font-bold p-2 rounded-md w-[90%]">
-              REVISAR PEDIDO
-            </button>
+            <div className="bg-orange-500/80 hover:bg-orange-500 text-white font-bold p-2 rounded-md w-[90%] text-center">
+              <Link to="/cart">REVISAR PEDIDO</Link>
+            </div>
           </div>
         </div>
       </div>

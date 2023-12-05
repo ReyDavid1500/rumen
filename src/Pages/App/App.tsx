@@ -5,6 +5,7 @@ import Menu from "../Menu";
 import About from "../About";
 import Contact from "../Contact";
 import Shopping from "../Shopping";
+import ShoppingCart from "../ShoppingCart";
 
 function AppRoutes() {
   let routes = useRoutes([
@@ -14,6 +15,7 @@ function AppRoutes() {
     { path: "/about", element: <About /> },
     { path: "/contact", element: <Contact /> },
     { path: "/shopping", element: <Shopping /> },
+    { path: "/cart", element: <ShoppingCart /> },
   ]);
   return routes;
 }

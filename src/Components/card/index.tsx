@@ -10,7 +10,7 @@ function Card(props: DataProps) {
   return (
     <div
       key={props.id}
-      className="border-2 border-gray-400 rounded-lg overflow-hidden bg-white h-[350px] w-[267px] m-auto"
+      className="border-2 border-gray-400 rounded-lg overflow-hidden bg-white h-[350px] w-[267px] m-auto md:w-[330px]"
     >
       <div className="h-[67%] w-[100%]">
         <img

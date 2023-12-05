@@ -19,12 +19,12 @@ function ShopLayout({ children }: PropsWithChildren) {
             </Link>
           </div>
           <div className="flex flex-row gap-3 items-center">
-            <a href="/cart">
+            <Link to="/cart">
               <AiTwotoneShopping className="w-[40px] h-[40px]" />
-            </a>
-            <a href="/cart">
+            </Link>
+            <Link to="/shopping">
               <LuMenu className="w-[40px] h-[40px]" />
-            </a>
+            </Link>
           </div>
         </section>
       </header>
