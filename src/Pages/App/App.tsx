@@ -6,6 +6,8 @@ import About from "../About";
 import Contact from "../Contact";
 import Shopping from "../Shopping";
 import ShoppingCart from "../ShoppingCart";
+import SignIn from "../SignIn";
+import SignUp from "../SignUp";
 
 function AppRoutes() {
   let routes = useRoutes([
@@ -16,6 +18,8 @@ function AppRoutes() {
     { path: "/contact", element: <Contact /> },
     { path: "/shopping", element: <Shopping /> },
     { path: "/cart", element: <ShoppingCart /> },
+    { path: "/signin", element: <SignIn /> },
+    { path: "/signup", element: <SignUp /> },
   ]);
   return routes;
 }
