@@ -17,9 +17,9 @@ function Navbar() {
       </section>
       <section className="flex flex-row items-center justify-end p-4 mb-3 sm:pr-12 md:pr-[7rem] md:order-3">
         <div className="bg-orange-500/80 hover:bg-orange-500 text-white font-bold p-2 rounded-md w-fit mt-3">
-          <a target="_blank" href="/shopping">
+          <Link target="_blank" rel="noreferrer" to="/shopping">
             PIDE AQUÍ!!
-          </a>
+          </Link>
         </div>
       </section>
       <section className="col-span-2 md:col-span-1 bg-gray-300 text-gray-600 font-semibold md:w-[100%] md:bg-inherit md:m-auto md:order-2 sm:text-xl md:text-3xl z-10">
