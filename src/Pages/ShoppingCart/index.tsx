@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import ShopLayout from "../../Components/ShopLayout";
+import { BsChevronDoubleLeft } from "react-icons/bs";
 
 const orderDetails: {
   id: number;
@@ -26,7 +27,7 @@ const orderDetails: {
 function ShoppingCart() {
   return (
     <ShopLayout>
-      <div className="bg-white m-6 md:w-[700px] md:m-auto md:mt-6">
+      <div className="bg-white m-6 md:w-[700px] md:m-auto md:mt-6 md:mb-6">
         <div className="p-4 flex flex-col gap-3 items-center">
           <h2 className="text-2xl font-medium">Carrito de Compras</h2>
           <p className="text-sm text-center">
@@ -35,7 +36,12 @@ function ShoppingCart() {
             acompañado de nuestras salsas BBQ y deliciosos encurtidos
           </p>
           <div className="text-green-600 font-bold text-center underline">
-            <Link to="/shopping">Vuelve al menu principal</Link>
+            <Link className="flex flex-row items-center gap-1" to="/shopping">
+              <span>
+                <BsChevronDoubleLeft />
+              </span>
+              Vuelve al menu principal
+            </Link>
           </div>
         </div>
         <div className="text-xs mt-6 p-4 md:text-lg">
@@ -68,7 +74,7 @@ function ShoppingCart() {
                     </form>
                   </td>
                   <td className="w-[20%] text-end">
-                    <button className="text-[10px] font-bold text-blue-800 pl-2 pr-2">
+                    <button className="text-[10px] md:text-xs font-bold text-blue-800 pl-2 pr-2">
                       Eliminar
                     </button>
                   </td>
@@ -99,7 +105,7 @@ function ShoppingCart() {
           </div>
           <div className="flex justify-center p-2">
             <div className="bg-orange-500/80 hover:bg-orange-500 text-white font-bold p-2 rounded-md w-[100%] text-center">
-              <Link to="/cart">HACER PEDIDO</Link>
+              <Link to="/cart">FINALIZAR PEDIDO</Link>
             </div>
           </div>
         </div>
