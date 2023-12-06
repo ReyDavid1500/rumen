@@ -6,7 +6,7 @@ import { LuMenu } from "react-icons/lu";
 function ShopLayout({ children }: PropsWithChildren) {
   return (
     <div>
-      <header>
+      <header className="w-[100%] fixed">
         <section className="flex flex-row justify-between p-4 items-center bg-[#5dc3bc]">
           <div>
             <Link to="/shopping">
@@ -28,7 +28,7 @@ function ShopLayout({ children }: PropsWithChildren) {
           </div>
         </section>
       </header>
-      <div>{children}</div>
+      <div className="pt-20">{children}</div>
     </div>
   );
 }
