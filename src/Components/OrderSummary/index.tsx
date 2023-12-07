@@ -30,7 +30,7 @@ function OrderSummary({
   buttonText: string;
 }) {
   return (
-    <div className="mt-6 md:mt-0 bg-white sm:p-16 md:w-[30vw]">
+    <div className="mt-6 md:mt-0 bg-white pb-6 sm:p-16 md:w-[30vw]">
       <div className="md:fixed md:overflow-y-scroll md:right-[48px] md:top-[120px] border-2 border-gray-400/50 rounded-lg p-2 xl:w-[350px] md:h-[78%]">
         <div className="flex flex-col gap-4 mb-4">
           <h2 className="text-xl font-bold">{title}</h2>

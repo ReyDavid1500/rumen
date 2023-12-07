@@ -31,7 +31,7 @@ function SignIn() {
                 type="password"
                 name="password"
                 id="password"
-                placeholder="password"
+                placeholder="Contraseña"
               />
             </div>
             <Link to="/shopping" className="text-xs font-bold text-green-600">
