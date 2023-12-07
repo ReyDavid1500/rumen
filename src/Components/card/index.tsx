@@ -2,7 +2,6 @@ export interface DataProps {
   id: number;
   images: string;
   title: string;
-  description: string;
   price: number;
 }
 
@@ -23,7 +22,7 @@ function Card(props: DataProps) {
         <div className="flex flex-row justify-between">
           <div>
             <h3 className="font-bold text-sm">{props.title}</h3>
-            <p className="text-sm">{props.description}</p>
+            <p className="text-sm">{props.title}</p>
           </div>
           <div>
             <h3 className="font-bold text-sm">${props.price}</h3>
@@ -34,7 +33,7 @@ function Card(props: DataProps) {
           <form className="flex flex-row justify-between">
             <div>
               <input
-                className="border-[3px] border-black rounded-lg w-[60px] h-[40px] mr-2"
+                className="border-[3px] border-black rounded-lg w-[60px] h-[40px] mr-2 pl-2"
                 type="text"
               />
               <label>Unidad</label>

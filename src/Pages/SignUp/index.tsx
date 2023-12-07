@@ -1,8 +1,12 @@
+import ShopLayout from "../../Components/ShopLayout";
+
 function SignUp() {
   return (
-    <div>
-      <h1>SignUp</h1>
-    </div>
+    <ShopLayout>
+      <div>
+        <h1>SignUp</h1>
+      </div>
+    </ShopLayout>
   );
 }
 

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <footer className="bg-gray-800 pt-10 pl-3 font-body">
@@ -10,9 +12,9 @@ function Footer() {
               className="bg-inherit border-b-2"
             />
             <div className="bg-orange-500/80 hover:bg-orange-500 text-white font-bold p-2 rounded-md font-buttons">
-              <a target="_blank" rel="noopener noreferrer" href="/">
+              <Link target="_blank" rel="noopener noreferrer" to="/signup">
                 Registrate!!
-              </a>
+              </Link>
             </div>
           </form>
         </div>
@@ -20,27 +22,27 @@ function Footer() {
           <div className="social-media mb-3 text-green-800 font-bold">
             <ul className="flex flex-row gap-3">
               <li className="hover:text-yellow-800/60 transform hover:scale-110 transition ease-out duration-1000">
-                <a
+                <Link
                   target="-blank"
                   rel="noreferrer"
-                  href="https://web.facebook.com/profile.php?id=100021213121012"
+                  to="https://web.facebook.com/profile.php?id=100021213121012"
                 >
                   <p>FACEBOOK</p>
-                </a>
+                </Link>
               </li>
               <li className="hover:text-yellow-800/60 transform hover:scale-110 transition ease-out duration-1000">
-                <a
+                <Link
                   target="-blank"
                   rel="noreferrer"
-                  href="https://www.instagram.com/rumenahumados/"
+                  to="https://www.instagram.com/rumenahumados/"
                 >
                   <p>INSTAGRAM</p>
-                </a>
+                </Link>
               </li>
               <li className="hover:text-yellow-800/60 transform hover:scale-110 transition ease-out duration-1000">
-                <a href="/contact">
+                <Link to="/contact">
                   <p>CONTACTO</p>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

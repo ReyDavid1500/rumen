@@ -1,11 +1,17 @@
+import { useEffect, useState } from "react";
 import OrderSummary from "../../Components/OrderSummary";
 import ShopLayout from "../../Components/ShopLayout";
-import Card from "../../Components/card";
-import fakeData from "../../mockData/fakedata.json";
-
-const products = fakeData.data;
+import Card, { DataProps } from "../../Components/card";
 
 function Shopping() {
+  const [products, setProducts] = useState<DataProps[]>([]);
+
+  useEffect(() => {
+    fetch("https://api.escuelajs.co/api/v1/products?offset=0&limit=20")
+      .then((res) => res.json())
+      .then((data) => setProducts(data));
+  }, []);
+
   return (
     <ShopLayout>
       <div className="md:flex md:flex-row md:justify-between p-4">
@@ -18,7 +24,6 @@ function Shopping() {
               <Card
                 key={product.id}
                 id={product.id}
-                description={product.description}
                 images={product.images[0]}
                 price={product.price}
                 title={product.title}
