@@ -8,6 +8,7 @@ import Shopping from "../Shopping";
 import ShoppingCart from "../ShoppingCart";
 import SignIn from "../SignIn";
 import SignUp from "../SignUp";
+import SubmitOrder from "../SubmitOrder";
 
 function AppRoutes() {
   let routes = useRoutes([
@@ -20,6 +21,7 @@ function AppRoutes() {
     { path: "/cart", element: <ShoppingCart /> },
     { path: "/signin", element: <SignIn /> },
     { path: "/signup", element: <SignUp /> },
+    { path: "/order", element: <SubmitOrder /> },
   ]);
   return routes;
 }

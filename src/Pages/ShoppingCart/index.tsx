@@ -60,7 +60,6 @@ function ShoppingCart() {
                           type="number"
                           pattern="\d*"
                           autoComplete="off"
-                          value={1}
                           step={1}
                         />
                         <label className="text-xs">Unidad</label>
@@ -105,7 +104,7 @@ function ShoppingCart() {
           </div>
           <div className="flex justify-center p-2">
             <div className="bg-orange-500/80 hover:bg-orange-500 text-white font-bold p-2 rounded-md w-[100%] text-center">
-              <Link to="/cart">FINALIZAR PEDIDO</Link>
+              <Link to="/order">FINALIZAR PEDIDO</Link>
             </div>
           </div>
         </div>
