@@ -26,7 +26,7 @@ function Shopping() {
             ))}
           </div>
         </div>
-        <OrderSummary />
+        <OrderSummary title="PEDIDO" buttonText="REVISAR PEDIDO" />
       </div>
     </ShopLayout>
   );

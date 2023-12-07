@@ -20,29 +20,47 @@ const orderDetails: {
     title: "Coca Cola en Lata",
     price: 2000,
   },
+  {
+    id: 1,
+    title: "Hamburguesa Ahumada",
+    price: 7000,
+  },
+  {
+    id: 2,
+    title: "Porción de Brisket",
+    price: 15000,
+  },
+  {
+    id: 3,
+    title: "Coca Cola en Lata",
+    price: 2000,
+  },
 ];
 
-function OrderSummary() {
+function OrderSummary({
+  title,
+  buttonText,
+}: {
+  title: string;
+  buttonText: string;
+}) {
   return (
     <div className="mt-6 md:mt-0 bg-white p-6 sm:p-16 md:w-[30vw]">
-      <div className="md:fixed md:overflow-y-scroll md:h-[80%] md:right-[48px] md:top-[120px] border-2 border-gray-400/50 rounded-lg p-2 xl:w-[350px]">
+      <div className="md:fixed md:overflow-y-scroll md:right-[48px] md:top-[120px] border-2 border-gray-400/50 rounded-lg p-2 xl:w-[350px] md:h-[78%]">
         <div className="flex flex-col gap-4 mb-4">
-          <h2 className="text-xl font-bold">PEDIDO</h2>
+          <h2 className="text-xl font-bold">{title}</h2>
           <table>
             <tbody>
               {orderDetails.map((detail) => (
                 <tr key={detail.id} className="border-b-2">
                   <td className="text-xs">1</td>
-                  <div className="flex flex-row justify-between items-center">
-                    <td className="text-xs pt-6 pb-6">
-                      <h3>{detail.title}</h3>
-                    </td>
-                    <td>
-                      <button className="text-xs text-green-600 font-bold">
-                        Eliminar
-                      </button>
-                    </td>
-                  </div>
+                  <td className="flex flex-row justify-between items-center">
+                    <h3 className="text-xs pt-6 pb-6">{detail.title}</h3>
+
+                    <button className="text-xs text-green-600 font-bold">
+                      Eliminar
+                    </button>
+                  </td>
                   <td className="text-xs text-end">${detail.price}</td>
                 </tr>
               ))}
@@ -65,7 +83,7 @@ function OrderSummary() {
         </div>
         <div className="flex justify-center fixed bottom-0 right-[-6px] w-[100vw] z-10 bg-gray-300 p-2 md:relative md:w-[100%] md:bg-white">
           <div className="bg-orange-500/80 hover:bg-orange-500 text-white font-bold p-2 rounded-md w-[90%] text-center">
-            <Link to="/cart">REVISAR PEDIDO</Link>
+            <Link to="/cart">{buttonText}</Link>
           </div>
         </div>
       </div>
