@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="bg-gray-800 pt-10 pl-3 font-body">
+    <footer className="bg-dark-blue pt-10 pl-3 font-body">
       <div className="text-white  flex flex-col gap-3 pb-10 sm:flex-row-reverse sm:justify-center sm:gap-20">
         <div className="sign-up">
           <form className="flex flex-row gap-4 text-white font-medium">
@@ -19,9 +19,9 @@ function Footer() {
           </form>
         </div>
         <section>
-          <div className="social-media mb-3 text-green-800 font-bold">
+          <div className="social-media mb-3 text-light-orange font-bold">
             <ul className="flex flex-row gap-3">
-              <li className="hover:text-yellow-800/60 transform hover:scale-110 transition ease-out duration-1000">
+              <li className="hover:text-light-orange/60 transform hover:scale-110 transition ease-out duration-1000">
                 <Link
                   target="-blank"
                   rel="noreferrer"
@@ -30,7 +30,7 @@ function Footer() {
                   <p>FACEBOOK</p>
                 </Link>
               </li>
-              <li className="hover:text-yellow-800/60 transform hover:scale-110 transition ease-out duration-1000">
+              <li className="hover:text-light-orange/60 transform hover:scale-110 transition ease-out duration-1000">
                 <Link
                   target="-blank"
                   rel="noreferrer"
@@ -39,7 +39,7 @@ function Footer() {
                   <p>INSTAGRAM</p>
                 </Link>
               </li>
-              <li className="hover:text-yellow-800/60 transform hover:scale-110 transition ease-out duration-1000">
+              <li className="hover:text-light-orange/60 transform hover:scale-110 transition ease-out duration-1000">
                 <Link to="/contact">
                   <p>CONTACTO</p>
                 </Link>

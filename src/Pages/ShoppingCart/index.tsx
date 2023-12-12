@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import ShopLayout from "../../Components/ShopLayout";
 import { BsChevronDoubleLeft } from "react-icons/bs";
+import { formatCurrency } from "../../assets/utils";
 
 const orderDetails: {
   id: number;
@@ -68,7 +69,7 @@ function ShoppingCart() {
                         Actualizar
                       </button>
                       <span className="text-xs font-bold">
-                        ${detail.price}/ <br /> Unidad
+                        {formatCurrency(detail.price)}/ <br /> Unidad
                       </span>
                     </form>
                   </td>
@@ -77,7 +78,9 @@ function ShoppingCart() {
                       Eliminar
                     </button>
                   </td>
-                  <td className="w-[10%] text-end">{detail.price}</td>
+                  <td className="w-[10%] text-end">
+                    {formatCurrency(detail.price)}
+                  </td>
                 </tr>
               ))}
             </tbody>

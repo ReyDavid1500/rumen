@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { formatCurrency } from "../../assets/utils";
 
 const orderDetails: {
   id: number;
@@ -46,7 +47,9 @@ function OrderSummary({
                       Eliminar
                     </button>
                   </td>
-                  <td className="text-xs text-end">${detail.price}</td>
+                  <td className="text-xs text-end">
+                    {formatCurrency(detail.price)}
+                  </td>
                 </tr>
               ))}
             </tbody>
