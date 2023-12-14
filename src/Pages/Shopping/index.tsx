@@ -31,7 +31,11 @@ function Shopping() {
             ))}
           </div>
         </div>
-        <OrderSummary title="PEDIDO" buttonText="REVISAR PEDIDO" />
+        <OrderSummary
+          title="PEDIDO"
+          buttonText="REVISAR PEDIDO"
+          route="/cart"
+        />
       </div>
     </ShopLayout>
   );

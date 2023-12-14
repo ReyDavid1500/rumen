@@ -115,7 +115,11 @@ function SubmitOrder() {
               </div>
             </form>
           </div>
-          <OrderSummary title="RESUMEN PEDIDO" buttonText="FINALIZAR COMPRA" />
+          <OrderSummary
+            title="RESUMEN PEDIDO"
+            buttonText="FINALIZAR COMPRA"
+            route="/shopping"
+          />
         </div>
       </div>
     </ShopLayout>

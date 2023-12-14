@@ -26,9 +26,11 @@ const orderDetails: {
 function OrderSummary({
   title,
   buttonText,
+  route,
 }: {
   title: string;
   buttonText: string;
+  route: string;
 }) {
   return (
     <div className="mt-6 md:mt-0 bg-white pb-6 sm:p-16 md:w-[30vw]">
@@ -70,7 +72,7 @@ function OrderSummary({
           <span className="text-end font-bold">$29.000</span>
         </div>
         <div className="flex justify-center fixed bottom-0 right-[-6px] w-[100vw] z-10 bg-gray-300 p-2 md:relative md:w-[100%] md:bg-white">
-          <Button title={buttonText} route="/cart" />
+          <Button title={buttonText} route={route} />
         </div>
       </div>
     </div>
