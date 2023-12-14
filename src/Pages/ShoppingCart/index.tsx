@@ -107,7 +107,7 @@ function ShoppingCart() {
             </span>
           </div>
           <div className="flex justify-center p-2">
-            <Button title="FINALIZAR PEDIDO" route="/order" />
+            <Button title="FINALIZAR PEDIDO" route="/signin" />
           </div>
         </div>
       </div>
