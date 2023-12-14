@@ -10,7 +10,7 @@ function Footer() {
             <input
               type="text"
               placeholder="Ingresa tu email"
-              className="bg-inherit border-b-2"
+              className="bg-inherit border-b-2 pl-2"
             />
             <Button title="REGISTRATE!!" target="_blank" route="/signup" />
           </form>

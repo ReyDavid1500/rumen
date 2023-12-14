@@ -7,7 +7,7 @@ function ShopLayout({ children }: PropsWithChildren) {
   return (
     <div>
       <header className="w-[100%] fixed">
-        <section className="flex flex-row justify-between p-4 items-center bg-[#5dc3bc]">
+        <section className="flex flex-row justify-between p-4 items-center bg-light-green">
           <div>
             <Link to="/shopping">
               <img
@@ -19,8 +19,11 @@ function ShopLayout({ children }: PropsWithChildren) {
             </Link>
           </div>
           <div className="flex flex-row gap-3 items-center">
-            <Link to="/cart">
+            <Link to="/cart" className="relative">
               <AiTwotoneShopping className="w-[40px] h-[40px]" />
+              <span className="absolute text-rumen-orange font-bold top-[12px] left-[15px]">
+                3
+              </span>
             </Link>
             <Link to="/shopping">
               <LuMenu className="w-[40px] h-[40px]" />

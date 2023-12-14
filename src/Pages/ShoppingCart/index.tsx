@@ -37,7 +37,7 @@ function ShoppingCart() {
             saludable consume al menos 400 gramos de carne al día. Tu pedido va
             acompañado de nuestras salsas BBQ y deliciosos encurtidos
           </p>
-          <div className="text-green-600 font-bold text-center underline">
+          <div className="text-light-green font-bold text-center underline">
             <Link className="flex flex-row items-center gap-1" to="/shopping">
               <span>
                 <BsChevronDoubleLeft />
@@ -75,7 +75,7 @@ function ShoppingCart() {
                     </form>
                   </td>
                   <td className="w-[20%] text-end">
-                    <button className="text-[10px] md:text-xs font-bold text-blue-800 pl-2 pr-2">
+                    <button className="text-[10px] md:text-xs font-bold text-regular-blue pl-2 pr-2">
                       Eliminar
                     </button>
                   </td>
