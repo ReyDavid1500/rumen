@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Button from "../coreComponents/Button";
 
 function Footer() {
   return (
@@ -11,11 +12,7 @@ function Footer() {
               placeholder="Ingresa tu email"
               className="bg-inherit border-b-2"
             />
-            <div className="bg-orange-500/80 hover:bg-orange-500 text-white font-bold p-2 rounded-md font-buttons">
-              <Link target="_blank" rel="noopener noreferrer" to="/signup">
-                Registrate!!
-              </Link>
-            </div>
+            <Button title="REGISTRATE!!" target="_blank" route="/signup" />
           </form>
         </div>
         <section>

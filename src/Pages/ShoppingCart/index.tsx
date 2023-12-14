@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import ShopLayout from "../../Components/ShopLayout";
 import { BsChevronDoubleLeft } from "react-icons/bs";
 import { formatCurrency } from "../../assets/utils";
+import Button from "../../Components/coreComponents/Button";
 
 const orderDetails: {
   id: number;
@@ -106,9 +107,7 @@ function ShoppingCart() {
             </span>
           </div>
           <div className="flex justify-center p-2">
-            <div className="bg-orange-500/80 hover:bg-orange-500 text-white font-bold p-2 rounded-md w-[100%] text-center">
-              <Link to="/signin">FINALIZAR PEDIDO</Link>
-            </div>
+            <Button title="FINALIZAR PEDIDO" route="/order" />
           </div>
         </div>
       </div>

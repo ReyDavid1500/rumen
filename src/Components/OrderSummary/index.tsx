@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { formatCurrency } from "../../assets/utils";
+import Button from "../coreComponents/Button";
 
 const orderDetails: {
   id: number;
@@ -70,9 +70,7 @@ function OrderSummary({
           <span className="text-end font-bold">$29.000</span>
         </div>
         <div className="flex justify-center fixed bottom-0 right-[-6px] w-[100vw] z-10 bg-gray-300 p-2 md:relative md:w-[100%] md:bg-white">
-          <div className="bg-orange-500/80 hover:bg-orange-500 text-white font-bold p-2 rounded-md w-[90%] text-center">
-            <Link to="/cart">{buttonText}</Link>
-          </div>
+          <Button title={buttonText} route="/cart" />
         </div>
       </div>
     </div>

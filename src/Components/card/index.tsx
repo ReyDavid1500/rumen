@@ -1,3 +1,5 @@
+import Button from "../coreComponents/Button";
+
 export interface DataProps {
   id: number;
   images: string;
@@ -30,7 +32,7 @@ function Card(props: DataProps) {
           </div>
         </div>
         <div className="mt-4">
-          <form className="flex flex-row justify-between">
+          <form className="flex flex-row justify-between items-center">
             <div>
               <input
                 className="border-[3px] border-black rounded-lg w-[60px] h-[40px] mr-2 pl-2"
@@ -38,9 +40,7 @@ function Card(props: DataProps) {
               />
               <label>Unidad</label>
             </div>
-            <button className="bg-orange-500/80 hover:bg-orange-500 text-white font-bold p-2 rounded-md w-fit">
-              AGREGAR
-            </button>
+            <Button title="AGREGAR" route="/" />
           </form>
         </div>
       </div>
