@@ -25,7 +25,7 @@ function Contact() {
                 type="password"
                 name="password"
                 id="password"
-                placeholder="Contraseña"
+                placeholder="Nombre"
               />
               <textarea
                 className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"

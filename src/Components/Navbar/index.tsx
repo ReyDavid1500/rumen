@@ -22,19 +22,19 @@ function Navbar() {
       <section className="col-span-2 md:col-span-1 bg-gray-300 text-gray-600 font-semibold md:w-[100%] md:bg-inherit md:m-auto md:order-2 sm:text-xl md:text-3xl z-10">
         <nav>
           <ul className="flex flex-row justify-around gap-3 xl:gap-[3.75rem] p-3 ">
-            <li className="hover:text-black hidden md:block text-orange-900">
+            <li className="hover:text-black hidden md:block text-orange-900 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration:300">
               <Link to="/">HOME</Link>
             </li>
-            <li className="hover:text-black">
+            <li className="hover:text-black transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration:300">
               <Link to="/locations">LOCALES</Link>
             </li>
-            <li className="hover:text-black">
+            <li className="hover:text-black transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration:300">
               <Link to="/menu">MENU</Link>
             </li>
-            <li className="hover:text-black">
+            <li className="hover:text-black transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration:300">
               <Link to="/about">NOSOTROS</Link>
             </li>
-            <li className="hover:text-black">
+            <li className="hover:text-black transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration:300">
               <Link to="/contact">CONTACTO</Link>
             </li>
           </ul>
