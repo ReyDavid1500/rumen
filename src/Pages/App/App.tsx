@@ -11,6 +11,7 @@ import SignUp from "../SignUp";
 import SubmitOrder from "../SubmitOrder";
 import RumenAccount from "../RumenAccount";
 import RumenSignUp from "../RumenSignUp";
+import RumenProducts from "../RumenProducts";
 
 function AppRoutes() {
   let routes = useRoutes([
@@ -26,6 +27,7 @@ function AppRoutes() {
     { path: "/order", element: <SubmitOrder /> },
     { path: "/rumen-account", element: <RumenAccount /> },
     { path: "/rumen-signup", element: <RumenSignUp /> },
+    { path: "/rumen-products", element: <RumenProducts /> },
   ]);
   return routes;
 }

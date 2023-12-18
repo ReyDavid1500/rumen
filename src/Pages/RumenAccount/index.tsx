@@ -41,7 +41,7 @@ function RumenAccount() {
               Olvidaste tu contraseña?
             </Link>
             <Link
-              to="/rumen-account"
+              to="/rumen-products"
               className="bg-light-green text-white p-2 font-bold rounded-lg hover:bg-green-600/50 w-[80%] m-auto text-center"
             >
               Ingresa a tu cuenta
