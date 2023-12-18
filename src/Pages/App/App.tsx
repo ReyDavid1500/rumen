@@ -9,6 +9,8 @@ import ShoppingCart from "../ShoppingCart";
 import SignIn from "../SignIn";
 import SignUp from "../SignUp";
 import SubmitOrder from "../SubmitOrder";
+import RumenAccount from "../RumenAccount";
+import RumenSignUp from "../RumenSignUp";
 
 function AppRoutes() {
   let routes = useRoutes([
@@ -22,6 +24,8 @@ function AppRoutes() {
     { path: "/signin", element: <SignIn /> },
     { path: "/signup", element: <SignUp /> },
     { path: "/order", element: <SubmitOrder /> },
+    { path: "/rumen-account", element: <RumenAccount /> },
+    { path: "/rumen-signup", element: <RumenSignUp /> },
   ]);
   return routes;
 }

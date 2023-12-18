@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import ShopLayout from "../../Components/ShopLayout";
 import { BsChevronDoubleLeft } from "react-icons/bs";
+import { GoTrash } from "react-icons/go";
 import { formatCurrency } from "../../assets/utils";
 import Button from "../../Components/coreComponents/Button";
 
@@ -76,7 +77,7 @@ function ShoppingCart() {
                   </td>
                   <td className="w-[20%] text-end">
                     <button className="text-[10px] md:text-xs font-bold text-regular-blue pl-2 pr-2">
-                      Eliminar
+                      <GoTrash className="w-4 h-4" />
                     </button>
                   </td>
                   <td className="w-[10%] text-end">

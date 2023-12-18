@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom";
-import ShopLayout from "../../Components/ShopLayout";
 import { FaUserAlt } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { Link } from "react-router-dom";
+import RumenLayout from "../../Components/RumenLayout";
 
-function SignIn() {
+function RumenAccount() {
   return (
-    <ShopLayout>
+    <RumenLayout>
       <div className="bg-white w-[80%] md:w-[30%] md:mt-20 h-[60%] m-auto rounded-lg overflow-hidden mt-10">
-        <header className="bg-regular-blue align-middle h-[30%] p-6">
+        <header className="bg-light-green align-middle h-[30%] p-6">
           <h1 className="text-center text-lg md:text-xl text-white font-bold">
-            TU CUENTA EN RUMEN
+            CUENTA COMERCIO RUMEN
           </h1>
         </header>
         <main className="p-6">
@@ -35,31 +35,30 @@ function SignIn() {
               />
             </div>
             <Link
-              to="/shopping"
+              to="/rumen-account"
               className="text-xs font-bold text-rumen-orange"
             >
               Olvidaste tu contraseña?
             </Link>
             <Link
-              to="/order"
-              className="bg-regular-blue text-white p-2 font-bold rounded-lg hover:bg-regular-blue/50 w-[80%] m-auto text-center"
+              to="/rumen-account"
+              className="bg-light-green text-white p-2 font-bold rounded-lg hover:bg-green-600/50 w-[80%] m-auto text-center"
             >
               Ingresa a tu cuenta
             </Link>
             <div className="flex flex-row gap-1 items-center">
-              <p className="text-xs">No estas registrado?</p>
               <Link
                 className="text-xs font-bold text-rumen-orange"
-                to="/signup"
+                to="/rumen-signup"
               >
-                Registrate!!
+                Registro Usario Comercio!
               </Link>
             </div>
           </form>
         </main>
       </div>
-    </ShopLayout>
+    </RumenLayout>
   );
 }
 
-export default SignIn;
+export default RumenAccount;

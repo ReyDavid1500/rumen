@@ -1,5 +1,6 @@
 import { formatCurrency } from "../../assets/utils";
 import Button from "../coreComponents/Button";
+import { GoTrash } from "react-icons/go";
 
 const orderDetails: {
   id: number;
@@ -46,7 +47,7 @@ function OrderSummary({
                     <h3 className="text-xs pt-6 pb-6">{detail.title}</h3>
 
                     <button className="text-xs text-dark-blue font-bold">
-                      Eliminar
+                      <GoTrash className="w-4 h-4" />
                     </button>
                   </td>
                   <td className="text-xs text-end">
