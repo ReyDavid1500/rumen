@@ -19,7 +19,7 @@ function RumenLayout({ children }: PropsWithChildren) {
             </Link>
           </div>
           <div className="flex flex-row gap-3 items-center">
-            <Button title="Nuevo Producto" route="/rumen-account" />
+            <Button title="Nuevo Producto" route="/rumen-form" />
             <HiOutlineLogout className="text-white w-9 h-9 cursor-pointer" />
           </div>
         </section>

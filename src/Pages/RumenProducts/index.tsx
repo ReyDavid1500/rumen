@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import RumenLayout from "../../Components/RumenLayout";
-import { CiMenuKebab } from "react-icons/ci";
 import { formatCurrency } from "../../assets/utils";
+import { FaRegEdit } from "react-icons/fa";
+import { GoTrash } from "react-icons/go";
 
 interface Product {
   id: number;
@@ -34,7 +35,19 @@ function RumenProducts() {
 
   return (
     <RumenLayout>
-      <ul className="p-2 text-lg">
+      <form className="p-2 mb-6 mt-6 flex flex-col w-[100%] gap-2 items-center md:flex-row md:gap-4 md:justify-center">
+        <label className="text-xl md:text-2xl font-bold">Buscar Producto</label>
+        <input
+          type="text"
+          placeholder="Nombre del producto"
+          className="p-2 rounded-md border-2 border-black"
+        />
+        <div className="flex flex-row gap-2">
+          <label>Filtrar sin Stock</label>
+          <input type="checkbox" placeholder="Productos sin Stock" />
+        </div>
+      </form>
+      <ul className="p-2 text-lg sm:p-6 md:p-9">
         {productData.map((product) => (
           <li
             className="rumen-card border-2 border-gray-400 rounded-lg p-4 mb-4 flex flex-col justify-between bg-light-orange md:flex-row md:justify-between"
@@ -42,7 +55,7 @@ function RumenProducts() {
           >
             <div>
               <p>
-                <span>Item:</span> {product.title}
+                <span>Producto:</span> {product.title}
               </p>
               <p>
                 <span>Descripción:</span> {product.description}
@@ -57,15 +70,18 @@ function RumenProducts() {
                   <span>Precio:</span> {formatCurrency(product.price)}
                 </p>
                 <p>
-                  <span>Imagen URL:</span> <br /> {product.images[0]}
+                  <span>Imágen URL:</span> <br /> {product.images[0]}
                 </p>
               </div>
-              <div className="flex flex-row items-center justify-between">
+              <div className="flex flex-row items-center justify-between sm:gap-4">
                 <select className="rounded-md p-2 border-2 border-gray-500">
-                  <option value="">Stock</option>
+                  <option value="">Con Stock</option>
                   <option value="">Sin Stock</option>
                 </select>
-                <CiMenuKebab className="h-8 w-8" />
+                <div className="flex flex-row gap-4">
+                  <FaRegEdit className="w-8 h-8 cursor-pointer" />
+                  <GoTrash className="w-8 h-8 cursor-pointer" />
+                </div>
               </div>
             </div>
           </li>

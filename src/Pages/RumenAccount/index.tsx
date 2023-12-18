@@ -13,7 +13,7 @@ function RumenAccount() {
           </h1>
         </header>
         <main className="p-6">
-          <form className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4 items-center">
             <div className="flex flex-row w-full gap-2 items-center">
               <FaUserAlt className="w-[25px] h-[25px]" />
               <input
