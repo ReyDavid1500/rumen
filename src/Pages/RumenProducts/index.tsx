@@ -3,6 +3,7 @@ import RumenLayout from "../../Components/RumenLayout";
 import { formatCurrency } from "../../assets/utils";
 import { FaRegEdit } from "react-icons/fa";
 import { GoTrash } from "react-icons/go";
+import Button from "../../Components/coreComponents/Button";
 
 interface Product {
   id: number;
@@ -46,6 +47,7 @@ function RumenProducts() {
           <label>Filtrar sin Stock</label>
           <input type="checkbox" placeholder="Productos sin Stock" />
         </div>
+        <Button title="Nuevo Producto" route="/rumen-form" />
       </form>
       <ul className="p-2 text-lg sm:p-6 md:p-9">
         {productData.map((product) => (

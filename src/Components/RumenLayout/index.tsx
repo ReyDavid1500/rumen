@@ -1,6 +1,5 @@
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
-import Button from "../coreComponents/Button";
 import { HiOutlineLogout } from "react-icons/hi";
 
 function RumenLayout({ children }: PropsWithChildren) {
@@ -19,8 +18,9 @@ function RumenLayout({ children }: PropsWithChildren) {
             </Link>
           </div>
           <div className="flex flex-row gap-3 items-center">
-            <Button title="Nuevo Producto" route="/rumen-form" />
-            <HiOutlineLogout className="text-white w-9 h-9 cursor-pointer" />
+            <Link to="/rumen-account">
+              <HiOutlineLogout className="text-white w-9 h-9 cursor-pointer" />
+            </Link>
           </div>
         </section>
       </header>

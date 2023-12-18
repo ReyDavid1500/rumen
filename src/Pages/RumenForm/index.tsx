@@ -6,7 +6,7 @@ function RumenForm() {
   return (
     <RumenLayout>
       <div>
-        <div className="bg-white w-[80%] md:w-[30%] md:mt-20 h-[60%] m-auto rounded-lg overflow-hidden mt-10">
+        <div className="bg-white w-[80%] md:w-[30%] md:mt-8 h-[60%] m-auto rounded-lg overflow-hidden mt-10">
           <header className="bg-regular-blue align-middle h-[30%] p-6">
             <h1 className="text-center text-lg md:text-xl text-white font-bold">
               CREA UN NUEVO PRODUCTO
