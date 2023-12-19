@@ -52,10 +52,17 @@ function RumenProducts() {
       <ul className="p-2 text-lg sm:p-6 md:p-9">
         {productData.map((product) => (
           <li
-            className="rumen-card border-2 border-gray-400 rounded-lg p-4 mb-4 flex flex-col justify-between bg-light-orange md:flex-row md:justify-between"
+            className="rumen-card border-2 border-gray-400 rounded-lg p-4 mb-4 flex flex-col gap-4 bg-light-orange md:flex-row md:justify-around"
             key={product.id}
           >
-            <div>
+            <div className="flex flex-col gap-4 md:flex-row">
+              <img
+                src={product.images[0]}
+                alt={product.title}
+                width={150}
+                height={150}
+                className="m-auto"
+              />
               <p>
                 <span>Producto:</span> {product.title}
               </p>
@@ -65,21 +72,21 @@ function RumenProducts() {
               <p>
                 <span>Categoria:</span> {product.category.name}
               </p>
+              <p>
+                <span>Precio:</span> {formatCurrency(product.price)}
+              </p>
             </div>
             <div className="flex flex-col gap-3 justify-around sm:flex-row sm:justify-between">
-              <div>
-                <p>
-                  <span>Precio:</span> {formatCurrency(product.price)}
-                </p>
-                <p>
-                  <span>Imágen URL:</span> <br /> {product.images[0]}
-                </p>
-              </div>
               <div className="flex flex-row items-center justify-between sm:gap-4">
-                <select className="rounded-md p-2 border-2 border-gray-500">
-                  <option value="">Con Stock</option>
-                  <option value="">Sin Stock</option>
-                </select>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <div>
+                    <input type="checkbox" value="" className="sr-only peer" />
+                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-rumen-orange rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] md:after:top-[10px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-700"></div>
+                  </div>
+                  <span className="ms-3 text-sm font-medium text-gray-900 dark:text-red-800">
+                    Sin Stock
+                  </span>
+                </label>
                 <div className="flex flex-row gap-4">
                   <FaRegEdit className="w-8 h-8 cursor-pointer" />
                   <GoTrash className="w-8 h-8 cursor-pointer" />
