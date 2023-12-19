@@ -68,14 +68,14 @@
       "title": "BRISKET Luco",
       "description": "Deliciosas Lonjas de Carne de Brisket bañadas en queso mantecoso fundido.",
       "price": 4500,
-      "category": "Sandwich"
+      "category": "Nuestros Sandwich"
     },
     {
       "id": 11,
       "title": "Pulled Pork (Mechada de Cerdo Ahumada)",
       "description": "Porción Generosa de Pulled Pork con ensalada Coleslow y salsa BBQ de la casa.",
       "price": 4500,
-      "category": "Sandwich"
+      "category": "Nuestros Sandwich"
     },
     {
       "id": 12,
