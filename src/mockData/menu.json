@@ -1,0 +1,95 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "Empanadas de Cerdo y Pollo",
+      "description": "",
+      "price": 2500,
+      "category": "Entradas"
+    },
+    {
+      "id": 2,
+      "title": "Empanadas de Vacuno",
+      "description": "",
+      "price": 3000,
+      "category": "Entradas"
+    },
+    {
+      "id": 3,
+      "title": "Papas Fritas",
+      "description": "",
+      "price": 4000,
+      "category": "Acompañamientos"
+    },
+    {
+      "id": 4,
+      "title": "Porotos BBQ",
+      "description": "",
+      "price": 2000,
+      "category": "Acompañamientos"
+    },
+    {
+      "id": 5,
+      "title": "Porotos BBQ",
+      "description": "",
+      "price": 2000,
+      "category": "Acompañamientos"
+    },
+    {
+      "id": 6,
+      "title": "El Rey Brisket.",
+      "description": "Porción de 350 gr de Tapapecho ahumado por 12 horas para acompañar tu bandeja.",
+      "price": 15570,
+      "category": "CARNES AHUMADAS"
+    },
+    {
+      "id": 7,
+      "title": "Chorrillana RUMEN (4 pers)",
+      "description": "Papas Grandes, Longaniza, tocino, costillar de cerdo, lengua de vacuno, cebolla caramelizada, queso mantecoso y huevo frito.",
+      "price": 30000,
+      "category": "CARNES AHUMADAS"
+    },
+    {
+      "id": 8,
+      "title": "Agua Mineral",
+      "description": "",
+      "price": 2000,
+      "category": "Bebidas"
+    },
+    {
+      "id": 9,
+      "title": "Cervazas Kunstmann 330ml",
+      "description": "",
+      "price": 4500,
+      "category": "Bebidas"
+    },
+    {
+      "id": 10,
+      "title": "BRISKET Luco",
+      "description": "Deliciosas Lonjas de Carne de Brisket bañadas en queso mantecoso fundido.",
+      "price": 4500,
+      "category": "Sandwich"
+    },
+    {
+      "id": 11,
+      "title": "Pulled Pork (Mechada de Cerdo Ahumada)",
+      "description": "Porción Generosa de Pulled Pork con ensalada Coleslow y salsa BBQ de la casa.",
+      "price": 4500,
+      "category": "Sandwich"
+    },
+    {
+      "id": 12,
+      "title": "Tocino Ahumado",
+      "description": "",
+      "price": 2000,
+      "category": "Extras"
+    },
+    {
+      "id": 13,
+      "title": "Pepinos Encurtidos",
+      "description": "",
+      "price": 2000,
+      "category": "Extras"
+    }
+  ]
+}

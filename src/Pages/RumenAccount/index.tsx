@@ -7,7 +7,7 @@ function RumenAccount() {
   return (
     <RumenLayout>
       <div className="bg-white w-[80%] md:w-[30%] md:mt-20 h-[60%] m-auto rounded-lg overflow-hidden mt-10">
-        <header className="bg-light-green align-middle h-[30%] p-6">
+        <header className="bg-regular-blue align-middle h-[30%] p-6">
           <h1 className="text-center text-lg md:text-xl text-white font-bold">
             CUENTA COMERCIO RUMEN
           </h1>
@@ -42,7 +42,7 @@ function RumenAccount() {
             </Link>
             <Link
               to="/rumen-products"
-              className="bg-light-green text-white p-2 font-bold rounded-lg hover:bg-green-600/50 w-[80%] m-auto text-center"
+              className="bg-regular-blue text-white p-2 font-bold rounded-lg hover:bg-regular-blue/50 w-[80%] m-auto text-center"
             >
               Ingresa a tu cuenta
             </Link>

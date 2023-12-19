@@ -28,6 +28,13 @@ function RumenForm() {
                 id="price"
                 placeholder="Precio Unitario"
               />
+              <select className="border-2 border-gray-300 rounded-md p-2 text-gray-400">
+                <option value="">Selecciona la Categoría</option>
+                <option value="">Productos Sellados</option>
+                <option value="">Carnes Ahumadas</option>
+                <option value="">Sandwich</option>
+                <option value="">Bebidas</option>
+              </select>
               <textarea
                 className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
                 name="description"
