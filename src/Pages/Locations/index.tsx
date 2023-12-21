@@ -37,8 +37,8 @@ function Locations() {
             </div>
             <div className="m-auto">
               <p className="text-center font-bold text-2xl">
-                Tambipen nos puedes visitar en nuestro fooftruck ubicado camino
-                Inernacional
+                También nos puedes visitar en nuestro FoodTruck ubicado en
+                camino Internacional
               </p>
               <a
                 target="_blank"

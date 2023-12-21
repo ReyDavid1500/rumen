@@ -35,7 +35,7 @@ function OrderSummary({
 }) {
   return (
     <div className="mt-6 md:mt-0 pb-6 sm:p-16 md:w-[30vw] bg-inherit">
-      <div className="md:fixed md:overflow-y-scroll md:right-[48px] md:top-[120px] border-2 border-gray-400/50 rounded-lg p-2 xl:w-[350px] md:h-[78%] bg-white shadow-xl">
+      <div className="md:fixed md:overflow-y-auto md:right-[48px] md:top-[120px] border-2 border-gray-400/50 rounded-lg p-4 xl:w-[350px] md:h-[78%] bg-white shadow-xl">
         <div className="flex flex-col gap-4 mb-4">
           <h2 className="text-xl text-center font-bold">{title}</h2>
           <table>

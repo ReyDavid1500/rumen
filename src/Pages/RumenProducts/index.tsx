@@ -43,7 +43,7 @@ function RumenProducts() {
     <RumenLayout>
       <div className="flex flex-col items-center m-4 md:flex-row md:items-start">
         <RumenDashboard />
-        <div>
+        <div className="md:pl-[25rem]">
           <form className="p-2 mb-6 mt-6 flex flex-col w-[100%] gap-2 items-center md:flex-row md:gap-4 md:justify-center">
             <label className="text-xl md:text-2xl font-bold">
               Buscar Producto

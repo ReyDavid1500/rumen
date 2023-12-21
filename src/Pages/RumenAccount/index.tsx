@@ -46,14 +46,7 @@ function RumenAccount() {
             >
               Ingresa a tu cuenta
             </Link>
-            <div className="flex flex-row gap-1 items-center">
-              <Link
-                className="text-xs font-bold text-rumen-orange"
-                to="/rumen-signup"
-              >
-                Registro Usario Comercio!
-              </Link>
-            </div>
+            <div className="flex flex-row gap-1 items-center"></div>
           </form>
         </main>
       </div>
