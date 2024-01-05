@@ -1,30 +1,32 @@
 import Button from "../coreComponents/Button";
 
 export interface DataProps {
-  id: number;
-  images: string;
-  title: string;
+  _id: number;
+  name: string;
+  description?: string;
   price: number;
+  image: string;
+  category?: string;
 }
 
 function Card(props: DataProps) {
   return (
     <div
-      key={props.id}
+      key={props._id}
       className="border-2 border-gray-400 rounded-lg overflow-hidden bg-white h-[350px] w-[267px] m-auto md:w-[280px]"
     >
       <div className="h-[67%] w-[100%]">
         <img
           className="w-full h-full object-cover "
-          src={props.images}
-          alt={props.title}
+          src={props.image}
+          alt={props.name}
         />
       </div>
       <div className="p-2">
         <div className="flex flex-row justify-between">
           <div>
-            <h3 className="font-bold text-sm">{props.title}</h3>
-            <p className="text-sm">{props.title}</p>
+            <h3 className="font-bold text-sm">{props.name}</h3>
+            <p className="text-xs">{props.description}</p>
           </div>
           <div>
             <h3 className="font-bold text-sm">${props.price}</h3>

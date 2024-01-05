@@ -10,7 +10,7 @@ function Shopping() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("https://api.escuelajs.co/api/v1/products?offset=0&limit=20")
+    fetch("https://rumen-server.onrender.com/products")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
@@ -31,11 +31,12 @@ function Shopping() {
             <div className="card mt-4">
               {products.map((product) => (
                 <Card
-                  key={product.id}
-                  id={product.id}
-                  images={product.images[0]}
+                  key={product._id}
+                  _id={product._id}
+                  image={product.image}
                   price={product.price}
-                  title={product.title}
+                  name={product.name}
+                  description={product.description}
                 />
               ))}
             </div>
