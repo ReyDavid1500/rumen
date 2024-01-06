@@ -8,14 +8,12 @@ import Loader from "../../Components/coreComponents/Loader";
 import RumenDashboard from "../../Components/RumenDashboard";
 
 interface Product {
-  id: number;
-  title: string;
+  _id: string;
+  name: string;
   price: number;
-  description: string;
-  category: {
-    name: string;
-  };
-  images: string;
+  description?: string;
+  category?: string;
+  image: string;
 }
 
 function RumenProducts() {
@@ -27,7 +25,7 @@ function RumenProducts() {
       const getData = async () => {
         setIsLoading(true);
         const response = await fetch(
-          "https://api.escuelajs.co/api/v1/products?offset=0&limit=20"
+          "https://rumen-server.onrender.com/products"
         );
         const data = await response.json();
         setProductData(data);
@@ -66,24 +64,24 @@ function RumenProducts() {
               {productData.map((product) => (
                 <li
                   className="rumen-card border-2 border-gray-400 rounded-lg p-4 mb-4 flex flex-col gap-4 bg-light-orange md:flex-row md:justify-around"
-                  key={product.id}
+                  key={product._id}
                 >
                   <div className="flex flex-col gap-4 md:flex-row">
                     <img
-                      src={product.images[0]}
-                      alt={product.title}
+                      src={product.image}
+                      alt={product.name}
                       width={150}
                       height={150}
                       className="m-auto"
                     />
                     <p>
-                      <span>Producto:</span> {product.title}
+                      <span>Producto:</span> {product.name}
                     </p>
                     <p>
                       <span>Descripción:</span> {product.description}
                     </p>
                     <p>
-                      <span>Categoria:</span> {product.category.name}
+                      <span>Categoria:</span> {product.category}
                     </p>
                     <p>
                       <span>Precio:</span> {formatCurrency(product.price)}
