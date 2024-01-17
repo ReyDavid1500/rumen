@@ -1,3 +1,4 @@
+import { formatCurrency } from "../../assets/utils";
 import Button from "../coreComponents/Button";
 
 export interface DataProps {
@@ -29,7 +30,7 @@ function Card(props: DataProps) {
             <p className="text-xs">{props.description}</p>
           </div>
           <div>
-            <h3 className="font-bold text-sm">${props.price}</h3>
+            <h3 className="font-bold text-sm">{formatCurrency(props.price)}</h3>
             <p className="text-sm">Unidad</p>
           </div>
         </div>
