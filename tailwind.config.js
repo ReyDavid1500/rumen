@@ -1,6 +1,11 @@
+import { nextui } from '@nextui-org/react';
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/*.{html,js,tsx}"],
+  content: [
+    "./src/**/*.{html,js,tsx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -19,6 +24,6 @@ export default {
     },
 
   },
-  plugins: [],
+  plugins: [nextui()],
 }
 

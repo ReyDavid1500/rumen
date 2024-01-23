@@ -1,7 +1,9 @@
+import { Spinner } from "@nextui-org/react";
+
 function Loader() {
   return (
-    <div className="text-4xl font-bold text-rumen-orange w-full h-[100%]">
-      <p className="text-center mt-[25%]">Loading...</p>
+    <div className="flex items-center justify-center h-[100vh]">
+      <Spinner size="lg" />
     </div>
   );
 }

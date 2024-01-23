@@ -33,6 +33,7 @@ function Card(props: DataProps) {
             <h3 className="font-bold text-sm">{formatCurrency(props.price)}</h3>
             <p className="text-sm">Unidad</p>
           </div>
+          |
         </div>
         <div className="mt-4">
           <form className="flex flex-row justify-between items-center">
