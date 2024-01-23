@@ -2,7 +2,7 @@ import { formatCurrency } from "../../assets/utils";
 import Button from "../coreComponents/Button";
 
 export interface DataProps {
-  _id: number;
+  _id: string;
   name: string;
   description?: string;
   price: number;
@@ -33,7 +33,6 @@ function Card(props: DataProps) {
             <h3 className="font-bold text-sm">{formatCurrency(props.price)}</h3>
             <p className="text-sm">Unidad</p>
           </div>
-          |
         </div>
         <div className="mt-4">
           <form className="flex flex-row justify-between items-center">

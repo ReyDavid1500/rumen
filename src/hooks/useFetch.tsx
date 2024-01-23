@@ -1,0 +1,37 @@
+import axios, { AxiosError } from "axios";
+import { useEffect, useState } from "react";
+
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  description?: string;
+  category?: string;
+  image: string;
+}
+
+export default function useFetch(url: string) {
+  const [data, setData] = useState<Product[]>([]);
+  const [error, setError] = useState<Error | AxiosError | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const client = axios.create({
+    baseURL: "https://rumen-server.onrender.com",
+  });
+
+  useEffect(() => {
+    (async function () {
+      try {
+        setLoading(true);
+        const { data } = await client.get("/products");
+        setData(data);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [url]);
+
+  return { data, error, loading };
+}

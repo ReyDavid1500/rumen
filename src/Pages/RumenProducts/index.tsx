@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import RumenLayout from "../../Components/RumenLayout";
 import { formatCurrency } from "../../assets/utils";
 import { FaRegEdit } from "react-icons/fa";
@@ -7,36 +6,10 @@ import Button from "../../Components/coreComponents/Button";
 import Loader from "../../Components/coreComponents/Loader";
 import RumenDashboard from "../../Components/RumenDashboard";
 import SwitchComponent from "../../Components/coreComponents/SwitchComponent";
-
-interface Product {
-  _id: string;
-  name: string;
-  price: number;
-  description?: string;
-  category?: string;
-  image: string;
-}
+import useFetch from "../../hooks/useFetch";
 
 function RumenProducts() {
-  const [productData, setProductData] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    try {
-      const getData = async () => {
-        setIsLoading(true);
-        const response = await fetch(
-          "https://rumen-server.onrender.com/products"
-        );
-        const data = await response.json();
-        setProductData(data);
-        setIsLoading(false);
-      };
-      getData();
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+  const { data, loading } = useFetch("/products");
 
   return (
     <RumenLayout>
@@ -58,11 +31,11 @@ function RumenProducts() {
             </div>
             <Button title="Nuevo Producto" route="/rumen-form" />
           </form>
-          {isLoading ? (
+          {loading ? (
             <Loader />
           ) : (
             <ul className="p-2 text-lg sm:p-6 md:p-9">
-              {productData.map((product) => (
+              {data.map((product) => (
                 <li
                   className="rumen-card border-2 border-gray-400 rounded-lg p-4 mb-4 flex flex-col gap-4 bg-light-orange md:flex-row md:justify-around"
                   key={product._id}
