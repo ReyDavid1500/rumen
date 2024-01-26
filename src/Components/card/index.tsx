@@ -1,36 +1,45 @@
 import { formatCurrency } from "../../assets/utils";
 import Button from "../coreComponents/Button";
 
-export interface DataProps {
+interface DataProps {
   _id: string;
   name: string;
   description?: string;
   price: number;
   image: string;
   category?: string;
+  inStock?: boolean;
+  handleProductQuantity?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleNewProductToCart?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  disabled?: boolean;
 }
 
-function Card(props: DataProps) {
+function Card({
+  _id,
+  name,
+  description,
+  price,
+  image,
+  handleNewProductToCart,
+  handleProductQuantity,
+  disabled,
+}: DataProps) {
   return (
     <div
-      key={props._id}
+      key={_id}
       className="border-2 border-gray-400 rounded-lg overflow-hidden bg-white h-[350px] w-[267px] m-auto md:w-[280px]"
     >
       <div className="h-[67%] w-[100%]">
-        <img
-          className="w-full h-full object-cover "
-          src={props.image}
-          alt={props.name}
-        />
+        <img className="w-full h-full object-cover " src={image} alt={name} />
       </div>
       <div className="p-2">
         <div className="flex flex-row justify-between">
           <div>
-            <h3 className="font-bold text-sm">{props.name}</h3>
-            <p className="text-xs">{props.description}</p>
+            <h3 className="font-bold text-sm">{name}</h3>
+            <p className="text-xs">{description}</p>
           </div>
           <div>
-            <h3 className="font-bold text-sm">{formatCurrency(props.price)}</h3>
+            <h3 className="font-bold text-sm">{formatCurrency(price)}</h3>
             <p className="text-sm">Unidad</p>
           </div>
         </div>
@@ -40,10 +49,17 @@ function Card(props: DataProps) {
               <input
                 className="border-[3px] border-black rounded-lg w-[60px] h-[40px] mr-2 pl-2"
                 type="text"
+                onChange={handleProductQuantity}
               />
               <label>Unidad</label>
             </div>
-            <Button title="AGREGAR" route="/" />
+            <Button
+              title="AGREGAR"
+              route=""
+              onClick={handleNewProductToCart}
+              data-id={_id}
+              disabled={disabled}
+            />
           </form>
         </div>
       </div>

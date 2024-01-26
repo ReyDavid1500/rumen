@@ -1,29 +1,30 @@
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
-interface Product {
+export interface Product {
   _id: string;
   name: string;
   price: number;
   description?: string;
   category?: string;
   image: string;
+  inStock?: boolean;
 }
+
+export const client = axios.create({
+  baseURL: "https://rumen-server.onrender.com",
+});
 
 export default function useFetch(url: string) {
   const [data, setData] = useState<Product[]>([]);
   const [error, setError] = useState<Error | AxiosError | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const client = axios.create({
-    baseURL: "https://rumen-server.onrender.com",
-  });
-
   useEffect(() => {
     (async function () {
       try {
         setLoading(true);
-        const { data } = await client.get("/products");
+        const { data } = await client.get(url);
         setData(data);
       } catch (err) {
         setError(err as Error);

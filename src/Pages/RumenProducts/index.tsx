@@ -10,7 +10,6 @@ import useFetch from "../../hooks/useFetch";
 
 function RumenProducts() {
   const { data, loading } = useFetch("/products");
-
   return (
     <RumenLayout>
       <div className="flex flex-col items-center m-4 md:flex-row md:items-start">

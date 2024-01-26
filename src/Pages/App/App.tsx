@@ -6,7 +6,6 @@ import About from "../About";
 import Contact from "../Contact";
 import Shopping from "../Shopping";
 import ShoppingCart from "../ShoppingCart";
-import SignIn from "../SignIn";
 import SignUp from "../SignUp";
 import SubmitOrder from "../SubmitOrder";
 import RumenAccount from "../RumenAccount";
@@ -23,7 +22,6 @@ function AppRoutes() {
     { path: "/contact", element: <Contact /> },
     { path: "/shopping", element: <Shopping /> },
     { path: "/cart", element: <ShoppingCart /> },
-    { path: "/signin", element: <SignIn /> },
     { path: "/signup", element: <SignUp /> },
     { path: "/order", element: <SubmitOrder /> },
     { path: "/rumen-account", element: <RumenAccount /> },
