@@ -4,9 +4,9 @@ import ShopLayout from "../../Components/ShopLayout";
 function SignUp() {
   return (
     <ShopLayout>
-      <div>
-        <div className="bg-white w-[80%] md:w-[30%] md:mt-4 h-[60%] m-auto rounded-lg overflow-hidden mt-10">
-          <header className="bg-regular-blue align-middle h-[30%] p-6">
+      <>
+        <div className="bg-white border-4 border-black w-[80%] md:w-[45%] md:mt-10 m-auto rounded-lg overflow-hidden mt-10">
+          <header className="bg-regular-blue align-middle h-[20%] p-6">
             <h1 className="text-center text-lg md:text-xl text-white font-bold">
               REGISTRATE EN RUMEN
             </h1>
@@ -18,14 +18,7 @@ function SignUp() {
                 type="text"
                 name="name"
                 id="name"
-                placeholder="Nombre"
-              />
-              <input
-                className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
-                type="text"
-                name="surname"
-                id="surname"
-                placeholder="Apellido"
+                placeholder="Nombre Completo"
               />
               <input
                 className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
@@ -38,7 +31,7 @@ function SignUp() {
                 className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
                 name="address"
                 id="address"
-                placeholder="Dirección en Pucón!"
+                placeholder="Dirección de despacho en Pucón!"
               />
               <input
                 className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
@@ -62,17 +55,14 @@ function SignUp() {
               </Link>
               <div className="flex flex-row gap-1 items-center">
                 <p className="text-xs">Ya estas registrado?</p>
-                <Link
-                  className="text-xs font-bold text-rumen-orange"
-                  to="/signin"
-                >
+                <Link className="text-xs font-bold text-rumen-orange" to="">
                   Ingresa tus datos aquí!
                 </Link>
               </div>
             </form>
           </main>
         </div>
-      </div>
+      </>
     </ShopLayout>
   );
 }

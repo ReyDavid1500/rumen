@@ -33,7 +33,7 @@ function Shopping() {
   const productQuantityHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setProductQuantity(Number(e.target.value));
 
-  const addNewProductToCart = async (
+  const signInAndAddNewProductToCart = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     try {
@@ -50,6 +50,8 @@ function Shopping() {
     }
   };
 
+  const addProductToCart = () => {}; //A different EndPoint!
+
   const { data, loading } = useFetch("/products");
 
   const categories = data.map((product) => product.category);
@@ -60,6 +62,7 @@ function Shopping() {
       <SignInModal
         isOpen={isSignInOpen}
         onClose={() => setIsSignInOpen(false)}
+        onClick={signInAndAddNewProductToCart}
       />
       <ShopLayout>
         {loading ? (
