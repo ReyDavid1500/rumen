@@ -18,7 +18,7 @@ interface OrderSummaryProps {
   title: string;
   buttonText: string;
   route: string;
-  orderDetails?: ShoppingCart[];
+  orderDetails?: ShoppingCart | null;
   handleShoppingCart?: () => void;
 }
 
@@ -36,14 +36,12 @@ function OrderSummary({
           <h2 className="text-xl text-center font-bold">{title}</h2>
           <table>
             <tbody>
-              {orderDetails?.map((detail) => (
-                <tr key={detail.products.product._id} className="border-b-2">
-                  <td className="text-xs xl:text-lg">
-                    {detail.products.quantity}
-                  </td>
+              {orderDetails?.products?.map((detail) => (
+                <tr key={detail.product._id} className="border-b-2">
+                  <td className="text-xs xl:text-lg">{detail.quantity}</td>
                   <td className="flex flex-row justify-between items-center">
                     <h3 className="text-xs xl:text-lg pt-6 pb-6">
-                      {detail.products.product.name}
+                      {detail.product.name}
                     </h3>
 
                     <button className="text-xs text-dark-blue font-bold">
@@ -51,7 +49,7 @@ function OrderSummary({
                     </button>
                   </td>
                   <td className="text-xs xl:text-lg text-end">
-                    {formatCurrency(detail.products.product.price)}
+                    {formatCurrency(detail.product.price)}
                   </td>
                 </tr>
               ))}
@@ -63,15 +61,17 @@ function OrderSummary({
           <div className="flex flex-col gap-4 mb-4">
             <div className="flex flex-row justify-between text-xs xl:text-lg">
               <p>Subtotal</p>
-              <span>$27.000</span>
+              <span>{formatCurrency(Number(orderDetails?.subtotal))}</span>
             </div>
             <hr />
             <div className="flex flex-row justify-between text-xs xl:text-lg">
               <p>Despacho</p>
-              <span>$2.000</span>
+              <span>{formatCurrency(Number(orderDetails?.shipping))}</span>
             </div>
             <hr />
-            <span className="text-end font-bold">$29.000</span>
+            <span className="text-end font-bold">
+              {formatCurrency(Number(orderDetails?.total))}
+            </span>
           </div>
         </div>
         <div className="flex justify-center fixed bottom-0 right-[-6px] w-[100vw] z-10 bg-light-orange p-2 md:relative md:w-[100%] md:bg-inherit">

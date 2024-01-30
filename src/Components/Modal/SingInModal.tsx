@@ -7,9 +7,20 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+type SignInModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  handlerSubmit: (userData: User, e: any) => void;
+};
+
+export type User = {
+  username: string;
+  password: string;
+};
+
 const schema = yup
   .object({
-    email: yup
+    username: yup
       .string()
       .email()
       .required("El Email es requerido para continuar"),
@@ -21,23 +32,18 @@ const schema = yup
   })
   .required();
 
-type SignInModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  onClick: (e: any) => void;
-};
-
 const modalContainer = document.getElementById("modal") as
   | Element
   | DocumentFragment;
 
-function SignInModal({ isOpen, onClose, onClick }: SignInModalProps) {
+function SignInModal({ isOpen, onClose, handlerSubmit }: SignInModalProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<User>({
     resolver: yupResolver(schema),
+    mode: "onSubmit",
   });
 
   return createPortal(
@@ -58,20 +64,22 @@ function SignInModal({ isOpen, onClose, onClick }: SignInModalProps) {
               </h1>
             </header>
             <main className="p-6">
-              <form className="flex flex-col gap-4">
+              <form
+                onSubmit={handleSubmit(handlerSubmit)}
+                className="flex flex-col gap-4"
+              >
                 <div className="flex flex-row w-full gap-2 items-center">
                   <FaUserAlt className="w-[25px] h-[25px]" />
                   <input
-                    {...register("email")}
+                    {...register("username")}
                     className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
                     type="text"
-                    name="email"
-                    id="email"
+                    id="username"
                     placeholder="Email"
                   />
                 </div>
                 <p className="text-sm text-red-500 font-medium m-auto">
-                  {errors.email?.message}
+                  {errors.username?.message}
                 </p>
                 <div className="flex flex-row w-full gap-2 items-center">
                   <RiLockPasswordFill className="w-[25px] h-[25px]" />
@@ -79,7 +87,6 @@ function SignInModal({ isOpen, onClose, onClick }: SignInModalProps) {
                     {...register("password")}
                     className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
                     type="password"
-                    name="password"
                     id="password"
                     placeholder="Contraseña"
                   />
@@ -93,10 +100,7 @@ function SignInModal({ isOpen, onClose, onClick }: SignInModalProps) {
                 >
                   Olvidaste tu contraseña?
                 </Link>
-                <button
-                  onClick={handleSubmit(onClick)}
-                  className="bg-regular-blue text-white p-2 font-bold rounded-lg hover:bg-regular-blue/50 w-[80%] m-auto text-center"
-                >
+                <button className="bg-regular-blue text-white p-2 font-bold rounded-lg hover:bg-regular-blue/50 w-[80%] m-auto text-center">
                   Ingresa a tu cuenta
                 </button>
                 <div className="flex flex-row gap-1 items-center">

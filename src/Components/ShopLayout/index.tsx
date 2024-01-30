@@ -1,9 +1,15 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { AiTwotoneShopping } from "react-icons/ai";
 import { LuMenu } from "react-icons/lu";
+import { User } from "../Modal/SingInModal";
 
-function ShopLayout({ children }: PropsWithChildren) {
+type ShopLayoutProps = PropsWithChildren & {
+  user?: User | null;
+  authData?: ReactNode;
+};
+
+function ShopLayout({ children, user, authData }: ShopLayoutProps) {
   return (
     <div className="h-[100vh]">
       <header className="w-[100%] fixed">
@@ -19,6 +25,13 @@ function ShopLayout({ children }: PropsWithChildren) {
             </Link>
           </div>
           <div className="flex flex-row gap-3 items-center">
+            {user && (
+              <div className="border-2 border-light-orange p-2 rounded-lg">
+                <p className="text-white font-bold text-xl">
+                  Hola!, {authData}
+                </p>
+              </div>
+            )}
             <Link to="/cart" className="relative">
               <AiTwotoneShopping className="w-[40px] h-[40px]" />
               <span className="absolute text-rumen-orange font-bold top-[12px] left-[15px]">

@@ -5,7 +5,7 @@ import Card from "../../Components/card";
 import Loader from "../../Components/coreComponents/Loader";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
-import SignInModal from "../../Components/Modal/SingInModal";
+import SignInModal, { User } from "../../Components/Modal/SingInModal";
 
 type Product = {
   _id: string;
@@ -19,38 +19,82 @@ type Products = {
 };
 
 export type ShoppingCart = {
-  products: Products;
+  products: Products[];
   shipping: number;
   subtotal: number;
   total: number;
 };
 
+export type AuthData = {
+  access_token: string;
+  email: string;
+  name: string;
+};
+
 function Shopping() {
-  const [productQuantity, setProductQuantity] = useState<number>(0);
+  const [productQuantity, setProductQuantity] = useState<number>(1);
   const [shoppingCart, setShoppingCart] = useState<ShoppingCart | null>(null);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [authData, setAuthData] = useState<AuthData | null>(null);
+  console.log(shoppingCart);
 
   const productQuantityHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setProductQuantity(Number(e.target.value));
+    setProductQuantity(Number(e.target.value) || 1);
 
-  const signInAndAddNewProductToCart = async (
+  const handleNewProductToCart = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
+    e.preventDefault();
     try {
-      const productId = e.currentTarget.dataset.id;
-      const res = await axios.post("http://localhost:3000/shopping-cart", [
-        {
-          productId,
-          quantity: productQuantity,
-        },
-      ]);
-      setShoppingCart(res.data);
+      if (!user) {
+        setIsSignInOpen(true);
+      } else {
+        const userToken = authData?.access_token;
+
+        const productId = e.currentTarget.dataset.id;
+        console.log(productId);
+
+        const { data } = await axios.post(
+          "http://localhost:3000/shopping-cart",
+          [
+            {
+              productId,
+              quantity: productQuantity,
+            },
+          ],
+          {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
+        );
+        setShoppingCart(data);
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
-  const addProductToCart = () => {}; //A different EndPoint!
+  const signIn = async (
+    userData: User,
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3000/auth/login",
+        userData
+      );
+      setUser(userData);
+      setAuthData(data);
+      setIsSignInOpen(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // const addProductToCart = () => {}; //A different EndPoint!
 
   const { data, loading } = useFetch("/products");
 
@@ -62,9 +106,9 @@ function Shopping() {
       <SignInModal
         isOpen={isSignInOpen}
         onClose={() => setIsSignInOpen(false)}
-        onClick={signInAndAddNewProductToCart}
+        handlerSubmit={signIn}
       />
-      <ShopLayout>
+      <ShopLayout user={user} authData={authData?.name}>
         {loading ? (
           <Loader />
         ) : (
@@ -87,8 +131,8 @@ function Shopping() {
                             name={product.name}
                             description={product.description}
                             handleProductQuantity={productQuantityHandler}
-                            handleNewProductToCart={() => setIsSignInOpen(true)}
-                            data-id={product._id}
+                            handleNewProductToCart={handleNewProductToCart}
+                            dataId={product._id}
                           />
                         );
                       }
@@ -101,6 +145,7 @@ function Shopping() {
               title="PEDIDO"
               buttonText="REVISAR PEDIDO"
               route="/cart"
+              orderDetails={shoppingCart}
             />
           </div>
         )}

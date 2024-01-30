@@ -12,6 +12,7 @@ interface DataProps {
   handleProductQuantity?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleNewProductToCart?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
+  dataId: string;
 }
 
 function Card({
@@ -23,6 +24,7 @@ function Card({
   handleNewProductToCart,
   handleProductQuantity,
   disabled,
+  dataId,
 }: DataProps) {
   return (
     <div
@@ -50,6 +52,7 @@ function Card({
                 className="border-[3px] border-black rounded-lg w-[60px] h-[40px] mr-2 pl-2"
                 type="text"
                 onChange={handleProductQuantity}
+                defaultValue={1}
               />
               <label>Unidad</label>
             </div>
@@ -57,7 +60,7 @@ function Card({
               title="AGREGAR"
               route=""
               onClick={handleNewProductToCart}
-              data-id={_id}
+              data-id={dataId}
               disabled={disabled}
             />
           </form>
