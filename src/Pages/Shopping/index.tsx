@@ -1,5 +1,5 @@
 import { useState } from "react";
-import OrderSummary from "../../Components/OrderSummary";
+import OrderSummary, { OrderProduct } from "../../Components/OrderSummary";
 import ShopLayout from "../../Components/ShopLayout";
 import Card from "../../Components/card";
 import Loader from "../../Components/coreComponents/Loader";
@@ -7,19 +7,9 @@ import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 import SignInModal, { User } from "../../Components/Modal/SingInModal";
 
-type Product = {
-  _id: string;
-  name: string;
-  price: number;
-};
-
-type Products = {
-  product: Product;
-  quantity: number;
-};
-
 export type ShoppingCart = {
-  products: Products[];
+  _id: string;
+  products: OrderProduct[];
   shipping: number;
   subtotal: number;
   total: number;
@@ -46,30 +36,48 @@ function Shopping() {
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
+    const userToken = authData?.access_token;
+    const productId = e.currentTarget.dataset.id;
+    const baseUrl = "http://localhost:3000/shopping-cart";
+
     try {
       if (!user) {
         setIsSignInOpen(true);
       } else {
-        const userToken = authData?.access_token;
-
-        const productId = e.currentTarget.dataset.id;
-        console.log(productId);
-
-        const { data } = await axios.post(
-          "http://localhost:3000/shopping-cart",
-          [
+        if (!shoppingCart) {
+          const { data } = await axios.post(
+            baseUrl,
+            [
+              {
+                productId,
+                quantity: productQuantity,
+              },
+            ],
             {
-              productId,
-              quantity: productQuantity,
-            },
-          ],
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        );
-        setShoppingCart(data);
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+              },
+            }
+          );
+          setShoppingCart(data);
+        } else {
+          const { data } = await axios.patch(
+            `${baseUrl}/${shoppingCart._id}`,
+            [
+              {
+                productId,
+                quantity: productQuantity,
+              },
+            ],
+            {
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+              },
+            }
+          );
+          console.log(data);
+          setShoppingCart(data);
+        }
       }
     } catch (err) {
       console.log(err);

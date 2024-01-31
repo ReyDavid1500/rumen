@@ -3,24 +3,20 @@ import { formatCurrency } from "../../assets/utils";
 import Button from "../coreComponents/Button";
 import { GoTrash } from "react-icons/go";
 
-export interface OrderDetail {
+export type OrderProduct = {
   _id: string;
   name: string;
   price: number;
-}
-
-export interface OrderProduct {
-  products: OrderDetail;
   quantity: number;
-}
+};
 
-interface OrderSummaryProps {
+type OrderSummaryProps = {
   title: string;
   buttonText: string;
   route: string;
   orderDetails?: ShoppingCart | null;
   handleShoppingCart?: () => void;
-}
+};
 
 function OrderSummary({
   title,
@@ -37,11 +33,11 @@ function OrderSummary({
           <table>
             <tbody>
               {orderDetails?.products?.map((detail) => (
-                <tr key={detail.product._id} className="border-b-2">
+                <tr key={detail._id} className="border-b-2">
                   <td className="text-xs xl:text-lg">{detail.quantity}</td>
                   <td className="flex flex-row justify-between items-center">
                     <h3 className="text-xs xl:text-lg pt-6 pb-6">
-                      {detail.product.name}
+                      {detail.name}
                     </h3>
 
                     <button className="text-xs text-dark-blue font-bold">
@@ -49,7 +45,7 @@ function OrderSummary({
                     </button>
                   </td>
                   <td className="text-xs xl:text-lg text-end">
-                    {formatCurrency(detail.product.price)}
+                    {formatCurrency(detail.price)}
                   </td>
                 </tr>
               ))}
@@ -61,16 +57,16 @@ function OrderSummary({
           <div className="flex flex-col gap-4 mb-4">
             <div className="flex flex-row justify-between text-xs xl:text-lg">
               <p>Subtotal</p>
-              <span>{formatCurrency(Number(orderDetails?.subtotal))}</span>
+              <span>{formatCurrency(Number(orderDetails?.subtotal) || 0)}</span>
             </div>
             <hr />
             <div className="flex flex-row justify-between text-xs xl:text-lg">
               <p>Despacho</p>
-              <span>{formatCurrency(Number(orderDetails?.shipping))}</span>
+              <span>{formatCurrency(Number(orderDetails?.shipping) || 0)}</span>
             </div>
             <hr />
             <span className="text-end font-bold">
-              {formatCurrency(Number(orderDetails?.total))}
+              {formatCurrency(Number(orderDetails?.total) || 0)}
             </span>
           </div>
         </div>
