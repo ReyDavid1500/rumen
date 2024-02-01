@@ -75,8 +75,8 @@ function Shopping() {
               },
             }
           );
-          console.log(data);
           setShoppingCart(data);
+          setProductQuantity(1);
         }
       }
     } catch (err) {
@@ -96,13 +96,12 @@ function Shopping() {
       );
       setUser(userData);
       setAuthData(data);
+      localStorage.setItem("USER_TOKEN", data.access_token);
       setIsSignInOpen(false);
     } catch (err) {
       console.log(err);
     }
   };
-
-  // const addProductToCart = () => {}; //A different EndPoint!
 
   const { data, loading } = useFetch("/products");
 
@@ -116,7 +115,11 @@ function Shopping() {
         onClose={() => setIsSignInOpen(false)}
         handlerSubmit={signIn}
       />
-      <ShopLayout user={user} authData={authData?.name}>
+      <ShopLayout
+        user={user}
+        authData={authData?.name}
+        shoppingCart={shoppingCart?.products.length}
+      >
         {loading ? (
           <Loader />
         ) : (

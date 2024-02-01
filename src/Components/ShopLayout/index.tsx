@@ -7,9 +7,15 @@ import { User } from "../Modal/SingInModal";
 type ShopLayoutProps = PropsWithChildren & {
   user?: User | null;
   authData?: ReactNode;
+  shoppingCart?: ReactNode;
 };
 
-function ShopLayout({ children, user, authData }: ShopLayoutProps) {
+function ShopLayout({
+  children,
+  user,
+  authData,
+  shoppingCart,
+}: ShopLayoutProps) {
   return (
     <div className="h-[100vh]">
       <header className="w-[100%] fixed">
@@ -33,9 +39,9 @@ function ShopLayout({ children, user, authData }: ShopLayoutProps) {
               </div>
             )}
             <Link to="/cart" className="relative">
-              <AiTwotoneShopping className="w-[40px] h-[40px]" />
-              <span className="absolute text-rumen-orange font-bold top-[12px] left-[15px]">
-                3
+              <AiTwotoneShopping className="w-[50px] h-[50px]" />
+              <span className="absolute text-rumen-orange font-bold top-[18px] left-[19px]">
+                {shoppingCart || 0}
               </span>
             </Link>
             <Link to="/shopping">
