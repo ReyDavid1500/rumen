@@ -1,7 +1,11 @@
-import { ShoppingCart } from "../../Pages/Shopping";
+import { useContext } from "react";
 import { formatCurrency } from "../../assets/utils";
 import Button from "../coreComponents/Button";
 import { GoTrash } from "react-icons/go";
+import {
+  ShoppingCartContext,
+  ShoppingCartContextType,
+} from "../../context/ShoppingCartContext";
 
 export type OrderProduct = {
   _id: string;
@@ -14,17 +18,19 @@ type OrderSummaryProps = {
   title: string;
   buttonText: string;
   route: string;
-  orderDetails?: ShoppingCart | null;
   handleShoppingCart?: () => void;
 };
 
 function OrderSummary({
   title,
   buttonText,
-  route,
-  orderDetails,
   handleShoppingCart,
+  route,
 }: OrderSummaryProps) {
+  const { shoppingCart } = useContext(
+    ShoppingCartContext
+  ) as ShoppingCartContextType;
+
   return (
     <div className="mt-6 md:mt-0 pb-6 sm:p-16 md:w-[30vw] bg-inherit">
       <div className="md:fixed md:overflow-y-auto md:right-[48px] md:top-[95px] border-2 border-gray-400/50 rounded-lg p-4 xl:w-[350px] md:h-[78%] bg-white shadow-xl">
@@ -32,7 +38,7 @@ function OrderSummary({
           <h2 className="text-xl text-center font-bold">{title}</h2>
           <table>
             <tbody>
-              {orderDetails?.products?.map((detail) => (
+              {shoppingCart?.products?.map((detail) => (
                 <tr key={detail._id} className="border-b-2">
                   <td className="text-xs xl:text-lg">{detail.quantity}</td>
                   <td className="flex flex-row justify-between items-center">
@@ -57,16 +63,16 @@ function OrderSummary({
           <div className="flex flex-col gap-4 mb-4">
             <div className="flex flex-row justify-between text-xs xl:text-lg">
               <p>Subtotal</p>
-              <span>{formatCurrency(Number(orderDetails?.subtotal) || 0)}</span>
+              <span>{formatCurrency(Number(shoppingCart?.subtotal) || 0)}</span>
             </div>
             <hr />
             <div className="flex flex-row justify-between text-xs xl:text-lg">
               <p>Despacho</p>
-              <span>{formatCurrency(Number(orderDetails?.shipping) || 0)}</span>
+              <span>{formatCurrency(Number(shoppingCart?.shipping) || 0)}</span>
             </div>
             <hr />
             <span className="text-end font-bold">
-              {formatCurrency(Number(orderDetails?.total) || 0)}
+              {formatCurrency(Number(shoppingCart?.total) || 0)}
             </span>
           </div>
         </div>

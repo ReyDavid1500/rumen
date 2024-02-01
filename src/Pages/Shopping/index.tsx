@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import OrderSummary, { OrderProduct } from "../../Components/OrderSummary";
 import ShopLayout from "../../Components/ShopLayout";
 import Card from "../../Components/card";
@@ -6,6 +6,10 @@ import Loader from "../../Components/coreComponents/Loader";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 import SignInModal, { User } from "../../Components/Modal/SingInModal";
+import {
+  ShoppingCartContext,
+  ShoppingCartContextType,
+} from "../../context/ShoppingCartContext";
 
 export type ShoppingCart = {
   _id: string;
@@ -22,12 +26,18 @@ export type AuthData = {
 };
 
 function Shopping() {
-  const [productQuantity, setProductQuantity] = useState<number>(1);
-  const [shoppingCart, setShoppingCart] = useState<ShoppingCart | null>(null);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
-  const [authData, setAuthData] = useState<AuthData | null>(null);
-  console.log(shoppingCart);
+
+  const {
+    setProductQuantity,
+    authData,
+    productQuantity,
+    setAuthData,
+    setShoppingCart,
+    setUser,
+    shoppingCart,
+    user,
+  } = useContext(ShoppingCartContext) as ShoppingCartContextType;
 
   const productQuantityHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setProductQuantity(Number(e.target.value) || 1);
@@ -115,11 +125,7 @@ function Shopping() {
         onClose={() => setIsSignInOpen(false)}
         handlerSubmit={signIn}
       />
-      <ShopLayout
-        user={user}
-        authData={authData?.name}
-        shoppingCart={shoppingCart?.products.length}
-      >
+      <ShopLayout>
         {loading ? (
           <Loader />
         ) : (
@@ -156,7 +162,6 @@ function Shopping() {
               title="PEDIDO"
               buttonText="REVISAR PEDIDO"
               route="/cart"
-              orderDetails={shoppingCart}
             />
           </div>
         )}

@@ -1,21 +1,21 @@
-import { PropsWithChildren, ReactNode } from "react";
+import { ReactNode, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AiTwotoneShopping } from "react-icons/ai";
 import { LuMenu } from "react-icons/lu";
-import { User } from "../Modal/SingInModal";
+import {
+  ShoppingCartContext,
+  ShoppingCartContextType,
+} from "../../context/ShoppingCartContext";
 
-type ShopLayoutProps = PropsWithChildren & {
-  user?: User | null;
-  authData?: ReactNode;
-  shoppingCart?: ReactNode;
+type ShopLayoutProps = {
+  children: ReactNode;
 };
 
-function ShopLayout({
-  children,
-  user,
-  authData,
-  shoppingCart,
-}: ShopLayoutProps) {
+function ShopLayout({ children }: ShopLayoutProps) {
+  const { authData, user, shoppingCart } = useContext(
+    ShoppingCartContext
+  ) as ShoppingCartContextType;
+
   return (
     <div className="h-[100vh]">
       <header className="w-[100%] fixed">
@@ -34,14 +34,14 @@ function ShopLayout({
             {user && (
               <div className="border-2 border-light-orange p-2 rounded-lg">
                 <p className="text-white font-bold text-xl">
-                  Hola!, {authData}
+                  Hola!, {authData?.name}
                 </p>
               </div>
             )}
             <Link to="/cart" className="relative">
               <AiTwotoneShopping className="w-[50px] h-[50px]" />
               <span className="absolute text-rumen-orange font-bold top-[18px] left-[19px]">
-                {shoppingCart || 0}
+                {shoppingCart?.products.length || 0}
               </span>
             </Link>
             <Link to="/shopping">
