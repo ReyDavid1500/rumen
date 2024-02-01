@@ -6,6 +6,7 @@ import {
   ShoppingCartContext,
   ShoppingCartContextType,
 } from "../../context/ShoppingCartContext";
+import { NextUIProvider } from "@nextui-org/react";
 
 type ShopLayoutProps = {
   children: ReactNode;
@@ -50,7 +51,9 @@ function ShopLayout({ children }: ShopLayoutProps) {
           </div>
         </section>
       </header>
-      <div className="pt-20 h-[100%]">{children}</div>
+      <div className="pt-20 h-[100%]">
+        <NextUIProvider>{children} </NextUIProvider>
+      </div>
     </div>
   );
 }

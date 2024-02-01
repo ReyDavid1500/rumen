@@ -12,7 +12,7 @@ import RumenAccount from "../RumenAccount";
 import RumenSignUp from "../RumenSignUp";
 import RumenProducts from "../RumenProducts";
 import RumenForm from "../RumenForm";
-import { ShoppingCartProvider } from "../../context/shoppingCartContext";
+import { ShoppingCartProvider } from "../../context/ShoppingCartContext";
 
 function AppRoutes() {
   let routes = useRoutes([

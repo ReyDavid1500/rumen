@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ShopLayout from "../../Components/ShopLayout";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
 
 type SignUpData = {
   name: string;
@@ -36,10 +37,19 @@ function SignUp() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpData, any>({ resolver: yupResolver(schema) });
+  } = useForm<SignUpData>({ resolver: yupResolver(schema) });
 
-  const handlerSubmit = (data: SignUpData) => {
-    console.log(data);
+  const navigate = useNavigate();
+
+  const handlerSubmit = async (data: SignUpData) => {
+    const { validatePassword, ...payload } = data;
+    try {
+      const res = await axios.post("http://localhost:3000/users", payload);
+      console.log(res);
+      navigate("/shopping");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
