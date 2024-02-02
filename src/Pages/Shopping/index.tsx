@@ -37,10 +37,13 @@ function Shopping() {
     setUser,
     shoppingCart,
     user,
+    setIsLoading,
   } = useContext(ShoppingCartContext) as ShoppingCartContextType;
 
   const productQuantityHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setProductQuantity(Number(e.target.value) || 1);
+
+  const baseUrl = "http://localhost:3000";
 
   const handleNewProductToCart = async (
     e: React.MouseEvent<HTMLButtonElement>
@@ -48,15 +51,15 @@ function Shopping() {
     e.preventDefault();
     const userToken = authData?.access_token;
     const productId = e.currentTarget.dataset.id;
-    const baseUrl = "http://localhost:3000/shopping-cart";
 
     try {
       if (!user) {
         setIsSignInOpen(true);
       } else {
-        if (!shoppingCart) {
+        if (!shoppingCart && productQuantity > 0) {
+          setIsLoading(true);
           const { data } = await axios.post(
-            baseUrl,
+            `${baseUrl}/shopping-cart`,
             [
               {
                 productId,
@@ -70,9 +73,10 @@ function Shopping() {
             }
           );
           setShoppingCart(data);
-        } else {
+        } else if (shoppingCart && productQuantity > 0) {
+          setIsLoading(true);
           const { data } = await axios.patch(
-            `${baseUrl}/${shoppingCart._id}`,
+            `${baseUrl}/shopping-cart/${shoppingCart?._id}`,
             [
               {
                 productId,
@@ -86,11 +90,12 @@ function Shopping() {
             }
           );
           setShoppingCart(data);
-          setProductQuantity(1);
         }
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -100,10 +105,7 @@ function Shopping() {
   ) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
-        "http://localhost:3000/auth/login",
-        userData
-      );
+      const { data } = await axios.post(`${baseUrl}/auth/login`, userData);
       setUser(userData);
       setAuthData(data);
       localStorage.setItem("USER_TOKEN", data.access_token);
@@ -127,7 +129,7 @@ function Shopping() {
       />
       <ShopLayout>
         {loading ? (
-          <Loader />
+          <Loader className="flex items-center justify-center h-[100vh]" />
         ) : (
           <div className="md:flex md:flex-row md:justify-between p-4">
             <div className="p-4 bg-white w-[90vw] m-auto mt-4 md:w-[70vw] md:m-0">

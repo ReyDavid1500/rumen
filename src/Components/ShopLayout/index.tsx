@@ -18,7 +18,7 @@ function ShopLayout({ children }: ShopLayoutProps) {
   ) as ShoppingCartContextType;
 
   return (
-    <div className="h-[100vh]">
+    <>
       <header className="w-[100%] fixed">
         <section className="flex flex-row justify-between p-4 items-center bg-light-green">
           <div>
@@ -54,7 +54,7 @@ function ShopLayout({ children }: ShopLayoutProps) {
       <div className="pt-20 h-[100%]">
         <NextUIProvider>{children} </NextUIProvider>
       </div>
-    </div>
+    </>
   );
 }
 

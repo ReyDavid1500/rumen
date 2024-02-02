@@ -52,7 +52,6 @@ function Card({
                 className="border-[3px] border-black rounded-lg w-[60px] h-[40px] mr-2 pl-2"
                 type="text"
                 onChange={handleProductQuantity}
-                defaultValue={1}
               />
               <label>Unidad</label>
             </div>
