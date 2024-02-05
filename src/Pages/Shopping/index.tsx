@@ -23,6 +23,7 @@ export type AuthData = {
   access_token: string;
   email: string;
   name: string;
+  address: string;
 };
 
 function Shopping() {

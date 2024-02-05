@@ -9,7 +9,7 @@ import {
 import Loader from "../coreComponents/Loader";
 
 export type OrderProduct = {
-  _id: string;
+  id: string;
   name: string;
   price: number;
   quantity: number;
@@ -33,7 +33,7 @@ function OrderSummary({
   ) as ShoppingCartContextType;
 
   return (
-    <div className="mt-6 md:mt-0 pb-6 sm:p-16 md:w-[30vw] bg-white">
+    <div className="mt-6 md:mt-0 pb-6 sm:p-16 md:w-[30vw]">
       <div className="md:fixed md:overflow-y-auto md:right-[48px] md:top-[124px] border-2 border-gray-400/50 rounded-lg p-4 xl:w-[350px] md:h-[78%] bg-white shadow-xl">
         <div className="flex flex-col gap-4 mb-4">
           <h2 className="text-xl text-center font-bold">{title}</h2>
@@ -45,32 +45,30 @@ function OrderSummary({
           ) : (
             ""
           )}
-          <table>
-            <tbody>
-              {isLoading ? (
-                <Loader className="flex items-center justify-center h-[50vh]" />
-              ) : (
-                <>
-                  {shoppingCart?.products?.map((detail) => (
-                    <tr key={detail._id} className="border-b-2">
-                      <td className="text-xs xl:text-lg">{detail.quantity}</td>
-                      <td className="flex flex-row justify-between items-center">
-                        <h3 className="text-xs xl:text-lg pt-6 pb-6">
-                          {detail.name}
-                        </h3>
-                        <button className="text-xs text-dark-blue font-bold">
-                          <GoTrash className="w-4 h-4" />
-                        </button>
-                      </td>
-                      <td className="text-xs xl:text-lg text-end">
-                        {formatCurrency(detail.price)}
-                      </td>
-                    </tr>
-                  ))}
-                </>
-              )}
-            </tbody>
-          </table>
+          {isLoading ? (
+            <Loader className="flex items-center justify-center h-[50vh]" />
+          ) : (
+            <table>
+              <tbody>
+                {shoppingCart?.products?.map((detail) => (
+                  <tr key={detail.id} className="border-b-2">
+                    <td className="text-xs xl:text-lg">{detail.quantity}</td>
+                    <td className="flex flex-row justify-between items-center">
+                      <h3 className="text-xs xl:text-lg pt-6 pb-6">
+                        {detail.name}
+                      </h3>
+                      <button className="text-xs text-dark-blue font-bold">
+                        <GoTrash className="w-4 h-4" />
+                      </button>
+                    </td>
+                    <td className="text-xs xl:text-lg text-end">
+                      {formatCurrency(detail.price)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
           <h2 className="text-xs xl:text-lg text-center font-bold mb-4">
             TOTAL ESTIMADO
           </h2>

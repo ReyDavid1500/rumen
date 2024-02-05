@@ -16,7 +16,7 @@ export const client = axios.create({
 });
 
 export default function useFetch(url: string) {
-  const [data, setData] = useState<Product[]>([]);
+  const [data, setData] = useState<any[]>([]);
   const [error, setError] = useState<Error | AxiosError | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 

@@ -1,43 +1,16 @@
+import { useContext } from "react";
 import OrderSummary from "../../Components/OrderSummary";
 import ShopLayout from "../../Components/ShopLayout";
-
-const locations: {
-  id: number;
-  address: string;
-}[] = [
-  {
-    id: 1,
-    address: "Selecciona un Local",
-  },
-  {
-    id: 2,
-    address: "Local Camino al Volcán Km6",
-  },
-  {
-    id: 3,
-    address: "FoodTruck Camino Internacional",
-  },
-];
-
-const addresses: {
-  id: number;
-  address: string;
-}[] = [
-  {
-    id: 1,
-    address: "Selecciona dirección de despacho",
-  },
-  {
-    id: 2,
-    address: "Primera dirección guardada por cliente",
-  },
-  {
-    id: 3,
-    address: "Segunda dirección guardada por cliente",
-  },
-];
+import {
+  ShoppingCartContext,
+  ShoppingCartContextType,
+} from "../../context/ShoppingCartContext";
 
 function SubmitOrder() {
+  const { authData } = useContext(
+    ShoppingCartContext
+  ) as ShoppingCartContextType;
+
   return (
     <ShopLayout>
       <div className="p-6 m-6 h-[100%] md:h-[100vh]">
@@ -55,37 +28,19 @@ function SubmitOrder() {
                     <p>Retiro en Local</p>
                   </label>
                 </div>
-                <select
-                  name="locations"
-                  id="locations"
-                  className="mb-4 border-2 border-black p-1 rounded-md w-full focus:border-orange-500 focus:border-2"
-                >
-                  {locations.map((location) => (
-                    <option className="" key={location.id}>
-                      {location.address}
-                    </option>
-                  ))}
-                </select>
-                <div className="flex flex-row gap-2 mb-2">
+                <p className="text-center">
+                  Ubicación: Aldea Los Álamos, Pucón
+                </p>
+                <div className="flex flex-row gap-2 mb-2 mt-2">
                   <input type="radio" />
                   <label>
-                    <p>Despacho a domicilio, disponible en Pucón</p>
+                    <p>Despacho a domicilio a tu dirección en Pucón:</p>
                   </label>
                 </div>
-                <select
-                  name="locations"
-                  id="locations"
-                  className="mb-4 border-2 border-black p-1 rounded-md w-full focus:border-orange-500 focus:border-2"
-                >
-                  {addresses.map((address) => (
-                    <option className="" key={address.id}>
-                      {address.address}
-                    </option>
-                  ))}
-                </select>
+                <p className="text-center">{authData?.address}</p>
               </form>
             </div>
-            <div className="delivery border-2 border-gray-200 bg-white border-b-4 border-b-dark-blue mt-6 w-fit rounded-md p-3 text-xs md:text-xl xl:text-2xl">
+            <div className="delivery border-2 border-gray-200 bg-white border-b-4 border-b-dark-blue w-fit rounded-md p-3 text-xs md:text-xl xl:text-2xl">
               <form>
                 <h2 className="font-bold mb-4">METODO DE PAGO</h2>
                 <label>

@@ -38,7 +38,7 @@ function ShoppingCart() {
           <table className="w-[100%] table-fixed">
             <tbody>
               {shoppingCart?.products.map((detail) => (
-                <tr key={detail._id} className="border-b-2 max-w-[100%]">
+                <tr key={detail.id} className="border-b-2 max-w-[100%]">
                   <td className="pt-6 pb-6 align-middle w-[20%] min-w-min">
                     <h6 className="text-start">{detail.name}</h6>
                   </td>
