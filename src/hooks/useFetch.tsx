@@ -12,7 +12,7 @@ export interface Product {
 }
 
 export const client = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://rumen-server.onrender.com",
 });
 
 export default function useFetch(url: string) {

@@ -7,7 +7,7 @@ import {
   ShoppingCartContextType,
 } from "../../context/ShoppingCartContext";
 import Loader from "../coreComponents/Loader";
-import { client } from "../../hooks/useFetch";
+import { useAxios } from "../../hooks/useAxios";
 
 export type OrderProduct = {
   id: string;
@@ -29,25 +29,16 @@ function OrderSummary({
   handleShoppingCart,
   route,
 }: OrderSummaryProps) {
-  const {
-    shoppingCart,
-    isLoading,
-    user,
-    authData,
-    setShoppingCart,
-    setIsLoading,
-  } = useContext(ShoppingCartContext) as ShoppingCartContextType;
+  const { shoppingCart, isLoading, user, setShoppingCart, setIsLoading } =
+    useContext(ShoppingCartContext) as ShoppingCartContextType;
+
+  const { requester } = useAxios(true);
 
   const handlerDeleteProduct = async (productId: string) => {
     try {
       setIsLoading(true);
-      const { data } = await client.delete(
-        `/shopping-cart/${shoppingCart?._id}/product/${productId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${authData?.access_token}`,
-          },
-        }
+      const { data } = await requester.delete(
+        `/shopping-cart/${shoppingCart?._id}/product/${productId}`
       );
       setShoppingCart(data);
     } catch (err) {
@@ -90,7 +81,7 @@ function OrderSummary({
                       </button>
                     </td>
                     <td className="text-xs xl:text-lg text-end">
-                      {formatCurrency(detail.price)}
+                      {formatCurrency(detail.price * detail.quantity)}
                     </td>
                   </tr>
                 ))}

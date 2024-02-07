@@ -1,25 +1,23 @@
-// import axios from 'axios';
-// import { useRouter } from 'next/router';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-// export const useAxios = () => {
+export const useAxios = (isReady: boolean) => {
+  const [accessToken, setAccessToken] = useState<string | null>(null);
 
-//   const { isReady } = useRouter();
+  useEffect(() => {
+    if (isReady && typeof window !== "undefined") {
+      const token = localStorage?.getItem("USER_TOKEN");
+      setAccessToken(token);
+    }
+  }, [isReady]);
 
-//   const accessToken = isReady && typeof window !== 'undefined' ? localStorage?.getItem('accessToken') : undefined;
+  const requester = axios.create({
+    baseURL: "https://rumen-server.onrender.com",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
-//   const requester = axios.create({
-//     baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-//     headers: {
-//       'content-type': 'application/json',
-//       Authorization: Bearer ${accessToken},
-//     },
-//   });
-
-//   const nextRequester = axios.create({
-//     baseURL: process.env.AUTH0_BASE_URL,
-//     headers: {
-//       'content-type': 'application/json',
-//     },
-//   });
-//   return { requester, nextRequester };
-// };
+  return { requester };
+};

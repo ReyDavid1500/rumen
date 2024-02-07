@@ -4,28 +4,36 @@ import { BsChevronDoubleLeft } from "react-icons/bs";
 import { GoTrash } from "react-icons/go";
 import { formatCurrency } from "../../assets/utils";
 import Button from "../../Components/coreComponents/Button";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
   ShoppingCartContext,
   ShoppingCartContextType,
 } from "../../context/ShoppingCartContext";
 import Loader from "../../Components/coreComponents/Loader";
-import { client } from "../../hooks/useFetch";
+import { useAxios } from "../../hooks/useAxios";
 
 function ShoppingCart() {
-  const { shoppingCart, setIsLoading, authData, setShoppingCart, isLoading } =
-    useContext(ShoppingCartContext) as ShoppingCartContextType;
+  const {
+    shoppingCart,
+    setIsLoading,
+    setShoppingCart,
+    isLoading,
+    productQuantity,
+  } = useContext(ShoppingCartContext) as ShoppingCartContextType;
+
+  const [newQuantity, setNewQuantity] = useState(productQuantity);
+
+  const { requester } = useAxios(true);
+
+  const handlerQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewQuantity(Number(e.target.value));
+  };
 
   const handlerDeleteProduct = async (productId: string) => {
     try {
       setIsLoading(true);
-      const { data } = await client.delete(
-        `/shopping-cart/${shoppingCart?._id}/product/${productId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${authData?.access_token}`,
-          },
-        }
+      const { data } = await requester.delete(
+        `/shopping-cart/${shoppingCart?._id}/product/${productId}`
       );
       setShoppingCart(data);
     } catch (err) {
@@ -35,20 +43,21 @@ function ShoppingCart() {
     }
   };
 
-  const handlerProductQuantity = async (
-    productId: string,
-    quantity: number
-  ) => {
+  const handlerProductQuantity = async (id: string) => {
     try {
       setIsLoading(true);
-      const { data } = await client.patch(
-        `/shopping-cart/${shoppingCart?._id}/product/${productId}`,
-        { quantity },
-        {
-          headers: {
-            Authorization: `Bearer ${authData?.access_token}`,
+      if (!shoppingCart) {
+        throw new Error("Not found");
+      }
+      const { data } = await requester.patch(
+        `/shopping-cart/${shoppingCart?._id}`,
+        [
+          {
+            id,
+            quantity: newQuantity,
           },
-        }
+          ...shoppingCart.products,
+        ]
       );
       setShoppingCart(data);
     } catch (err) {
@@ -92,23 +101,25 @@ function ShoppingCart() {
                       <form
                         onSubmit={(e) => {
                           e.preventDefault();
-                          handlerProductQuantity(detail.id, detail.quantity);
+                          handlerProductQuantity(detail.id);
                         }}
                         className="flex flex-row justify-between items-center"
                       >
                         <div className="flex flex-row max-[394px]:flex-col justify-start items-center gap-1">
                           <input
-                            className="border-2 border-black rounded-md w-10 pl-2"
+                            className="border-3 border-black rounded-md w-10 pl-2"
                             type="number"
-                            pattern="\d*"
+                            min={1}
+                            step={1}
                             autoComplete="off"
                             defaultValue={detail.quantity}
+                            onChange={handlerQuantity}
                           />
                           <label className="text-xs">Unidad</label>
                         </div>
                         <button
                           type="submit"
-                          className="text-xs font-bold text-rumen-orange"
+                          className="text-xs font-bold text-white bg-light-green rounded-md p-2"
                         >
                           Actualizar
                         </button>
@@ -126,7 +137,7 @@ function ShoppingCart() {
                       </button>
                     </td>
                     <td className="w-[10%] text-end">
-                      {formatCurrency(detail.price)}
+                      {formatCurrency(detail.price * detail.quantity)}
                     </td>
                   </tr>
                 ))}
@@ -141,16 +152,16 @@ function ShoppingCart() {
           <div className="flex flex-col gap-4 mb-4">
             <div className="flex flex-row justify-between text-xs md:text-lg">
               <p>Subtotal</p>
-              <span>{formatCurrency(Number(shoppingCart?.subtotal))}</span>
+              <span>{formatCurrency(Number(shoppingCart?.subtotal) || 0)}</span>
             </div>
             <hr />
             <div className="flex flex-row justify-between text-xs md:text-lg">
               <p>Despacho</p>
-              <span>{formatCurrency(Number(shoppingCart?.shipping))}</span>
+              <span>{formatCurrency(Number(shoppingCart?.shipping) || 0)}</span>
             </div>
             <hr />
             <span className="text-end font-bold text-xs md:text-lg">
-              {formatCurrency(Number(shoppingCart?.total))}
+              {formatCurrency(Number(shoppingCart?.total) || 0)}
             </span>
           </div>
           <div className="flex justify-center p-2">

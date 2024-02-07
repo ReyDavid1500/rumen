@@ -9,6 +9,7 @@ import {
   ShoppingCartContext,
   ShoppingCartContextType,
 } from "../../context/ShoppingCartContext";
+import { useAxios } from "../../hooks/useAxios";
 
 export type ShoppingCart = {
   _id: string;
@@ -28,9 +29,10 @@ export type AuthData = {
 function Shopping() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
 
+  const { requester } = useAxios(true);
+
   const {
     setProductQuantity,
-    authData,
     productQuantity,
     setAuthData,
     setShoppingCart,
@@ -39,68 +41,6 @@ function Shopping() {
     user,
     setIsLoading,
   } = useContext(ShoppingCartContext) as ShoppingCartContextType;
-
-  const productQuantityHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setProductQuantity(Number(e.target.value));
-
-  console.log(productQuantity);
-
-  const handleNewProductToCart = async (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    e.preventDefault();
-    const userToken = authData?.access_token;
-    const id = e.currentTarget.dataset.id;
-
-    try {
-      if (!user) {
-        setIsSignInOpen(true);
-      } else {
-        if (!shoppingCart && productQuantity !== null) {
-          setIsLoading(true);
-          const { data } = await client.post(
-            `/shopping-cart`,
-            [
-              {
-                id,
-                quantity: productQuantity,
-              },
-            ],
-            {
-              headers: {
-                Authorization: `Bearer ${userToken}`,
-              },
-            }
-          );
-          setShoppingCart(data);
-        } else if (shoppingCart && productQuantity !== null) {
-          setIsLoading(true);
-          console.log(shoppingCart);
-          const { data } = await client.patch(
-            `/shopping-cart/${shoppingCart?._id}`,
-            [
-              {
-                id,
-                quantity: productQuantity,
-              },
-              ...shoppingCart.products,
-            ],
-            {
-              headers: {
-                Authorization: `Bearer ${userToken}`,
-              },
-            }
-          );
-          setShoppingCart(data);
-        }
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-      setProductQuantity(null);
-    }
-  };
 
   const signIn = async (
     userData: User,
@@ -115,6 +55,51 @@ function Shopping() {
       setIsSignInOpen(false);
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const productQuantityHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setProductQuantity(Number(e.target.value));
+
+  const handleNewProductToCart = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+    const id = e.currentTarget.dataset.id;
+
+    try {
+      if (!user) {
+        setIsSignInOpen(true);
+      } else {
+        if (!shoppingCart && productQuantity !== null) {
+          setIsLoading(true);
+          const { data } = await requester.post("/shopping-cart", [
+            {
+              id,
+              quantity: productQuantity,
+            },
+          ]);
+          setShoppingCart(data);
+        } else if (shoppingCart && productQuantity !== null) {
+          setIsLoading(true);
+          const { data } = await requester.patch(
+            `/shopping-cart/${shoppingCart?._id}`,
+            [
+              {
+                id,
+                quantity: productQuantity,
+              },
+              ...shoppingCart.products,
+            ]
+          );
+          setShoppingCart(data);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+      setProductQuantity(null);
     }
   };
 
