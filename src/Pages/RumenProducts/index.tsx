@@ -31,7 +31,7 @@ function RumenProducts() {
             <Button title="Nuevo Producto" route="/rumen-form" />
           </form>
           {loading ? (
-            <Loader />
+            <Loader className="flex items-center justify-center h-[100vh]" />
           ) : (
             <ul className="p-2 text-lg sm:p-6 md:p-9">
               {data.map((product) => (

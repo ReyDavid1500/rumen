@@ -27,7 +27,7 @@ export type ShoppingCartContextType = {
 
 const ShoppingCartContext = createContext<ShoppingCartContextType | null>(null);
 
-const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps) => {
+function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const [productQuantity, setProductQuantity] = useState<number | null>(null);
   const [shoppingCart, setShoppingCart] = useState<ShoppingCart | null>(null);
   const [user, setUser] = useState<User | null>(null);
@@ -52,6 +52,6 @@ const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps) => {
       {children}
     </ShoppingCartContext.Provider>
   );
-};
+}
 
 export { ShoppingCartContext, ShoppingCartProvider };
