@@ -7,6 +7,7 @@ import {
   ShoppingCartContextType,
 } from "../../context/ShoppingCartContext";
 import Loader from "../coreComponents/Loader";
+import { client } from "../../hooks/useFetch";
 
 export type OrderProduct = {
   id: string;
@@ -28,9 +29,33 @@ function OrderSummary({
   handleShoppingCart,
   route,
 }: OrderSummaryProps) {
-  const { shoppingCart, isLoading, user } = useContext(
-    ShoppingCartContext
-  ) as ShoppingCartContextType;
+  const {
+    shoppingCart,
+    isLoading,
+    user,
+    authData,
+    setShoppingCart,
+    setIsLoading,
+  } = useContext(ShoppingCartContext) as ShoppingCartContextType;
+
+  const handlerDeleteProduct = async (productId: string) => {
+    try {
+      setIsLoading(true);
+      const { data } = await client.delete(
+        `/shopping-cart/${shoppingCart?._id}/product/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${authData?.access_token}`,
+          },
+        }
+      );
+      setShoppingCart(data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="mt-6 md:mt-0 pb-6 sm:p-16 md:w-[30vw]">
@@ -57,7 +82,10 @@ function OrderSummary({
                       <h3 className="text-xs xl:text-lg pt-6 pb-6">
                         {detail.name}
                       </h3>
-                      <button className="text-xs text-dark-blue font-bold">
+                      <button
+                        onClick={() => handlerDeleteProduct(detail.id)}
+                        className="text-xs text-dark-blue font-bold"
+                      >
                         <GoTrash className="w-4 h-4" />
                       </button>
                     </td>

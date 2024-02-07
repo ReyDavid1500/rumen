@@ -3,8 +3,7 @@ import OrderSummary, { OrderProduct } from "../../Components/OrderSummary";
 import ShopLayout from "../../Components/ShopLayout";
 import Card from "../../Components/card";
 import Loader from "../../Components/coreComponents/Loader";
-import useFetch from "../../hooks/useFetch";
-import axios from "axios";
+import useFetch, { client } from "../../hooks/useFetch";
 import SignInModal, { User } from "../../Components/Modal/SingInModal";
 import {
   ShoppingCartContext,
@@ -42,28 +41,28 @@ function Shopping() {
   } = useContext(ShoppingCartContext) as ShoppingCartContextType;
 
   const productQuantityHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setProductQuantity(Number(e.target.value) || 1);
+    setProductQuantity(Number(e.target.value));
 
-  const baseUrl = "http://localhost:3000";
+  console.log(productQuantity);
 
   const handleNewProductToCart = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
     const userToken = authData?.access_token;
-    const productId = e.currentTarget.dataset.id;
+    const id = e.currentTarget.dataset.id;
 
     try {
       if (!user) {
         setIsSignInOpen(true);
       } else {
-        if (!shoppingCart && productQuantity > 0) {
+        if (!shoppingCart && productQuantity !== null) {
           setIsLoading(true);
-          const { data } = await axios.post(
-            `${baseUrl}/shopping-cart`,
+          const { data } = await client.post(
+            `/shopping-cart`,
             [
               {
-                productId,
+                id,
                 quantity: productQuantity,
               },
             ],
@@ -74,15 +73,17 @@ function Shopping() {
             }
           );
           setShoppingCart(data);
-        } else if (shoppingCart && productQuantity > 0) {
+        } else if (shoppingCart && productQuantity !== null) {
           setIsLoading(true);
-          const { data } = await axios.patch(
-            `${baseUrl}/shopping-cart/${shoppingCart?._id}`,
+          console.log(shoppingCart);
+          const { data } = await client.patch(
+            `/shopping-cart/${shoppingCart?._id}`,
             [
               {
-                productId,
+                id,
                 quantity: productQuantity,
               },
+              ...shoppingCart.products,
             ],
             {
               headers: {
@@ -97,6 +98,7 @@ function Shopping() {
       console.log(err);
     } finally {
       setIsLoading(false);
+      setProductQuantity(null);
     }
   };
 
@@ -106,7 +108,7 @@ function Shopping() {
   ) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${baseUrl}/auth/login`, userData);
+      const { data } = await client.post(`/auth/login`, userData);
       setUser(userData);
       setAuthData(data);
       localStorage.setItem("USER_TOKEN", data.access_token);

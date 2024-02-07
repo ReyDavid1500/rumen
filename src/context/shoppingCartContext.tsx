@@ -13,8 +13,8 @@ type ShoppingCartProviderProps = {
 };
 
 export type ShoppingCartContextType = {
-  productQuantity: number;
-  setProductQuantity: Dispatch<SetStateAction<number>>;
+  productQuantity: number | null;
+  setProductQuantity: Dispatch<SetStateAction<number | null>>;
   shoppingCart: ShoppingCart | null;
   setShoppingCart: Dispatch<SetStateAction<ShoppingCart | null>>;
   user: User | null;
@@ -28,7 +28,7 @@ export type ShoppingCartContextType = {
 const ShoppingCartContext = createContext<ShoppingCartContextType | null>(null);
 
 const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps) => {
-  const [productQuantity, setProductQuantity] = useState<number>(0);
+  const [productQuantity, setProductQuantity] = useState<number | null>(null);
   const [shoppingCart, setShoppingCart] = useState<ShoppingCart | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [authData, setAuthData] = useState<AuthData | null>(null);
