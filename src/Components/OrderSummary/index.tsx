@@ -2,12 +2,12 @@ import { useContext } from "react";
 import { formatCurrency } from "../../assets/utils";
 import Button from "../coreComponents/Button";
 import { GoTrash } from "react-icons/go";
+import Loader from "../coreComponents/Loader";
+import { useAxios } from "../../hooks/useAxios";
 import {
   ShoppingCartContext,
   ShoppingCartContextType,
 } from "../../context/ShoppingCartContext";
-import Loader from "../coreComponents/Loader";
-import { useAxios } from "../../hooks/useAxios";
 
 export type OrderProduct = {
   id: string;

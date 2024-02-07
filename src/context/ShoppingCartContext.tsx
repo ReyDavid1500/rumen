@@ -25,9 +25,10 @@ export type ShoppingCartContextType = {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
 
-const ShoppingCartContext = createContext<ShoppingCartContextType | null>(null);
+export const ShoppingCartContext =
+  createContext<ShoppingCartContextType | null>(null);
 
-function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
+export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const [productQuantity, setProductQuantity] = useState<number | null>(null);
   const [shoppingCart, setShoppingCart] = useState<ShoppingCart | null>(null);
   const [user, setUser] = useState<User | null>(null);
@@ -53,5 +54,3 @@ function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     </ShoppingCartContext.Provider>
   );
 }
-
-export { ShoppingCartContext, ShoppingCartProvider };
