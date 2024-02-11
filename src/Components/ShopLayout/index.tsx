@@ -13,7 +13,7 @@ type ShopLayoutProps = {
 };
 
 function ShopLayout({ children }: ShopLayoutProps) {
-  const { authData, user, shoppingCart } = useContext(
+  const { shoppingCart, authData, user } = useContext(
     ShoppingCartContext
   ) as ShoppingCartContextType;
 

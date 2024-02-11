@@ -1,15 +1,24 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import OrderSummary, { OrderProduct } from "../../Components/OrderSummary";
 import ShopLayout from "../../Components/ShopLayout";
 import Card from "../../Components/card";
 import Loader from "../../Components/coreComponents/Loader";
-import useFetch, { client } from "../../hooks/useFetch";
 import SignInModal, { User } from "../../Components/Modal/SingInModal";
 import {
   ShoppingCartContext,
   ShoppingCartContextType,
 } from "../../context/ShoppingCartContext";
 import { useAxios } from "../../hooks/useAxios";
+import { AxiosError } from "axios";
+
+export type Product = {
+  _id: string;
+  name: string;
+  description: string;
+  image: string;
+  price: number;
+  category: string;
+};
 
 export type ShoppingCart = {
   _id: string;
@@ -28,18 +37,23 @@ export type AuthData = {
 
 function Shopping() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
+  const [error, setError] = useState<Error | AxiosError | null>(null);
 
-  const { requester } = useAxios(true);
+  const { requester } = useAxios();
 
   const {
     setProductQuantity,
     productQuantity,
-    setAuthData,
     setShoppingCart,
-    setUser,
     shoppingCart,
-    user,
     setIsLoading,
+    isLoading,
+    setUser,
+    user,
+    setAuthData,
+    products,
+    setProducts,
+    authData,
   } = useContext(ShoppingCartContext) as ShoppingCartContextType;
 
   const signIn = async (
@@ -48,13 +62,16 @@ function Shopping() {
   ) => {
     e.preventDefault();
     try {
-      const { data } = await client.post(`/auth/login`, userData);
+      const { data } = await requester.post(`/auth/login`, userData);
       setUser(userData);
       setAuthData(data);
-      localStorage.setItem("USER_TOKEN", data.access_token);
+      localStorage.setItem("TOKEN", data.access_token);
       setIsSignInOpen(false);
     } catch (err) {
-      console.log(err);
+      setError(err as Error);
+      if (error?.message === "Request failed with status code 401") {
+        alert("Usuario y/o contraseña invalidos");
+      }
     }
   };
 
@@ -103,9 +120,33 @@ function Shopping() {
     }
   };
 
-  const { data, loading } = useFetch("/products");
+  const token = localStorage.getItem("TOKEN");
 
-  const categories = data.map((product) => product.category);
+  const fetchShoppingCart = async () => {
+    const { data } = await requester.get(`shopping-cart/${shoppingCart?._id}`);
+  };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setIsLoading(true);
+        const { data } = await requester.get("/products", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setProducts(data);
+      } catch (err) {
+        console.log(err as Error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProducts();
+    fetchShoppingCart();
+  }, []);
+
+  const categories = products?.map((product) => product.category);
   const categoryArray = [...new Set(categories)];
 
   return (
@@ -116,7 +157,7 @@ function Shopping() {
         handlerSubmit={signIn}
       />
       <ShopLayout>
-        {loading ? (
+        {isLoading ? (
           <Loader className="flex items-center justify-center h-[100vh]" />
         ) : (
           <div className="md:flex md:flex-row md:justify-between p-4">
@@ -127,12 +168,11 @@ function Shopping() {
                     {category}
                   </h1>
                   <div className="card mt-4">
-                    {data.map((product) => {
+                    {products?.map((product) => {
                       if (product.category === category) {
                         return (
                           <Card
                             key={product._id}
-                            _id={product._id}
                             image={product.image}
                             price={product.price}
                             name={product.name}

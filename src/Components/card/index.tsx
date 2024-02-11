@@ -2,7 +2,6 @@ import { formatCurrency } from "../../assets/utils";
 import Button from "../coreComponents/Button";
 
 interface DataProps {
-  _id: string;
   name: string;
   description?: string;
   price: number;
@@ -16,7 +15,6 @@ interface DataProps {
 }
 
 function Card({
-  _id,
   name,
   description,
   price,
@@ -27,11 +25,8 @@ function Card({
   dataId,
 }: DataProps) {
   return (
-    <div
-      key={_id}
-      className="border-2 border-gray-400 rounded-lg overflow-hidden bg-white h-[350px] w-[267px] m-auto md:w-[280px]"
-    >
-      <div className="h-[67%] w-[100%]">
+    <div className="border-2 border-gray-400 rounded-lg overflow-hidden bg-white h-[350px] w-[267px] m-auto md:w-[280px]">
+      <div className="h-[60%] w-[100%]">
         <img className="w-full h-full object-cover " src={image} alt={name} />
       </div>
       <div className="p-2">

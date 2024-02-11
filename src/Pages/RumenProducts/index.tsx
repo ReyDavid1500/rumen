@@ -6,10 +6,19 @@ import Button from "../../Components/coreComponents/Button";
 import Loader from "../../Components/coreComponents/Loader";
 import RumenDashboard from "../../Components/RumenDashboard";
 import SwitchComponent from "../../Components/coreComponents/SwitchComponent";
-import useFetch from "../../hooks/useFetch";
+import { useContext } from "react";
+import {
+  ShoppingCartContext,
+  ShoppingCartContextType,
+} from "../../context/ShoppingCartContext";
 
 function RumenProducts() {
-  const { data, loading } = useFetch("/products");
+  const { products, isLoading } = useContext(
+    ShoppingCartContext
+  ) as ShoppingCartContextType;
+
+  console.log(products);
+
   return (
     <RumenLayout>
       <div className="flex flex-col items-center m-4 md:flex-row md:items-start">
@@ -30,11 +39,11 @@ function RumenProducts() {
             </div>
             <Button title="Nuevo Producto" route="/rumen-form" />
           </form>
-          {loading ? (
+          {isLoading ? (
             <Loader className="flex items-center justify-center h-[100vh]" />
           ) : (
             <ul className="p-2 text-lg sm:p-6 md:p-9">
-              {data.map((product) => (
+              {products?.map((product) => (
                 <li
                   className="rumen-card border-2 border-gray-400 rounded-lg p-4 mb-4 flex flex-col gap-4 bg-light-orange md:flex-row md:justify-around"
                   key={product._id}

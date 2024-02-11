@@ -5,7 +5,7 @@ import {
   createContext,
   useState,
 } from "react";
-import { AuthData, ShoppingCart } from "../Pages/Shopping";
+import { AuthData, Product, ShoppingCart } from "../Pages/Shopping";
 import { User } from "../Components/Modal/SingInModal";
 
 type ShoppingCartProviderProps = {
@@ -23,6 +23,8 @@ export type ShoppingCartContextType = {
   setAuthData: Dispatch<SetStateAction<AuthData | null>>;
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  products: Product[] | null;
+  setProducts: Dispatch<SetStateAction<Product[] | null>>;
 };
 
 export const ShoppingCartContext =
@@ -34,6 +36,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [authData, setAuthData] = useState<AuthData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [products, setProducts] = useState<Product[] | null>(null);
 
   return (
     <ShoppingCartContext.Provider
@@ -48,6 +51,8 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         setAuthData,
         isLoading,
         setIsLoading,
+        products,
+        setProducts,
       }}
     >
       {children}

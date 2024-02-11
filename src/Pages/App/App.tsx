@@ -12,7 +12,6 @@ import RumenAccount from "../RumenAccount";
 import RumenSignUp from "../RumenSignUp";
 import RumenProducts from "../RumenProducts";
 import RumenForm from "../RumenForm";
-import { ShoppingCartProvider } from "../../context/ShoppingCartContext";
 
 function AppRoutes() {
   let routes = useRoutes([
@@ -35,11 +34,9 @@ function AppRoutes() {
 
 function App() {
   return (
-    <ShoppingCartProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </ShoppingCartProvider>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   );
 }
 

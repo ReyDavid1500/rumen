@@ -4,7 +4,7 @@ import { BsChevronDoubleLeft } from "react-icons/bs";
 import { GoTrash } from "react-icons/go";
 import { formatCurrency } from "../../assets/utils";
 import Button from "../../Components/coreComponents/Button";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import {
   ShoppingCartContext,
   ShoppingCartContextType,
@@ -13,38 +13,18 @@ import Loader from "../../Components/coreComponents/Loader";
 import { useAxios } from "../../hooks/useAxios";
 
 function ShoppingCart() {
-  const {
-    shoppingCart,
-    setIsLoading,
-    setShoppingCart,
-    isLoading,
-    productQuantity,
-  } = useContext(ShoppingCartContext) as ShoppingCartContextType;
+  const { shoppingCart, setIsLoading, setShoppingCart, isLoading } = useContext(
+    ShoppingCartContext
+  ) as ShoppingCartContextType;
 
-  const [newQuantity, setNewQuantity] = useState(productQuantity);
+  const { requester } = useAxios();
 
-  const { requester } = useAxios(true);
-
-  const handlerQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewQuantity(Number(e.target.value));
-  };
-
-  const handlerDeleteProduct = async (productId: string) => {
+  const handlerProductQuantity = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: string
+  ) => {
     try {
-      setIsLoading(true);
-      const { data } = await requester.delete(
-        `/shopping-cart/${shoppingCart?._id}/product/${productId}`
-      );
-      setShoppingCart(data);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handlerProductQuantity = async (id: string) => {
-    try {
+      const newQuantity = Number(e.target.value);
       setIsLoading(true);
       if (!shoppingCart) {
         throw new Error("Not found");
@@ -58,6 +38,20 @@ function ShoppingCart() {
           },
           ...shoppingCart.products,
         ]
+      );
+      setShoppingCart(data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlerDeleteProduct = async (productId: string) => {
+    try {
+      setIsLoading(true);
+      const { data } = await requester.delete(
+        `/shopping-cart/${shoppingCart?._id}/product/${productId}`
       );
       setShoppingCart(data);
     } catch (err) {
@@ -98,31 +92,22 @@ function ShoppingCart() {
                       <h6 className="text-start">{detail.name}</h6>
                     </td>
                     <td className="pl-2 pr-2 w-[50%]">
-                      <form
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          handlerProductQuantity(detail.id);
-                        }}
-                        className="flex flex-row justify-between items-center"
-                      >
+                      <form className="flex flex-row justify-between items-center">
                         <div className="flex flex-row max-[394px]:flex-col justify-start items-center gap-1">
                           <input
-                            className="border-3 border-black rounded-md w-10 pl-2"
+                            className="border-3 border-black rounded-md w-10 pl-2 pt-1 pb-1"
                             type="number"
                             min={1}
                             step={1}
                             autoComplete="off"
                             defaultValue={detail.quantity}
-                            onChange={handlerQuantity}
+                            onChange={(e) => {
+                              e.preventDefault();
+                              handlerProductQuantity(e, detail.id);
+                            }}
                           />
                           <label className="text-xs">Unidad</label>
                         </div>
-                        <button
-                          type="submit"
-                          className="text-xs font-bold text-white bg-light-green rounded-md p-2"
-                        >
-                          Actualizar
-                        </button>
                         <span className="text-xs font-bold">
                           {formatCurrency(detail.price)}/ <br /> Unidad
                         </span>
