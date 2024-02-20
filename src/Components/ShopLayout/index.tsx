@@ -1,5 +1,5 @@
 import { ReactNode, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiTwotoneShopping } from "react-icons/ai";
 import { IoLogOutOutline } from "react-icons/io5";
 import { LuMenu } from "react-icons/lu";
@@ -21,14 +21,19 @@ function ShopLayout({ children }: ShopLayoutProps) {
     setIsLoading,
     loggedIn,
     loggedUser,
+    setLoggedIn,
   } = useContext(ShoppingCartContext) as ShoppingCartContextType;
+
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     setIsLoading(true);
     localStorage.clear();
     setLoggedUser(null);
+    setLoggedIn(null);
     setShoppingCart(null);
     setIsLoading(false);
+    navigate("/shopping");
   };
   return (
     <>

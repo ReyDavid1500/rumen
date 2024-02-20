@@ -4,14 +4,14 @@ import { BsChevronDoubleLeft } from "react-icons/bs";
 import { GoTrash } from "react-icons/go";
 import { formatCurrency } from "../../assets/utils";
 import Button from "../../Components/coreComponents/Button";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import {
   ShoppingCartContext,
   ShoppingCartContextType,
 } from "../../context/ShoppingCartContext";
 import Loader from "../../Components/coreComponents/Loader";
 import { useAxios } from "../../hooks/useAxios";
-import { AuthData } from "../Shopping";
+import useFetchUserData from "../../hooks/useFetchUserData";
 
 function ShoppingCart() {
   const {
@@ -20,8 +20,9 @@ function ShoppingCart() {
     setShoppingCart,
     isLoading,
     handlerDeleteProduct,
-    setLoggedUser,
   } = useContext(ShoppingCartContext) as ShoppingCartContextType;
+
+  useFetchUserData();
 
   const { requester } = useAxios();
 
@@ -52,43 +53,6 @@ function ShoppingCart() {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("TOKEN");
-    if (token) {
-      const savedToken: AuthData = JSON.parse(token);
-
-      if (!savedToken) {
-        return;
-      }
-      const fetchUser = async () => {
-        try {
-          const { data } = await requester.get(`/users/${savedToken._id}`, {
-            headers: { Authorization: `Bearer ${savedToken.access_token}` },
-          });
-          setLoggedUser(data);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchUser();
-
-      const fetchCart = async () => {
-        try {
-          const { data } = await requester.get(
-            `/shopping-cart/user/${savedToken._id}`,
-            {
-              headers: { Authorization: `Bearer ${savedToken.access_token}` },
-            }
-          );
-          setShoppingCart(data);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchCart();
-    }
-  }, []);
 
   return (
     <ShopLayout>

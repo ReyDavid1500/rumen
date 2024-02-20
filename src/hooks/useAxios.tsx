@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { AuthData } from "../Pages/Shopping";
+import { AuthData } from "../types";
 
 export const useAxios = () => {
   const [savedToken, setSavedToken] = useState<AuthData | null>(null);

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import OrderSummary, { OrderProduct } from "../../Components/OrderSummary";
+import OrderSummary from "../../Components/OrderSummary";
 import ShopLayout from "../../Components/ShopLayout";
 import Card from "../../Components/card";
 import Loader from "../../Components/coreComponents/Loader";
@@ -10,38 +10,7 @@ import {
 } from "../../context/ShoppingCartContext";
 import { useAxios } from "../../hooks/useAxios";
 import { AxiosError } from "axios";
-
-export type Product = {
-  _id: string;
-  name: string;
-  description: string;
-  image: string;
-  price: number;
-  category: string;
-};
-
-export type ShoppingCart = {
-  _id: string;
-  userId: string;
-  products: OrderProduct[];
-  shipping: number;
-  subtotal: number;
-  total: number;
-  isActive: boolean;
-};
-
-export type AuthData = {
-  access_token: string;
-  name: string;
-  _id: string;
-};
-
-export type LoggedUser = {
-  _id: string;
-  name: string;
-  email: string;
-  address: string;
-};
+import useFetchUserData from "../../hooks/useFetchUserData";
 
 function Shopping() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
@@ -50,16 +19,16 @@ function Shopping() {
 
   const { requester } = useAxios();
 
+  useFetchUserData();
+
   const {
     setShoppingCart,
     shoppingCart,
     setIsLoading,
     isLoading,
-    loggedIn,
     setLoggedIn,
     products,
     setProducts,
-    setLoggedUser,
     loggedUser,
   } = useContext(ShoppingCartContext) as ShoppingCartContextType;
 
@@ -111,7 +80,7 @@ function Shopping() {
       if (!shoppingCart && productQuantity) {
         setIsLoading(true);
         const { data } = await requester.post(
-          `/shopping-cart/${loggedIn?._id}`,
+          `/shopping-cart/${loggedUser?._id}`,
           [
             {
               id,
@@ -144,43 +113,6 @@ function Shopping() {
 
   const categories = products?.map((product) => product.category);
   const categoryArray = [...new Set(categories)];
-
-  useEffect(() => {
-    const token = localStorage.getItem("TOKEN");
-    if (token) {
-      const savedToken: AuthData = JSON.parse(token);
-
-      if (!savedToken) {
-        return;
-      }
-      const fetchUser = async () => {
-        try {
-          const { data } = await requester.get(`/users/${savedToken._id}`, {
-            headers: { Authorization: `Bearer ${savedToken.access_token}` },
-          });
-          setLoggedUser(data);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchUser();
-
-      const fetchCart = async () => {
-        try {
-          const { data } = await requester.get(
-            `/shopping-cart/user/${savedToken._id}`,
-            {
-              headers: { Authorization: `Bearer ${savedToken.access_token}` },
-            }
-          );
-          setShoppingCart(data);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchCart();
-    }
-  }, [loggedIn]);
 
   return (
     <>

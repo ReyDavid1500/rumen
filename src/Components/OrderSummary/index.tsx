@@ -8,13 +8,6 @@ import {
   ShoppingCartContextType,
 } from "../../context/ShoppingCartContext";
 
-export type OrderProduct = {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-};
-
 type OrderSummaryProps = {
   title: string;
   buttonText: string;

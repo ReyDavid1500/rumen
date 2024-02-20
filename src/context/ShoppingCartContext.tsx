@@ -5,7 +5,7 @@ import {
   createContext,
   useState,
 } from "react";
-import { AuthData, LoggedUser, Product, ShoppingCart } from "../Pages/Shopping";
+import { AuthData, LoggedUser, Product, ShoppingCart } from "../types";
 import { useAxios } from "../hooks/useAxios";
 
 type ShoppingCartProviderProps = {

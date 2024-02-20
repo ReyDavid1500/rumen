@@ -1,56 +1,18 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import OrderSummary from "../../Components/OrderSummary";
 import ShopLayout from "../../Components/ShopLayout";
 import {
   ShoppingCartContext,
   ShoppingCartContextType,
 } from "../../context/ShoppingCartContext";
-import { AuthData } from "../Shopping";
-import { useAxios } from "../../hooks/useAxios";
+import useFetchUserData from "../../hooks/useFetchUserData";
 
 function SubmitOrder() {
-  const { loggedUser, setLoggedUser, setShoppingCart } = useContext(
+  const { loggedUser } = useContext(
     ShoppingCartContext
   ) as ShoppingCartContextType;
 
-  const { requester } = useAxios();
-
-  useEffect(() => {
-    const token = localStorage.getItem("TOKEN");
-    if (token) {
-      const savedToken: AuthData = JSON.parse(token);
-
-      if (!savedToken) {
-        return;
-      }
-      const fetchUser = async () => {
-        try {
-          const { data } = await requester.get(`/users/${savedToken._id}`, {
-            headers: { Authorization: `Bearer ${savedToken.access_token}` },
-          });
-          setLoggedUser(data);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchUser();
-
-      const fetchCart = async () => {
-        try {
-          const { data } = await requester.get(
-            `/shopping-cart/user/${savedToken._id}`,
-            {
-              headers: { Authorization: `Bearer ${savedToken.access_token}` },
-            }
-          );
-          setShoppingCart(data);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchCart();
-    }
-  }, []);
+  useFetchUserData();
 
   return (
     <ShopLayout>
