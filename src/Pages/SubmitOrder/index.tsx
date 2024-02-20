@@ -1,15 +1,56 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import OrderSummary from "../../Components/OrderSummary";
 import ShopLayout from "../../Components/ShopLayout";
 import {
   ShoppingCartContext,
   ShoppingCartContextType,
 } from "../../context/ShoppingCartContext";
+import { AuthData } from "../Shopping";
+import { useAxios } from "../../hooks/useAxios";
 
 function SubmitOrder() {
-  const { authData } = useContext(
+  const { loggedUser, setLoggedUser, setShoppingCart } = useContext(
     ShoppingCartContext
   ) as ShoppingCartContextType;
+
+  const { requester } = useAxios();
+
+  useEffect(() => {
+    const token = localStorage.getItem("TOKEN");
+    if (token) {
+      const savedToken: AuthData = JSON.parse(token);
+
+      if (!savedToken) {
+        return;
+      }
+      const fetchUser = async () => {
+        try {
+          const { data } = await requester.get(`/users/${savedToken._id}`, {
+            headers: { Authorization: `Bearer ${savedToken.access_token}` },
+          });
+          setLoggedUser(data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchUser();
+
+      const fetchCart = async () => {
+        try {
+          const { data } = await requester.get(
+            `/shopping-cart/user/${savedToken._id}`,
+            {
+              headers: { Authorization: `Bearer ${savedToken.access_token}` },
+            }
+          );
+          setShoppingCart(data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchCart();
+    }
+  }, []);
 
   return (
     <ShopLayout>
@@ -37,7 +78,7 @@ function SubmitOrder() {
                     <p>Despacho a domicilio a tu dirección en Pucón:</p>
                   </label>
                 </div>
-                <p className="text-center">{authData?.address}</p>
+                <p className="text-center">{loggedUser?.address}</p>
               </form>
             </div>
             <div className="delivery border-2 border-gray-200 bg-white border-b-4 border-b-dark-blue w-fit rounded-md p-3 text-xs md:text-xl xl:text-2xl">

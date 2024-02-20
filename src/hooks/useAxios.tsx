@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { AuthData } from "../Pages/Shopping";
 
 export const useAxios = () => {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [savedToken, setSavedToken] = useState<AuthData | null>(null);
 
   useEffect(() => {
     const token = localStorage?.getItem("TOKEN");
-    setAccessToken(token);
+    if (token !== null) setSavedToken(JSON.parse(token));
   }, []);
 
   const requester = axios.create({
     baseURL: "http://localhost:3000",
     headers: {
       "content-type": "application/json",
-      ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+      Authorization: `Bearer ${savedToken?.access_token}`,
     },
   });
 

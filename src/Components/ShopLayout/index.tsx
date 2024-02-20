@@ -1,6 +1,7 @@
 import { ReactNode, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AiTwotoneShopping } from "react-icons/ai";
+import { IoLogOutOutline } from "react-icons/io5";
 import { LuMenu } from "react-icons/lu";
 import {
   ShoppingCartContext,
@@ -13,10 +14,22 @@ type ShopLayoutProps = {
 };
 
 function ShopLayout({ children }: ShopLayoutProps) {
-  const { shoppingCart, authData, user } = useContext(
-    ShoppingCartContext
-  ) as ShoppingCartContextType;
+  const {
+    shoppingCart,
+    setLoggedUser,
+    setShoppingCart,
+    setIsLoading,
+    loggedIn,
+    loggedUser,
+  } = useContext(ShoppingCartContext) as ShoppingCartContextType;
 
+  const handleLogout = () => {
+    setIsLoading(true);
+    localStorage.clear();
+    setLoggedUser(null);
+    setShoppingCart(null);
+    setIsLoading(false);
+  };
   return (
     <>
       <header className="w-[100%] fixed">
@@ -32,12 +45,19 @@ function ShopLayout({ children }: ShopLayoutProps) {
             </Link>
           </div>
           <div className="flex flex-row gap-3 items-center">
-            {user && (
-              <div className="border-2 border-light-orange p-2 rounded-lg">
-                <p className="text-white font-bold text-xl">
-                  Hola!, {authData?.name}
-                </p>
-              </div>
+            {loggedIn || loggedUser ? (
+              <>
+                <div className="border-2 border-light-orange p-2 rounded-lg">
+                  <p className="text-white font-bold text-xl">
+                    Hola!, {loggedIn?.name || loggedUser?.name}
+                  </p>
+                </div>
+                <button onClick={handleLogout}>
+                  <IoLogOutOutline className="w-[40px] h-[40px]" />
+                </button>
+              </>
+            ) : (
+              ""
             )}
             <Link to="/cart" className="relative">
               <AiTwotoneShopping className="w-[50px] h-[50px]" />

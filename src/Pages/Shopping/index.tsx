@@ -22,39 +22,61 @@ export type Product = {
 
 export type ShoppingCart = {
   _id: string;
+  userId: string;
   products: OrderProduct[];
   shipping: number;
   subtotal: number;
   total: number;
+  isActive: boolean;
 };
 
 export type AuthData = {
   access_token: string;
-  email: string;
   name: string;
+  _id: string;
+};
+
+export type LoggedUser = {
+  _id: string;
+  name: string;
+  email: string;
   address: string;
 };
 
 function Shopping() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [error, setError] = useState<Error | AxiosError | null>(null);
+  const [productQuantity, setProductQuantity] = useState<number | null>(null);
 
   const { requester } = useAxios();
 
   const {
-    setProductQuantity,
-    productQuantity,
     setShoppingCart,
     shoppingCart,
     setIsLoading,
     isLoading,
-    setUser,
-    user,
-    setAuthData,
+    loggedIn,
+    setLoggedIn,
     products,
     setProducts,
-    authData,
+    setLoggedUser,
+    loggedUser,
   } = useContext(ShoppingCartContext) as ShoppingCartContextType;
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setIsLoading(true);
+        const { data } = await requester.get("/products");
+        setProducts(data);
+      } catch (err) {
+        console.log(err as Error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   const signIn = async (
     userData: User,
@@ -63,9 +85,8 @@ function Shopping() {
     e.preventDefault();
     try {
       const { data } = await requester.post(`/auth/login`, userData);
-      setUser(userData);
-      setAuthData(data);
-      localStorage.setItem("TOKEN", data.access_token);
+      setLoggedIn(data);
+      localStorage.setItem("TOKEN", JSON.stringify(data));
       setIsSignInOpen(false);
     } catch (err) {
       setError(err as Error);
@@ -83,71 +104,83 @@ function Shopping() {
   ) => {
     e.preventDefault();
     const id = e.currentTarget.dataset.id;
-
     try {
-      if (!user) {
+      if (!loggedUser) {
         setIsSignInOpen(true);
-      } else {
-        if (!shoppingCart && productQuantity !== null) {
-          setIsLoading(true);
-          const { data } = await requester.post("/shopping-cart", [
+      }
+      if (!shoppingCart && productQuantity) {
+        setIsLoading(true);
+        const { data } = await requester.post(
+          `/shopping-cart/${loggedIn?._id}`,
+          [
             {
               id,
               quantity: productQuantity,
             },
-          ]);
-          setShoppingCart(data);
-        } else if (shoppingCart && productQuantity !== null) {
-          setIsLoading(true);
-          const { data } = await requester.patch(
-            `/shopping-cart/${shoppingCart?._id}`,
-            [
-              {
-                id,
-                quantity: productQuantity,
-              },
-              ...shoppingCart.products,
-            ]
-          );
-          setShoppingCart(data);
-        }
+          ]
+        );
+        setShoppingCart(data);
+      }
+      if (shoppingCart && productQuantity) {
+        setIsLoading(true);
+        const { data } = await requester.patch(
+          `/shopping-cart/${shoppingCart?._id}`,
+          [
+            {
+              id,
+              quantity: productQuantity,
+            },
+            ...shoppingCart.products,
+          ]
+        );
+        setShoppingCart(data);
       }
     } catch (err) {
       console.log(err);
     } finally {
       setIsLoading(false);
-      setProductQuantity(null);
     }
   };
 
-  const token = localStorage.getItem("TOKEN");
-
-  const fetchShoppingCart = async () => {
-    const { data } = await requester.get(`shopping-cart/${shoppingCart?._id}`);
-  };
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setIsLoading(true);
-        const { data } = await requester.get("/products", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setProducts(data);
-      } catch (err) {
-        console.log(err as Error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchProducts();
-    fetchShoppingCart();
-  }, []);
-
   const categories = products?.map((product) => product.category);
   const categoryArray = [...new Set(categories)];
+
+  useEffect(() => {
+    const token = localStorage.getItem("TOKEN");
+    if (token) {
+      const savedToken: AuthData = JSON.parse(token);
+
+      if (!savedToken) {
+        return;
+      }
+      const fetchUser = async () => {
+        try {
+          const { data } = await requester.get(`/users/${savedToken._id}`, {
+            headers: { Authorization: `Bearer ${savedToken.access_token}` },
+          });
+          setLoggedUser(data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchUser();
+
+      const fetchCart = async () => {
+        try {
+          const { data } = await requester.get(
+            `/shopping-cart/user/${savedToken._id}`,
+            {
+              headers: { Authorization: `Bearer ${savedToken.access_token}` },
+            }
+          );
+          setShoppingCart(data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchCart();
+    }
+  }, [loggedIn]);
 
   return (
     <>

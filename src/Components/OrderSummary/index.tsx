@@ -3,7 +3,6 @@ import { formatCurrency } from "../../assets/utils";
 import Button from "../coreComponents/Button";
 import { GoTrash } from "react-icons/go";
 import Loader from "../coreComponents/Loader";
-import { useAxios } from "../../hooks/useAxios";
 import {
   ShoppingCartContext,
   ShoppingCartContextType,
@@ -29,31 +28,15 @@ function OrderSummary({
   handleShoppingCart,
   route,
 }: OrderSummaryProps) {
-  const { shoppingCart, isLoading, user, setShoppingCart, setIsLoading } =
+  const { shoppingCart, isLoading, handlerDeleteProduct, loggedIn } =
     useContext(ShoppingCartContext) as ShoppingCartContextType;
-
-  const { requester } = useAxios(true);
-
-  const handlerDeleteProduct = async (productId: string) => {
-    try {
-      setIsLoading(true);
-      const { data } = await requester.delete(
-        `/shopping-cart/${shoppingCart?._id}/product/${productId}`
-      );
-      setShoppingCart(data);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <div className="mt-6 md:mt-0 pb-6 sm:p-16 md:w-[30vw]">
       <div className="md:fixed md:overflow-y-auto md:right-[48px] md:top-[124px] border-2 border-gray-400/50 rounded-lg p-4 xl:w-[350px] md:h-[78%] bg-white shadow-xl">
         <div className="flex flex-col gap-4 mb-4">
           <h2 className="text-xl text-center font-bold">{title}</h2>
-          {user && !shoppingCart ? (
+          {loggedIn && !shoppingCart ? (
             <h3 className="m-auto text-center w-fit font-medium text-dark-blue text-xl">
               Bienvenido a tu cuenta,
               <br /> ya puedes agregar productos!
