@@ -56,7 +56,7 @@ function ShoppingCart() {
 
   return (
     <ShopLayout>
-      <div className="bg-white m-6 md:w-[700px] md:m-auto md:mt-6 md:mb-6">
+      <div className="bg-white m-6 mt-20 md:w-[700px] md:m-auto md:mt-6 md:mb-6">
         <div className="p-4 flex flex-col gap-3 items-center">
           <h2 className="text-2xl font-medium">Carrito de Compras</h2>
           <p className="text-sm text-center">
@@ -73,7 +73,7 @@ function ShoppingCart() {
             </Link>
           </div>
         </div>
-        <div className="text-xs mt-6 p-4 md:text-lg">
+        <div className="text-xs mt-6 mr-2 p-4 md:text-lg">
           {isLoading ? (
             <Loader className="flex items-center justify-center h-[50vh]" />
           ) : (

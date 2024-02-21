@@ -7,6 +7,7 @@ import {
 } from "../../context/ShoppingCartContext";
 import useFetchUserData from "../../hooks/useFetchUserData";
 import { useAxios } from "../../hooks/useAxios";
+import { useNavigate } from "react-router-dom";
 
 function SubmitOrder() {
   const [shipping, setShipping] = useState<string | null>(null);
@@ -18,6 +19,8 @@ function SubmitOrder() {
   ) as ShoppingCartContextType;
 
   useFetchUserData();
+
+  const navigate = useNavigate();
 
   const { requester } = useAxios();
 
@@ -40,6 +43,7 @@ function SubmitOrder() {
       });
 
       console.log(data);
+      navigate("/order-resume");
     } catch (err) {
       console.log(err);
     }

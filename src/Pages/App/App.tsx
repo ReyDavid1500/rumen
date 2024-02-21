@@ -12,6 +12,7 @@ import RumenAccount from "../RumenAccount";
 import RumenSignUp from "../RumenSignUp";
 import RumenProducts from "../RumenProducts";
 import RumenForm from "../RumenForm";
+import OrderResume from "../OrderResume";
 
 function AppRoutes() {
   let routes = useRoutes([
@@ -28,6 +29,7 @@ function AppRoutes() {
     { path: "/rumen-signup", element: <RumenSignUp /> },
     { path: "/rumen-products", element: <RumenProducts /> },
     { path: "/rumen-form", element: <RumenForm /> },
+    { path: "/order-resume", element: <OrderResume /> },
   ]);
   return routes;
 }
