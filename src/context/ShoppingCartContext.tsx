@@ -41,6 +41,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const handlerDeleteProduct = async (productId: string) => {
     try {
       setIsLoading(true);
+
       const { data } = await requester.delete(
         `/shopping-cart/${shoppingCart?._id}/product/${productId}`
       );

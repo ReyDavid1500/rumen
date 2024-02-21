@@ -49,9 +49,9 @@ function ShopLayout({ children }: ShopLayoutProps) {
               />
             </Link>
           </div>
-          <div className="flex flex-row gap-3 items-center">
+          <div className="flex flex-col gap-3 items-center sm:flex-row">
             {loggedIn || loggedUser ? (
-              <>
+              <div className="flex flex-row gap-2 order-2">
                 <div className="border-2 border-light-orange p-2 rounded-lg">
                   <p className="text-white font-bold text-xl">
                     Hola!, {loggedIn?.name || loggedUser?.name}
@@ -60,19 +60,21 @@ function ShopLayout({ children }: ShopLayoutProps) {
                 <button onClick={handleLogout}>
                   <IoLogOutOutline className="w-[40px] h-[40px]" />
                 </button>
-              </>
+              </div>
             ) : (
               ""
             )}
-            <Link to="/cart" className="relative">
-              <AiTwotoneShopping className="w-[50px] h-[50px]" />
-              <span className="absolute text-rumen-orange font-bold top-[18px] left-[19px]">
-                {shoppingCart?.products.length || 0}
-              </span>
-            </Link>
-            <Link to="/shopping">
-              <LuMenu className="w-[40px] h-[40px]" />
-            </Link>
+            <div className="flex flex-row items-center w-full justify-end sm:order-2 sm:w-fit">
+              <Link to="/cart" className="relative">
+                <AiTwotoneShopping className="w-[50px] h-[50px]" />
+                <span className="absolute text-rumen-orange font-bold top-[18px] left-[19px]">
+                  {shoppingCart?.products.length || 0}
+                </span>
+              </Link>
+              <Link to="/shopping">
+                <LuMenu className="w-[40px] h-[40px]" />
+              </Link>
+            </div>
           </div>
         </section>
       </header>
