@@ -9,9 +9,8 @@ import {
 function useFetchUserData() {
   const { requester } = useAxios();
 
-  const { loggedIn, setLoggedUser, setShoppingCart, shoppingCart } = useContext(
-    ShoppingCartContext
-  ) as ShoppingCartContextType;
+  const { loggedIn, setLoggedUser, setShoppingCart, shoppingCart, order } =
+    useContext(ShoppingCartContext) as ShoppingCartContextType;
 
   useEffect(() => {
     const token = localStorage.getItem("TOKEN");
@@ -25,18 +24,16 @@ function useFetchUserData() {
 
       const fetchCart = async () => {
         try {
-          const { data } = await requester.get(
-            `/shopping-cart/user/${savedToken._id}`,
-            {
-              headers: { Authorization: `Bearer ${savedToken.access_token}` },
-            }
-          );
+          const { data } = await requester.get(`/shopping-cart`, {
+            headers: { Authorization: `Bearer ${savedToken.access_token}` },
+          });
+          console.log(data);
           setShoppingCart(data);
         } catch (err) {
           console.log(err);
         }
       };
-      if (!shoppingCart) fetchCart();
+      if (!shoppingCart && order) fetchCart();
     }
   }, [loggedIn]);
 }

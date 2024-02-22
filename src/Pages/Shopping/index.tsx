@@ -82,15 +82,12 @@ function Shopping() {
       }
       if (!shoppingCart && productQuantity) {
         setIsLoading(true);
-        const { data } = await requester.post(
-          `/shopping-cart/${loggedUser?._id}`,
-          [
-            {
-              id,
-              quantity: productQuantity,
-            },
-          ]
-        );
+        const { data } = await requester.post(`/shopping-cart`, [
+          {
+            id,
+            quantity: productQuantity,
+          },
+        ]);
         setShoppingCart(data);
       }
       if (shoppingCart && productQuantity) {

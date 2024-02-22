@@ -14,9 +14,8 @@ function SubmitOrder() {
   const [payment, setPayment] = useState<string | null>(null);
   const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
 
-  const { loggedUser, shoppingCart, setOrder, order } = useContext(
-    ShoppingCartContext
-  ) as ShoppingCartContextType;
+  const { loggedUser, shoppingCart, setShoppingCart, setOrder, order } =
+    useContext(ShoppingCartContext) as ShoppingCartContextType;
 
   console.log("submit", order);
 
@@ -37,7 +36,6 @@ function SubmitOrder() {
   const submitOrderHandler = async () => {
     try {
       const { data } = await requester.post("/orders", {
-        userId: loggedUser?._id,
         shoppingCartId: shoppingCart?._id,
         address: shipping,
         payment,
@@ -45,6 +43,7 @@ function SubmitOrder() {
       });
       console.log("postOrder", data);
       setOrder(data);
+      setShoppingCart(null);
       navigate("/order-resume");
     } catch (err) {
       console.log(err);
