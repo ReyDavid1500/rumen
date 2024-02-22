@@ -14,9 +14,11 @@ function SubmitOrder() {
   const [payment, setPayment] = useState<string | null>(null);
   const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
 
-  const { loggedUser, shoppingCart } = useContext(
+  const { loggedUser, shoppingCart, setOrder, order } = useContext(
     ShoppingCartContext
   ) as ShoppingCartContextType;
+
+  console.log("submit", order);
 
   useFetchUserData();
 
@@ -41,8 +43,8 @@ function SubmitOrder() {
         payment,
         phone: phoneNumber,
       });
-
-      console.log(data);
+      console.log("postOrder", data);
+      setOrder(data);
       navigate("/order-resume");
     } catch (err) {
       console.log(err);
@@ -51,10 +53,10 @@ function SubmitOrder() {
 
   return (
     <ShopLayout>
-      <div className="p-6 m-6 h-[100%] md:h-[100vh]">
+      <div className="p-3 m-6 pt-16 xs:p-0 xs:m-0 md:p-0 md:m-0 md:pl-1 md:pr-1 md:pt-4 h-[100%] md:h-[100%] md:w-[98%]">
         <form className="flex flex-col justify-center items-center md:justify-start md:flex-row md:gap-3 xl:gap-10 xl:justify-around">
           <section className="flex flex-col gap-4 items-center w-full xl:flex-row xl:pr-2 xl:justify-center">
-            <div className="delivery border-2 border-gray-200 border-b-4 border-b-rumen-orange mt-6 w-fit rounded-md p-3 text-xs md:text-xl xl:text-2xl bg-white">
+            <div className="delivery border-2 border-gray-200 border-b-4 border-b-rumen-orange mt-6 w-fit md:w-[50%] rounded-md p-3 text-xs md:text-xl xl:text-2xl bg-white">
               <div>
                 <h2 className="font-bold mb-4">MODO DE ENTREGA</h2>
                 <label>

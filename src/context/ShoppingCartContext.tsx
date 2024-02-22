@@ -5,7 +5,7 @@ import {
   createContext,
   useState,
 } from "react";
-import { AuthData, LoggedUser, Product, ShoppingCart } from "../types";
+import { AuthData, LoggedUser, Order, Product, ShoppingCart } from "../types";
 import { useAxios } from "../hooks/useAxios";
 
 type ShoppingCartProviderProps = {
@@ -24,6 +24,8 @@ export type ShoppingCartContextType = {
   loggedUser: LoggedUser | null;
   setLoggedUser: Dispatch<SetStateAction<LoggedUser | null>>;
   handlerDeleteProduct: (productId: string) => Promise<void>;
+  order: Order | null;
+  setOrder: Dispatch<SetStateAction<Order | null>>;
 };
 
 export const ShoppingCartContext =
@@ -35,6 +37,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState<Product[] | null>(null);
   const [loggedUser, setLoggedUser] = useState<LoggedUser | null>(null);
+  const [order, setOrder] = useState<Order | null>(null);
 
   const { requester } = useAxios();
 
@@ -67,6 +70,8 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         loggedUser,
         setLoggedUser,
         handlerDeleteProduct,
+        order,
+        setOrder,
       }}
     >
       {children}

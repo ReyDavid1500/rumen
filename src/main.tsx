@@ -5,9 +5,9 @@ import "./styles/index.css";
 import { ShoppingCartProvider } from "./context/ShoppingCartContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <ShoppingCartProvider>
-    <React.StrictMode>
+  <React.StrictMode>
+    <ShoppingCartProvider>
       <App />
-    </React.StrictMode>
-  </ShoppingCartProvider>
+    </ShoppingCartProvider>
+  </React.StrictMode>
 );

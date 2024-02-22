@@ -9,7 +9,7 @@ import {
 function useFetchUserData() {
   const { requester } = useAxios();
 
-  const { loggedIn, setLoggedUser, setShoppingCart } = useContext(
+  const { loggedIn, setLoggedUser, setShoppingCart, shoppingCart } = useContext(
     ShoppingCartContext
   ) as ShoppingCartContextType;
 
@@ -21,17 +21,7 @@ function useFetchUserData() {
       if (!savedToken) {
         return;
       }
-      const fetchUser = async () => {
-        try {
-          const { data } = await requester.get(`/users/${savedToken._id}`, {
-            headers: { Authorization: `Bearer ${savedToken.access_token}` },
-          });
-          setLoggedUser(data);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchUser();
+      setLoggedUser(savedToken);
 
       const fetchCart = async () => {
         try {
@@ -46,7 +36,7 @@ function useFetchUserData() {
           console.log(err);
         }
       };
-      fetchCart();
+      if (!shoppingCart) fetchCart();
     }
   }, [loggedIn]);
 }

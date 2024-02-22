@@ -28,6 +28,8 @@ export type AuthData = {
   access_token: string;
   name: string;
   _id: string;
+  email: string;
+  address: string;
 };
 
 export type LoggedUser = {
@@ -35,4 +37,14 @@ export type LoggedUser = {
   name: string;
   email: string;
   address: string;
+};
+
+export type Order = {
+  _id: string;
+  userId: string;
+  shoppingCart: ShoppingCart;
+  address: string;
+  phone: string;
+  payment: string;
+  isCompleted: boolean;
 };

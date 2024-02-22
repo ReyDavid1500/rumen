@@ -1,138 +1,165 @@
+import { useContext, useEffect, useState } from "react";
 import { formatCurrency } from "../../assets/utils";
+import { useAxios } from "../../hooks/useAxios";
+import {
+  ShoppingCartContext,
+  ShoppingCartContextType,
+} from "../../context/ShoppingCartContext";
+import { Order } from "../../types";
 
-interface Order {
-  id: number;
-  name: string;
-  address: string;
-  phone: string;
-  products: Product[];
-  price: number;
-  isCompleted: boolean;
-}
+// interface Order {
+//   id: number;
+//   name: string;
+//   address: string;
+//   phone: string;
+//   products: Product[];
+//   price: number;
+//   isCompleted: boolean;
+// }
 
-interface Product {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-}
+// interface Product {
+//   id: number;
+//   name: string;
+//   quantity: number;
+//   price: number;
+// }
 
-const orders: Order[] = [
-  {
-    id: 1,
-    name: "David Guzmán",
-    address: "Camino al Volcan 12",
-    phone: "+56984541821",
-    products: [
-      {
-        id: 1,
-        name: "Hamburguesa Ahumada",
-        quantity: 1,
-        price: 12000,
-      },
-      {
-        id: 2,
-        name: "Papas Fritas Grandes",
-        quantity: 1,
-        price: 5000,
-      },
-      {
-        id: 3,
-        name: "CocaCola",
-        quantity: 1,
-        price: 2000,
-      },
-    ],
-    price: 19000,
-    isCompleted: false,
-  },
-  {
-    id: 2,
-    name: "Vicoria Arellano",
-    address: "Parque el Volcán 10",
-    phone: "+56984541821",
-    products: [
-      {
-        id: 1,
-        name: "Hamburguesa Ahumada",
-        quantity: 1,
-        price: 12000,
-      },
-      {
-        id: 2,
-        name: "Papas Fritas Grandes",
-        quantity: 1,
-        price: 5000,
-      },
-      {
-        id: 3,
-        name: "CocaCola",
-        quantity: 1,
-        price: 2000,
-      },
-    ],
-    price: 19000,
-    isCompleted: false,
-  },
-  {
-    id: 3,
-    name: "Sofia Burky",
-    address: "Peumayen 112",
-    phone: "+56984541821",
-    products: [
-      {
-        id: 1,
-        name: "Hamburguesa Ahumada",
-        quantity: 1,
-        price: 12000,
-      },
-      {
-        id: 2,
-        name: "Papas Fritas Grandes",
-        quantity: 1,
-        price: 5000,
-      },
-      {
-        id: 3,
-        name: "CocaCola",
-        quantity: 1,
-        price: 2000,
-      },
-    ],
-    price: 19000,
-    isCompleted: false,
-  },
-  {
-    id: 4,
-    name: "Rodrigo y Belén",
-    address: "Camino Internacional 20",
-    phone: "+56984541821",
-    products: [
-      {
-        id: 1,
-        name: "Hamburguesa Ahumada",
-        quantity: 1,
-        price: 12000,
-      },
-      {
-        id: 2,
-        name: "Papas Fritas Grandes",
-        quantity: 1,
-        price: 5000,
-      },
-      {
-        id: 3,
-        name: "CocaCola",
-        quantity: 1,
-        price: 2000,
-      },
-    ],
-    price: 19000,
-    isCompleted: false,
-  },
-];
+// const orders: Order[] = [
+//   {
+//     id: 1,
+//     name: "David Guzmán",
+//     address: "Camino al Volcan 12",
+//     phone: "+56984541821",
+//     products: [
+//       {
+//         id: 1,
+//         name: "Hamburguesa Ahumada",
+//         quantity: 1,
+//         price: 12000,
+//       },
+//       {
+//         id: 2,
+//         name: "Papas Fritas Grandes",
+//         quantity: 1,
+//         price: 5000,
+//       },
+//       {
+//         id: 3,
+//         name: "CocaCola",
+//         quantity: 1,
+//         price: 2000,
+//       },
+//     ],
+//     price: 19000,
+//     isCompleted: false,
+//   },
+//   {
+//     id: 2,
+//     name: "Vicoria Arellano",
+//     address: "Parque el Volcán 10",
+//     phone: "+56984541821",
+//     products: [
+//       {
+//         id: 1,
+//         name: "Hamburguesa Ahumada",
+//         quantity: 1,
+//         price: 12000,
+//       },
+//       {
+//         id: 2,
+//         name: "Papas Fritas Grandes",
+//         quantity: 1,
+//         price: 5000,
+//       },
+//       {
+//         id: 3,
+//         name: "CocaCola",
+//         quantity: 1,
+//         price: 2000,
+//       },
+//     ],
+//     price: 19000,
+//     isCompleted: false,
+//   },
+//   {
+//     id: 3,
+//     name: "Sofia Burky",
+//     address: "Peumayen 112",
+//     phone: "+56984541821",
+//     products: [
+//       {
+//         id: 1,
+//         name: "Hamburguesa Ahumada",
+//         quantity: 1,
+//         price: 12000,
+//       },
+//       {
+//         id: 2,
+//         name: "Papas Fritas Grandes",
+//         quantity: 1,
+//         price: 5000,
+//       },
+//       {
+//         id: 3,
+//         name: "CocaCola",
+//         quantity: 1,
+//         price: 2000,
+//       },
+//     ],
+//     price: 19000,
+//     isCompleted: false,
+//   },
+//   {
+//     id: 4,
+//     name: "Rodrigo y Belén",
+//     address: "Camino Internacional 20",
+//     phone: "+56984541821",
+//     products: [
+//       {
+//         id: 1,
+//         name: "Hamburguesa Ahumada",
+//         quantity: 1,
+//         price: 12000,
+//       },
+//       {
+//         id: 2,
+//         name: "Papas Fritas Grandes",
+//         quantity: 1,
+//         price: 5000,
+//       },
+//       {
+//         id: 3,
+//         name: "CocaCola",
+//         quantity: 1,
+//         price: 2000,
+//       },
+//     ],
+//     price: 19000,
+//     isCompleted: false,
+//   },
+// ];
 
 function RumenDashboard() {
+  const [orders, setOrders] = useState<Order[] | null>(null);
+  const { order } = useContext(ShoppingCartContext) as ShoppingCartContextType;
+
+  console.log("dashboard", order);
+
+  const { requester } = useAxios();
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const { data } = await requester.get(`/orders/${order?._id}`);
+        console.log(data);
+        setOrders(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchOrders();
+  }, []);
+
   return (
     <aside className="block md:w-[25rem] md:fixed md:bottom-[-100px] md:right-auto bg-white p-4 border-2 rounded-md border-gray-300 md:h-[100vh] overflow-y-auto">
       <div>
@@ -141,18 +168,18 @@ function RumenDashboard() {
         </h1>
       </div>
       <ul>
-        {orders.map((order) => (
+        {orders?.map((order) => (
           <li
             className="flex flex-row justify-between border-2 border-light-orange p-2 rounded-md text-xs mb-4"
-            key={order.id}
+            key={order._id}
           >
             <div>
-              <h2>{order.name}</h2>
+              {/* <h2>{order.userId}</h2> */}
               <p>{order.address}</p>
               <p>{order.phone}</p>
             </div>
             <ul>
-              {order.products.map((product) => (
+              {order.shoppingCart.products.map((product) => (
                 <li className="text-xs flex flex-row justify-between">
                   <p>{product.name}</p>
                   <p>{formatCurrency(product.price)}</p>

@@ -6,18 +6,34 @@ import Button from "../../Components/coreComponents/Button";
 import Loader from "../../Components/coreComponents/Loader";
 import RumenDashboard from "../../Components/RumenDashboard";
 import SwitchComponent from "../../Components/coreComponents/SwitchComponent";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import {
   ShoppingCartContext,
   ShoppingCartContextType,
 } from "../../context/ShoppingCartContext";
+import { useAxios } from "../../hooks/useAxios";
 
 function RumenProducts() {
-  const { products, isLoading } = useContext(
+  const { products, isLoading, setProducts, setIsLoading } = useContext(
     ShoppingCartContext
   ) as ShoppingCartContextType;
 
-  console.log(products);
+  const { requester } = useAxios();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setIsLoading(true);
+        const { data } = await requester.get("/products");
+        setProducts(data);
+      } catch (err) {
+        console.log(err as Error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   return (
     <RumenLayout>

@@ -53,6 +53,7 @@ function Shopping() {
   ) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const { data } = await requester.post(`/auth/login`, userData);
       setLoggedIn(data);
       localStorage.setItem("TOKEN", JSON.stringify(data));
@@ -62,6 +63,8 @@ function Shopping() {
       if (error?.message === "Request failed with status code 401") {
         alert("Usuario y/o contraseña invalidos");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
