@@ -9,8 +9,14 @@ import {
 function useFetchUserData() {
   const { requester } = useAxios();
 
-  const { loggedIn, setLoggedUser, setShoppingCart, shoppingCart, order } =
-    useContext(ShoppingCartContext) as ShoppingCartContextType;
+  const {
+    loggedIn,
+    setLoggedUser,
+    setShoppingCart,
+    shoppingCart,
+    order,
+    setIsLoading,
+  } = useContext(ShoppingCartContext) as ShoppingCartContextType;
 
   useEffect(() => {
     const token = localStorage.getItem("TOKEN");
@@ -24,10 +30,13 @@ function useFetchUserData() {
 
       const fetchCart = async () => {
         try {
+          setIsLoading(true);
           const { data } = await requester.get(`/shopping-cart`);
           setShoppingCart(data);
         } catch (err) {
           console.log(err);
+        } finally {
+          setIsLoading(false);
         }
       };
       if (!shoppingCart && !order) fetchCart();

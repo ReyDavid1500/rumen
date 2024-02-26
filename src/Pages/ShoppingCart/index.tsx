@@ -14,13 +14,8 @@ import { useAxios } from "../../hooks/useAxios";
 import useFetchUserData from "../../hooks/useFetchUserData";
 
 function ShoppingCart() {
-  const {
-    shoppingCart,
-    setIsLoading,
-    setShoppingCart,
-    isLoading,
-    handlerDeleteProduct,
-  } = useContext(ShoppingCartContext) as ShoppingCartContextType;
+  const { shoppingCart, setShoppingCart, isLoading, handlerDeleteProduct } =
+    useContext(ShoppingCartContext) as ShoppingCartContextType;
 
   useFetchUserData();
 
@@ -32,7 +27,6 @@ function ShoppingCart() {
   ) => {
     try {
       const newQuantity = Number(e.target.value);
-      setIsLoading(true);
       if (!shoppingCart) {
         throw new Error("Not found");
       }
@@ -49,8 +43,6 @@ function ShoppingCart() {
       setShoppingCart(data);
     } catch (err) {
       console.log(err);
-    } finally {
-      setIsLoading(false);
     }
   };
 

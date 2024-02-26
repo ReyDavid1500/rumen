@@ -86,7 +86,6 @@ function Shopping() {
         setIsSignInOpen(true);
       }
       if (!shoppingCart && productQuantity) {
-        setIsLoading(true);
         const { data } = await requester.post(`/shopping-cart`, [
           {
             id,
@@ -96,7 +95,6 @@ function Shopping() {
         setShoppingCart(data);
       }
       if (shoppingCart && productQuantity) {
-        setIsLoading(true);
         const { data } = await requester.patch(
           `/shopping-cart/${shoppingCart?._id}`,
           [
@@ -111,8 +109,6 @@ function Shopping() {
       }
     } catch (err) {
       console.log(err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
