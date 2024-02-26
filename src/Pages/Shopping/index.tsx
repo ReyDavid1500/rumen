@@ -11,6 +11,7 @@ import {
 import { useAxios } from "../../hooks/useAxios";
 import { AxiosError } from "axios";
 import useFetchUserData from "../../hooks/useFetchUserData";
+import { AuthData } from "../../types";
 
 function Shopping() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
@@ -32,12 +33,18 @@ function Shopping() {
     loggedUser,
   } = useContext(ShoppingCartContext) as ShoppingCartContextType;
 
+  const currentToken = localStorage.getItem("TOKEN") as string;
+  const tokenObject: AuthData = JSON.parse(currentToken);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setIsLoading(true);
         const { data } = await requester.get("/products");
         setProducts(data);
+        if (!currentToken) {
+          setTimeout(() => setIsSignInOpen(true), 5000);
+        }
       } catch (err) {
         console.log(err as Error);
       } finally {
@@ -55,9 +62,9 @@ function Shopping() {
     try {
       setIsLoading(true);
       const { data } = await requester.post(`/auth/login`, userData);
-      setLoggedIn(data);
-      localStorage.setItem("TOKEN", JSON.stringify(data));
       setIsSignInOpen(false);
+      localStorage.setItem("TOKEN", JSON.stringify(data));
+      setLoggedIn(data);
     } catch (err) {
       setError(err as Error);
       if (error?.message === "Request failed with status code 401") {
@@ -100,7 +107,8 @@ function Shopping() {
               quantity: productQuantity,
             },
             ...shoppingCart.products,
-          ]
+          ],
+          { headers: { Authorization: `Bearer ${tokenObject.access_token}` } }
         );
         setShoppingCart(data);
       }
@@ -145,6 +153,7 @@ function Shopping() {
                             handleProductQuantity={productQuantityHandler}
                             handleNewProductToCart={handleNewProductToCart}
                             dataId={product._id}
+                            inputDisabled={!loggedUser}
                           />
                         );
                       }

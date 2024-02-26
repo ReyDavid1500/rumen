@@ -12,6 +12,7 @@ interface DataProps {
   handleNewProductToCart?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   dataId: string;
+  inputDisabled?: boolean;
 }
 
 function Card({
@@ -23,6 +24,7 @@ function Card({
   handleProductQuantity,
   disabled,
   dataId,
+  inputDisabled,
 }: DataProps) {
   return (
     <div className="border-2 border-gray-400 rounded-lg overflow-hidden bg-white h-[350px] w-[267px] m-auto md:w-[280px]">
@@ -47,6 +49,7 @@ function Card({
                 className="border-[3px] border-black rounded-lg w-[60px] h-[40px] mr-2 pl-2"
                 type="text"
                 onChange={handleProductQuantity}
+                disabled={inputDisabled}
               />
               <label>Unidad</label>
             </div>

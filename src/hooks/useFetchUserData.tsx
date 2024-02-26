@@ -27,13 +27,12 @@ function useFetchUserData() {
           const { data } = await requester.get(`/shopping-cart`, {
             headers: { Authorization: `Bearer ${savedToken.access_token}` },
           });
-          console.log(data);
           setShoppingCart(data);
         } catch (err) {
           console.log(err);
         }
       };
-      if (!shoppingCart && order) fetchCart();
+      if (!shoppingCart && !order) fetchCart();
     }
   }, [loggedIn]);
 }

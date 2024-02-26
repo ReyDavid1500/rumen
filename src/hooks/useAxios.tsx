@@ -7,11 +7,11 @@ export const useAxios = () => {
 
   useEffect(() => {
     const token = localStorage?.getItem("TOKEN");
-    if (token !== null) setSavedToken(JSON.parse(token));
+    if (token) setSavedToken(JSON.parse(token));
   }, []);
 
   const requester = axios.create({
-    baseURL: "https://rumen-server.onrender.com",
+    baseURL: "http://localhost:3000" || "https://rumen-server.onrender.com",
     headers: {
       "content-type": "application/json",
       Authorization: `Bearer ${savedToken?.access_token}`,
