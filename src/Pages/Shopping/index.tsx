@@ -11,7 +11,6 @@ import {
 import { useAxios } from "../../hooks/useAxios";
 import { AxiosError } from "axios";
 import useFetchUserData from "../../hooks/useFetchUserData";
-import { AuthData } from "../../types";
 
 function Shopping() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
@@ -34,7 +33,6 @@ function Shopping() {
   } = useContext(ShoppingCartContext) as ShoppingCartContextType;
 
   const currentToken = localStorage.getItem("TOKEN") as string;
-  const tokenObject: AuthData = JSON.parse(currentToken);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -107,8 +105,7 @@ function Shopping() {
               quantity: productQuantity,
             },
             ...shoppingCart.products,
-          ],
-          { headers: { Authorization: `Bearer ${tokenObject.access_token}` } }
+          ]
         );
         setShoppingCart(data);
       }

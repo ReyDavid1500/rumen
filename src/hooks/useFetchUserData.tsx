@@ -24,9 +24,7 @@ function useFetchUserData() {
 
       const fetchCart = async () => {
         try {
-          const { data } = await requester.get(`/shopping-cart`, {
-            headers: { Authorization: `Bearer ${savedToken.access_token}` },
-          });
+          const { data } = await requester.get(`/shopping-cart`);
           setShoppingCart(data);
         } catch (err) {
           console.log(err);

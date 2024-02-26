@@ -41,16 +41,12 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
 
   const { requester } = useAxios();
 
-  const currentToken = localStorage.getItem("TOKEN") as string;
-  const tokenObject: AuthData = JSON.parse(currentToken);
-
   const handlerDeleteProduct = async (productId: string) => {
     try {
       setIsLoading(true);
 
       const { data } = await requester.delete(
-        `/shopping-cart/${shoppingCart?._id}/product/${productId}`,
-        { headers: { Authorization: `Bearer ${tokenObject.access_token}` } }
+        `/shopping-cart/${shoppingCart?._id}/product/${productId}`
       );
       setShoppingCart(data);
     } catch (err) {

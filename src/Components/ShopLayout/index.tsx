@@ -84,7 +84,7 @@ function ShopLayout({ children }: ShopLayoutProps) {
               </div>
             </section>
           </header>
-          <div className="pt-20 h-[100%]">
+          <div className="pt-20 h-[100vh]">
             <NextUIProvider>{children} </NextUIProvider>
           </div>
         </>

@@ -1,3 +1,4 @@
+import { BsChevronDoubleLeft } from "react-icons/bs";
 import ShopLayout from "../../Components/ShopLayout";
 
 function OrderResume() {
@@ -8,9 +9,12 @@ function OrderResume() {
           Gracias por tu compra!!
         </p>
         <a
-          className="text-light-green font-bold cursor-pointer"
+          className="text-light-green font-bold cursor-pointer flex flex-raw gap-1 items-center"
           href="/shopping"
         >
+          <span>
+            <BsChevronDoubleLeft />
+          </span>
           Volver a la pagina principal
         </a>
       </main>
