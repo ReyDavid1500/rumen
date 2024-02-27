@@ -43,11 +43,12 @@ function ShopLayout({ children }: ShopLayoutProps) {
         <Loader className="flex items-center justify-center h-[100vh]" />
       ) : (
         <>
-          <header className="w-[100%] fixed">
+          <header className="w-[100%] fixed z-10">
             <section className="flex flex-row justify-between p-4 items-center bg-light-green">
               <div>
                 <Link to="/shopping">
                   <img
+                    loading="lazy"
                     src="/rumen-logo.png"
                     alt="Rumen Carnes Ahumadas"
                     width={96}
@@ -85,7 +86,7 @@ function ShopLayout({ children }: ShopLayoutProps) {
             </section>
           </header>
           <div className="pt-20 h-[100vh]">
-            <NextUIProvider>{children} </NextUIProvider>
+            <NextUIProvider>{children}</NextUIProvider>
           </div>
         </>
       )}

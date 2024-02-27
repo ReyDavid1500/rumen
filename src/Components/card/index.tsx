@@ -38,7 +38,12 @@ function Card({
             {message}
           </div>
         )}
-        <img className="w-full h-full object-cover " src={image} alt={name} />
+        <img
+          className="w-full h-full object-cover"
+          loading="lazy"
+          src={image}
+          alt={name}
+        />
       </div>
       <div className="p-2">
         <div className="flex flex-row justify-between">
