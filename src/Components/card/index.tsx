@@ -1,7 +1,7 @@
 import { formatCurrency } from "../../assets/utils";
 import Button from "../coreComponents/Button";
 
-interface DataProps {
+type DataProps = {
   name: string;
   description?: string;
   price: number;
@@ -13,7 +13,9 @@ interface DataProps {
   disabled?: boolean;
   dataId: string;
   inputDisabled?: boolean;
-}
+  addedToCart?: boolean;
+  message?: any;
+};
 
 function Card({
   name,
@@ -25,10 +27,17 @@ function Card({
   disabled,
   dataId,
   inputDisabled,
+  addedToCart,
+  message,
 }: DataProps) {
   return (
-    <div className="border-2 border-gray-400 rounded-lg overflow-hidden bg-white h-[350px] w-[267px] m-auto md:w-[280px]">
-      <div className="h-[60%] w-[100%]">
+    <div className="border-2 border-gray-400 rounded-lg overflow-hidden bg-white h-[340px] w-[267px] m-auto md:w-[280px]">
+      <div className="h-[60%] w-[100%] relative">
+        {addedToCart && (
+          <div className="text-center font-medium text-white absolute w-full">
+            {message}
+          </div>
+        )}
         <img className="w-full h-full object-cover " src={image} alt={name} />
       </div>
       <div className="p-2">

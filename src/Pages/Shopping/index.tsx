@@ -147,6 +147,14 @@ function Shopping() {
                             handleNewProductToCart={handleNewProductToCart}
                             dataId={product._id}
                             inputDisabled={!loggedUser}
+                            addedToCart={shoppingCart?.products.some(
+                              (item) => item.id === product._id
+                            )}
+                            message={
+                              <p className="text-sm bg-gray-900 p-1 rounded-sm border-gray-700 ">
+                                Has añadido {product.name}
+                              </p>
+                            }
                           />
                         );
                       }
