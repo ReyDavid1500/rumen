@@ -22,6 +22,7 @@ function ShopLayout({ children }: ShopLayoutProps) {
     loggedIn,
     loggedUser,
     setLoggedIn,
+    isLoading,
   } = useContext(ShoppingCartContext) as ShoppingCartContextType;
 
   const navigate = useNavigate();
@@ -79,7 +80,7 @@ function ShopLayout({ children }: ShopLayoutProps) {
           </div>
         </section>
       </header>
-      <div className="sm:pt-20 pb-8 p-0 h-[100%]">
+      <div className={isLoading ? "" : "sm:pt-20 pb-8 p-0 h-[100%]"}>
         <NextUIProvider>{children}</NextUIProvider>
       </div>
     </>

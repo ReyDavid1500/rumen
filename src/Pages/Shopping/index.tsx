@@ -125,8 +125,14 @@ function Shopping() {
       />
       <ShopLayout>
         <div className="md:flex md:flex-row md:justify-between p-4">
-          <div className="p-4 bg-white w-[90vw] m-auto mt-4 md:w-[70vw] md:m-0">
-            {isLoading ? (
+          <div
+            className={
+              isLoading
+                ? "p-4 bg-white w-[85vw] m-auto mt-4 md:w-[70vw] sm:mt-20"
+                : "p-4 bg-white w-[85vw] m-auto mt-4 md:w-[70vw] sm:mt-0"
+            }
+          >
+            {isLoading || !products ? (
               <CardSkeleton />
             ) : (
               <>

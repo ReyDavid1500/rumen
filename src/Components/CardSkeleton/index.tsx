@@ -6,7 +6,7 @@ function CardSkeleton() {
 
   return categoryData.map((_, index) => (
     <div key={index}>
-      <Skeleton className="w-96 rounded-lg m-auto mt-10">
+      <Skeleton className="w-48 sm:w-96 rounded-lg m-auto mt-10">
         <div className="h-11 w-4 rounded-lg bg-default-200"></div>
       </Skeleton>
       <div className="card">
