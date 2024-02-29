@@ -8,7 +8,6 @@ import {
   ShoppingCartContextType,
 } from "../../context/ShoppingCartContext";
 import { NextUIProvider } from "@nextui-org/react";
-import Loader from "../coreComponents/Loader";
 
 type ShopLayoutProps = {
   children: ReactNode;
@@ -20,7 +19,6 @@ function ShopLayout({ children }: ShopLayoutProps) {
     setLoggedUser,
     setShoppingCart,
     setIsLoading,
-    isLoading,
     loggedIn,
     loggedUser,
     setLoggedIn,
@@ -39,57 +37,51 @@ function ShopLayout({ children }: ShopLayoutProps) {
   };
   return (
     <>
-      {isLoading ? (
-        <Loader className="flex items-center justify-center h-[100vh]" />
-      ) : (
-        <>
-          <header className="w-[100%] sticky sm:fixed sm:z-10">
-            <section className="flex flex-row justify-between p-4 items-center bg-light-green">
-              <div>
-                <Link to="/shopping">
-                  <img
-                    loading="lazy"
-                    src="/rumen-logo.png"
-                    alt="Rumen Carnes Ahumadas"
-                    width={96}
-                    height={54}
-                  />
-                </Link>
-              </div>
-              <div className="flex flex-col gap-3 items-center sm:flex-row">
-                {loggedIn || loggedUser ? (
-                  <div className="flex flex-row gap-2 order-2">
-                    <div className="border-2 border-light-orange p-2 rounded-lg">
-                      <p className="text-white font-bold text-xl">
-                        Hola!, {loggedIn?.name || loggedUser?.name}
-                      </p>
-                    </div>
-                    <button onClick={handleLogout}>
-                      <IoLogOutOutline className="w-[40px] h-[40px]" />
-                    </button>
-                  </div>
-                ) : (
-                  ""
-                )}
-                <div className="flex flex-row items-center w-full justify-end sm:order-2 sm:w-fit">
-                  <Link to="/cart" className="relative">
-                    <AiTwotoneShopping className="w-[50px] h-[50px]" />
-                    <span className="absolute text-rumen-orange font-bold top-[18px] left-[19px]">
-                      {shoppingCart?.products.length || 0}
-                    </span>
-                  </Link>
-                  <Link to="/shopping">
-                    <LuMenu className="w-[40px] h-[40px]" />
-                  </Link>
-                </div>
-              </div>
-            </section>
-          </header>
-          <div className="sm:pt-20 pb-8 p-0 h-[100%]">
-            <NextUIProvider>{children}</NextUIProvider>
+      <header className="w-[100%] sticky sm:fixed sm:z-10">
+        <section className="flex flex-row justify-between p-4 items-center bg-light-green">
+          <div>
+            <Link to="/shopping">
+              <img
+                loading="lazy"
+                src="/rumen-logo.png"
+                alt="Rumen Carnes Ahumadas"
+                width={96}
+                height={54}
+              />
+            </Link>
           </div>
-        </>
-      )}
+          <div className="flex flex-col gap-3 items-center sm:flex-row">
+            {loggedIn || loggedUser ? (
+              <div className="flex flex-row gap-2 order-2">
+                <div className="border-2 border-light-orange p-2 rounded-lg">
+                  <p className="text-white font-bold text-xl">
+                    Hola!, {loggedIn?.name || loggedUser?.name}
+                  </p>
+                </div>
+                <button onClick={handleLogout}>
+                  <IoLogOutOutline className="w-[40px] h-[40px]" />
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
+            <div className="flex flex-row items-center w-full justify-end sm:order-2 sm:w-fit">
+              <Link to="/cart" className="relative">
+                <AiTwotoneShopping className="w-[50px] h-[50px]" />
+                <span className="absolute text-rumen-orange font-bold top-[18px] left-[19px]">
+                  {shoppingCart?.products.length || 0}
+                </span>
+              </Link>
+              <Link to="/shopping">
+                <LuMenu className="w-[40px] h-[40px]" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      </header>
+      <div className="sm:pt-20 pb-8 p-0 h-[100%]">
+        <NextUIProvider>{children}</NextUIProvider>
+      </div>
     </>
   );
 }

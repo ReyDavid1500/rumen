@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import OrderSummary from "../../Components/OrderSummary";
 import ShopLayout from "../../Components/ShopLayout";
-import Card from "../../Components/card";
-import Loader from "../../Components/coreComponents/Loader";
 import SignInModal, { User } from "../../Components/Modal/SingInModal";
 import {
   ShoppingCartContext,
@@ -11,6 +9,8 @@ import {
 import { useAxios } from "../../hooks/useAxios";
 import { AxiosError } from "axios";
 import useFetchUserData from "../../hooks/useFetchUserData";
+import ProductCard from "../../Components/ProductCard";
+import CardSkeleton from "../../Components/CardSkeleton";
 
 function Shopping() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
@@ -24,12 +24,12 @@ function Shopping() {
   const {
     setShoppingCart,
     shoppingCart,
-    setIsLoading,
-    isLoading,
     setLoggedIn,
     products,
     setProducts,
     loggedUser,
+    isLoading,
+    setIsLoading,
   } = useContext(ShoppingCartContext) as ShoppingCartContextType;
 
   const currentToken = localStorage.getItem("TOKEN") as string;
@@ -49,6 +49,7 @@ function Shopping() {
         setIsLoading(false);
       }
     };
+    if (!products) setIsLoading(true);
     fetchProducts();
   }, []);
 
@@ -123,21 +124,21 @@ function Shopping() {
         handlerSubmit={signIn}
       />
       <ShopLayout>
-        {isLoading ? (
-          <Loader className="flex items-center justify-center h-[100vh]" />
-        ) : (
-          <div className="md:flex md:flex-row md:justify-between p-4">
-            <div className="p-4 bg-white w-[90vw] m-auto mt-4 md:w-[70vw] md:m-0">
-              {categoryArray.map((category, index) => (
-                <div key={index}>
-                  <h1 className="text-center font-bold text-4xl mb-[50px] mt-8">
-                    {category}
-                  </h1>
+        <div className="md:flex md:flex-row md:justify-between p-4">
+          <div className="p-4 bg-white w-[90vw] m-auto mt-4 md:w-[70vw] md:m-0">
+            {categoryArray.map((category, index) => (
+              <div key={index}>
+                <h1 className="text-center font-bold text-4xl mb-[50px] mt-8">
+                  {category}
+                </h1>
+                {isLoading ? (
+                  <CardSkeleton />
+                ) : (
                   <div className="card mt-4">
                     {products?.map((product) => {
                       if (product.category === category) {
                         return (
-                          <Card
+                          <ProductCard
                             key={product._id}
                             image={product.image}
                             price={product.price}
@@ -160,16 +161,16 @@ function Shopping() {
                       }
                     })}
                   </div>
-                </div>
-              ))}
-            </div>
-            <OrderSummary
-              title="PEDIDO"
-              buttonText="REVISAR PEDIDO"
-              route="/cart"
-            />
+                )}
+              </div>
+            ))}
           </div>
-        )}
+          <OrderSummary
+            title="PEDIDO"
+            buttonText="REVISAR PEDIDO"
+            route="/cart"
+          />
+        </div>
       </ShopLayout>
     </>
   );
