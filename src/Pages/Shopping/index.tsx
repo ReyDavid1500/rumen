@@ -126,44 +126,46 @@ function Shopping() {
       <ShopLayout>
         <div className="md:flex md:flex-row md:justify-between p-4">
           <div className="p-4 bg-white w-[90vw] m-auto mt-4 md:w-[70vw] md:m-0">
-            {categoryArray.map((category, index) => (
-              <div key={index}>
-                <h1 className="text-center font-bold text-4xl mb-[50px] mt-8">
-                  {category}
-                </h1>
-                {isLoading ? (
-                  <CardSkeleton />
-                ) : (
-                  <div className="card mt-4">
-                    {products?.map((product) => {
-                      if (product.category === category) {
-                        return (
-                          <ProductCard
-                            key={product._id}
-                            image={product.image}
-                            price={product.price}
-                            name={product.name}
-                            description={product.description}
-                            handleProductQuantity={productQuantityHandler}
-                            handleNewProductToCart={handleNewProductToCart}
-                            dataId={product._id}
-                            inputDisabled={!loggedUser}
-                            addedToCart={shoppingCart?.products.some(
-                              (item) => item.id === product._id
-                            )}
-                            message={
-                              <p className="text-sm bg-gray-900 p-1 rounded-sm border-gray-700 ">
-                                Has añadido {product.name}
-                              </p>
-                            }
-                          />
-                        );
-                      }
-                    })}
+            {isLoading ? (
+              <CardSkeleton />
+            ) : (
+              <>
+                {categoryArray.map((category, index) => (
+                  <div key={index}>
+                    <h1 className="text-center font-bold text-4xl mb-[50px] mt-8">
+                      {category}
+                    </h1>
+                    <div className="card mt-4">
+                      {products?.map((product) => {
+                        if (product.category === category) {
+                          return (
+                            <ProductCard
+                              key={product._id}
+                              image={product.image}
+                              price={product.price}
+                              name={product.name}
+                              description={product.description}
+                              handleProductQuantity={productQuantityHandler}
+                              handleNewProductToCart={handleNewProductToCart}
+                              dataId={product._id}
+                              inputDisabled={!loggedUser}
+                              addedToCart={shoppingCart?.products.some(
+                                (item) => item.id === product._id
+                              )}
+                              message={
+                                <p className="text-sm bg-gray-900 p-1 rounded-sm border-gray-700 ">
+                                  Has añadido {product.name}
+                                </p>
+                              }
+                            />
+                          );
+                        }
+                      })}
+                    </div>
                   </div>
-                )}
-              </div>
-            ))}
+                ))}
+              </>
+            )}
           </div>
           <OrderSummary
             title="PEDIDO"
