@@ -43,7 +43,7 @@ function ShopLayout({ children }: ShopLayoutProps) {
         <Loader className="flex items-center justify-center h-[100vh]" />
       ) : (
         <>
-          <header className="w-[100%] fixed z-10">
+          <header className="w-[100%] sticky sm:fixed sm:z-10">
             <section className="flex flex-row justify-between p-4 items-center bg-light-green">
               <div>
                 <Link to="/shopping">
@@ -85,7 +85,7 @@ function ShopLayout({ children }: ShopLayoutProps) {
               </div>
             </section>
           </header>
-          <div className="pt-20 h-[100vh]">
+          <div className="sm:pt-20 p-0 h-[100vh]">
             <NextUIProvider>{children}</NextUIProvider>
           </div>
         </>
