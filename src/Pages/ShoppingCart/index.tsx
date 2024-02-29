@@ -48,7 +48,7 @@ function ShoppingCart() {
 
   return (
     <ShopLayout>
-      <div className="bg-white m-6 mt-20 md:w-[700px] md:m-auto md:mt-6 md:mb-6">
+      <div className="bg-white md:w-[700px] md:m-auto mt-6 md:mt-8 shadow-2xl">
         <div className="p-4 flex flex-col gap-3 items-center">
           <h2 className="text-2xl font-medium">Carrito de Compras</h2>
           <p className="text-sm text-center">
