@@ -9,8 +9,8 @@ import {
 import { useAxios } from "../../hooks/useAxios";
 import { AxiosError } from "axios";
 import useFetchUserData from "../../hooks/useFetchUserData";
-import ProductCard from "../../Components/ProductCard";
 import CardSkeleton from "../../Components/CardSkeleton";
+import ProductCard from "../../Components/ProductCard";
 
 function Shopping() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
