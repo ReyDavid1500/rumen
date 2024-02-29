@@ -9,7 +9,7 @@ export const useAxios = () => {
   const productionURL = "https://rumen-server.onrender.com";
 
   const baseURL =
-    process.env.NODE_ENV === "production" ? productionURL : devURL;
+    import.meta.env.MODE === "production" ? productionURL : devURL;
 
   const requester = axios.create({
     baseURL,
