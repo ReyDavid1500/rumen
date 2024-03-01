@@ -5,8 +5,8 @@ export const useAxios = () => {
   const token = localStorage.getItem("TOKEN") as string;
   const savedToken: AuthData = JSON.parse(token);
 
-  const devURL = "http://localhost:3000";
-  const productionURL = "https://rumen-server.onrender.com";
+  const devURL = import.meta.env.VITE_DEV_URL;
+  const productionURL = import.meta.env.VITE_PRODUCTION_URL;
 
   const baseURL =
     import.meta.env.MODE === "production" ? productionURL : devURL;
