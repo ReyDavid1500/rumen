@@ -3,9 +3,9 @@ import ShopLayout from "../../Components/ShopLayout";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Resend } from "resend";
+// import { Resend } from "resend";
 import { useAxios } from "../../hooks/useAxios";
-import VerificationEmail from "../../emails/VerificationEmail";
+// import VerificationEmail from "../../emails/VerificationEmail";
 
 type SignUpData = {
   name: string;
@@ -15,7 +15,7 @@ type SignUpData = {
   validatePassword: string;
 };
 
-const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
+// const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
 
 const schema = yup.object().shape({
   name: yup
@@ -47,29 +47,29 @@ function SignUp() {
 
   const navigate = useNavigate();
 
-  type Payload = Omit<SignUpData, "validatePassword">;
+  // type Payload = Omit<SignUpData, "validatePassword">;
 
-  const sendEmail = async (payload: Payload) => {
-    const { data, error } = await resend.emails.send({
-      from: "Acme <onboarding@resend.dev>",
-      to: payload.email,
-      subject: "Hello World",
-      react: VerificationEmail(),
-    });
+  // const sendEmail = async (payload: Payload) => {
+  //   const { data, error } = await resend.emails.send({
+  //     from: "Acme <onboarding@resend.dev>",
+  //     to: payload.email,
+  //     subject: "Hello World",
+  //     react: VerificationEmail(),
+  //   });
 
-    if (error) {
-      return console.error(error);
-    }
+  //   if (error) {
+  //     return console.error(error);
+  //   }
 
-    console.log(data);
-  };
+  //   console.log(data);
+  // };
 
   const handlerSubmit = async (userData: SignUpData) => {
     const { validatePassword, ...payload } = userData;
     try {
       const res = await requester.post("/users", payload);
       console.log(res.data);
-      sendEmail(payload);
+      // sendEmail(payload);
       navigate("/shopping");
     } catch (err) {
       console.log(err);
