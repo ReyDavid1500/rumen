@@ -13,6 +13,8 @@ import RumenSignUp from "../RumenSignUp";
 import RumenProducts from "../RumenProducts";
 import RumenForm from "../RumenForm";
 import OrderResume from "../OrderResume";
+import ConfirmMessage from "../../Components/ConfirmMessage";
+import ConfirmButton from "../../Components/ConfirmButon";
 
 function AppRoutes() {
   let routes = useRoutes([
@@ -30,6 +32,8 @@ function AppRoutes() {
     { path: "/rumen-products", element: <RumenProducts /> },
     { path: "/rumen-form", element: <RumenForm /> },
     { path: "/order-resume", element: <OrderResume /> },
+    { path: "/confirm-email-sent", element: <ConfirmMessage /> },
+    { path: "/confirm-email-button", element: <ConfirmButton /> },
   ]);
   return routes;
 }

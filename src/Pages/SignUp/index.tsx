@@ -3,19 +3,15 @@ import ShopLayout from "../../Components/ShopLayout";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-// import { Resend } from "resend";
 import { useAxios } from "../../hooks/useAxios";
-// import VerificationEmail from "../../emails/VerificationEmail";
 
-type SignUpData = {
+export type SignUpData = {
   name: string;
   email: string;
   address: string;
   password: string;
   validatePassword: string;
 };
-
-// const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
 
 const schema = yup.object().shape({
   name: yup
@@ -26,8 +22,8 @@ const schema = yup.object().shape({
     .string()
     .email("No es un email valido")
     .required("El email es requerido"),
-  address: yup.string().required("La dirección es requerido").max(100),
-  password: yup.string().required("La contraseña es requerido").min(8).max(20),
+  address: yup.string().required("La dirección es requerida").max(100),
+  password: yup.string().required("La contraseña es requerida").min(8).max(20),
   validatePassword: yup
     .string()
     .required("Validar la contraseña es requerido")
@@ -47,30 +43,12 @@ function SignUp() {
 
   const navigate = useNavigate();
 
-  // type Payload = Omit<SignUpData, "validatePassword">;
-
-  // const sendEmail = async (payload: Payload) => {
-  //   const { data, error } = await resend.emails.send({
-  //     from: "Acme <onboarding@resend.dev>",
-  //     to: payload.email,
-  //     subject: "Hello World",
-  //     react: VerificationEmail(),
-  //   });
-
-  //   if (error) {
-  //     return console.error(error);
-  //   }
-
-  //   console.log(data);
-  // };
-
   const handlerSubmit = async (userData: SignUpData) => {
     const { validatePassword, ...payload } = userData;
     try {
-      const res = await requester.post("/users", payload);
+      const res = await requester.post("/auth/confirm-account", payload);
       console.log(res.data);
-      // sendEmail(payload);
-      navigate("/shopping");
+      navigate("/confirm-email-sent");
     } catch (err) {
       console.log(err);
     }

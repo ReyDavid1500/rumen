@@ -66,8 +66,14 @@ function Shopping() {
       setLoggedIn(data);
     } catch (err) {
       setError(err as Error);
+      console.log(err);
       if (error?.message === "Request failed with status code 401") {
         alert("Usuario y/o contraseña invalidos");
+      }
+      if (error?.message === "Request failed with status code 400") {
+        alert(
+          "La cuenta no esta activada, revisa tu correo o vuelve a registrarte"
+        );
       }
     } finally {
       setIsLoading(false);
