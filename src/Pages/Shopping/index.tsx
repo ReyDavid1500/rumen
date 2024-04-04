@@ -66,7 +66,6 @@ function Shopping() {
       setLoggedIn(data);
     } catch (err) {
       setError(err as Error);
-      console.log(err);
       if (error?.message === "Request failed with status code 401") {
         alert("Usuario y/o contraseña invalidos");
       }
