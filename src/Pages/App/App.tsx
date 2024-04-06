@@ -13,8 +13,8 @@ import RumenSignUp from "../RumenSignUp";
 import RumenProducts from "../RumenProducts";
 import RumenForm from "../RumenForm";
 import OrderResume from "../OrderResume";
-import ConfirmMessage from "../../Components/ConfirmMessage";
-import ConfirmButton from "../../Components/ConfirmButton";
+import ConfirmMessage from "../ConfirmMessage";
+import ConfirmButton from "../ConfirmButton";
 
 function AppRoutes() {
   let routes = useRoutes([
