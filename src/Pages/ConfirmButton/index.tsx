@@ -38,7 +38,7 @@ function ConfirmButton() {
       ) : (
         <div className="h-[100vh] flex flex-col gap-6 justify-center items-center bg-light-green/50">
           <img
-            src="../../../public/rumen-logo.png"
+            src="/rumen-logo.png"
             alt="Rumen Logo"
             height={300}
             width={300}
