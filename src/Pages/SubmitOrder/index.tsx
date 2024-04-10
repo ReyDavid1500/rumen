@@ -9,23 +9,36 @@ import useFetchUserData from "../../hooks/useFetchUserData";
 import { useAxios } from "../../hooks/useAxios";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../Components/coreComponents/Loader";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+type UserInfoData = {
+  phone: string;
+  address: string;
+};
+
+const schema = yup.object().shape({
+  phone: yup
+    .string()
+    .required()
+    .min(9, "Tu número debe tener al menos 9 dígitos")
+    .max(12, "Tu número no debe ser mayor de 12 dígitos"),
+  address: yup.string().required().min(4).max(300),
+});
 
 function SubmitOrder() {
-  const [shipping, setShipping] = useState<string | null>(null);
+  const [shippingData, setShippingData] = useState<UserInfoData | null>(null);
   const [payment, setPayment] = useState<string | null>(null);
-  const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
 
   const {
     loggedUser,
     shoppingCart,
     setShoppingCart,
     setOrder,
-    order,
     setIsLoading,
     isLoading,
   } = useContext(ShoppingCartContext) as ShoppingCartContextType;
-
-  console.log("submit", order);
 
   useFetchUserData();
 
@@ -33,12 +46,24 @@ function SubmitOrder() {
 
   const { requester } = useAxios();
 
-  const handleInputShipping = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setShipping(e.target.value);
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UserInfoData>({ resolver: yupResolver(schema) });
 
   const handleInputPayment = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPayment(e.target.value);
+  };
+
+  const shippingDataSubmitHandler = async (userData: UserInfoData) => {
+    console.log(userData);
+    const { data } = await requester.put("/users/user-info", {
+      phone: userData.phone,
+      address: userData.address,
+    });
+    setShippingData(data);
+    console.log(data);
   };
 
   const submitOrderHandler = async () => {
@@ -46,9 +71,9 @@ function SubmitOrder() {
       setIsLoading(true);
       const { data } = await requester.post("/orders", {
         shoppingCartId: shoppingCart?._id,
-        address: shipping,
+        address: shippingData?.address,
         payment,
-        phone: phoneNumber,
+        phone: shippingData?.phone,
       });
       console.log("postOrder", data);
       setOrder(data);
@@ -66,10 +91,10 @@ function SubmitOrder() {
       {isLoading ? (
         <Loader className="flex items-center justify-center h-[100vh]" />
       ) : (
-        <div className="p-3 m-6 pt-16 xs:p-0 xs:m-0 md:p-0 md:m-0 md:pl-1 md:pr-1 md:pt-4 h-[100%] md:h-[100%] md:w-[98%]">
-          <form className="flex flex-col justify-center items-center md:justify-start md:flex-row md:gap-3 xl:gap-10 xl:justify-around">
-            <section className="flex flex-col gap-4 items-center w-full xl:flex-row xl:pr-2 xl:justify-center">
-              <div className="delivery border-2 border-gray-200 border-b-4 border-b-rumen-orange mt-6 w-fit md:w-[50%] rounded-md p-3 text-xs md:text-xl xl:text-2xl bg-white">
+        <div className="pl-3 pr-3 m-1 xs:p-0 xs:m-0 md:p-0 md:m-0 md:pl-1 md:pr-1 md:pt-4 h-[100%] md:h-[100%] md:w-[98%]">
+          <div className="flex flex-col justify-center items-center md:justify-start md:flex-row md:gap-3 xl:gap-10 xl:justify-around">
+            <section className="flex flex-col min-[420px]:flex-row gap-4 w-full xl:flex-row xl:pr-2 xl:justify-center">
+              <div className="delivery border-2 border-gray-200 border-b-4 border-b-rumen-orange w-[100%] md:w-[100%] rounded-md p-3 text-xs md:text-xl xl:text-2xl bg-white">
                 <div>
                   <h2 className="font-bold mb-4">MODO DE ENTREGA</h2>
                   <label>
@@ -83,42 +108,61 @@ function SubmitOrder() {
                       name="shipping"
                       id="pick-up"
                       value="Retiro en Local"
-                      onChange={handleInputShipping}
                     />
                     <label htmlFor="pick-up">
                       <p>Retiro en Local</p>
                     </label>
                   </div>
-                  <p className="text-center">
-                    Ubicación: Aldea Los Álamos, Pucón
-                  </p>
+                  <p>Ubicación: Aldea Los Álamos, Pucón</p>
                   <div className="flex flex-row gap-2 mb-2 mt-2">
                     <input
                       type="radio"
                       name="shipping"
                       id="delivery"
                       value={loggedUser?.address}
-                      onChange={handleInputShipping}
                     />
                     <label htmlFor="delivery">
                       <p>Despacho a domicilio a tu dirección en Pucón:</p>
                       <p className="text-center">{loggedUser?.address}</p>
+                      <p className="text-center">{loggedUser?.phone}</p>
                     </label>
                   </div>
-                  <div className="flex flex-col justify-center gap-2">
-                    <label className="text-center font-bold">
-                      Por favor ingresa tu número de telefono para la entrega
+                  <form
+                    onSubmit={handleSubmit(shippingDataSubmitHandler)}
+                    className="flex flex-col justify-center gap-2"
+                  >
+                    <label className="font-bold">
+                      Por favor ingresa tu número de telefono y dirección para
+                      la entrega
                     </label>
                     <input
-                      className="border-2 border-black rounded-md p-2"
+                      {...register("phone")}
+                      name="phone"
+                      id="phone"
+                      className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
                       type="text"
-                      placeholder="+56X-XXXXXXXX"
-                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      placeholder="Teléfono de contacto..."
                     />
-                  </div>
+                    <p className="text-xs text-red-500 font-medium mt-[-8px]">
+                      {errors.phone?.message}
+                    </p>
+                    <textarea
+                      {...register("address")}
+                      className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
+                      name="address"
+                      id="address"
+                      placeholder="Dirección de despacho en Pucón!"
+                    />
+                    <p className="text-xs text-red-500 font-medium mt-[-8px]">
+                      {errors.address?.message}
+                    </p>
+                    <button className="bg-light-orange text-gray-700 font-medium border-2 border-black hover:bg-light-orange/50 rounded-md p-2 w-[40%] m-auto">
+                      Actualizar!
+                    </button>
+                  </form>
                 </div>
               </div>
-              <div className="delivery border-2 border-gray-200 bg-white border-b-4 border-b-dark-blue w-fit rounded-md p-3 text-xs md:text-xl xl:text-2xl">
+              <div className="delivery border-2 border-gray-200 bg-white border-b-4 border-b-dark-blue w-[100%] rounded-md p-3 text-xs md:text-xl xl:text-2xl mt-2 md:mt-0">
                 <div>
                   <h2 className="font-bold mb-4">METODO DE PAGO</h2>
                   <label>
@@ -138,7 +182,7 @@ function SubmitOrder() {
                     </label>
                   </div>
                   <div className="border-2 border-black mb-4 p-2 rounded-lg bg-dark-blue text-white space-y-1">
-                    <h3 className="text-center font-bold">Datos Bancarios:</h3>
+                    <h3 className="font-bold">Datos Bancarios:</h3>
                     <p>Cuenta Corriente Banco ITAU</p>
                     <p>Nro: 12344566666</p>
                     <p>Titular: Vicente Burky</p>
@@ -165,7 +209,7 @@ function SubmitOrder() {
               route=""
               handleShoppingCart={submitOrderHandler}
             />
-          </form>
+          </div>
         </div>
       )}
     </ShopLayout>

@@ -30,6 +30,7 @@ export type AuthData = {
   _id: string;
   email: string;
   address: string;
+  phone: string;
 };
 
 export type LoggedUser = {
@@ -37,6 +38,7 @@ export type LoggedUser = {
   name: string;
   email: string;
   address: string;
+  phone: string;
 };
 
 export type Order = {

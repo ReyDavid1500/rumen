@@ -40,7 +40,7 @@ function ShopLayout({ children }: ShopLayoutProps) {
     <>
       <header className="w-[100%] sticky sm:fixed sm:z-10">
         <section className="flex flex-row justify-between p-4 items-center bg-light-green">
-          <div>
+          <div className="self-baseline">
             <Link to="/shopping">
               <img
                 loading="lazy"
@@ -55,7 +55,7 @@ function ShopLayout({ children }: ShopLayoutProps) {
             {loggedIn || loggedUser ? (
               <div className="flex flex-row gap-2 order-2">
                 <div className="border-2 border-light-orange p-2 rounded-lg">
-                  <p className="text-white font-bold text-xl">
+                  <p className="text-white font-bold text-sm md:text-xl">
                     Hola!, {loggedIn?.name || loggedUser?.name}
                   </p>
                 </div>

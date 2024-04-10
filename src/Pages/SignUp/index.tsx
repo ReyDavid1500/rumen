@@ -11,7 +11,6 @@ import { AxiosError } from "axios";
 export type SignUpData = {
   name: string;
   email: string;
-  address: string;
   password: string;
   validatePassword: string;
 };
@@ -25,7 +24,6 @@ const schema = yup.object().shape({
     .string()
     .email("No es un email valido")
     .required("El email es requerido"),
-  address: yup.string().required("La dirección es requerida").max(100),
   password: yup.string().required("La contraseña es requerida").min(8).max(20),
   validatePassword: yup
     .string()
@@ -110,17 +108,6 @@ function SignUp() {
                     </p>
                   </div>
                 </div>
-
-                <textarea
-                  {...register("address")}
-                  className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
-                  name="address"
-                  id="address"
-                  placeholder="Dirección de despacho en Pucón!"
-                />
-                <p className="text-sm text-red-500 font-medium m-auto">
-                  {errors.address?.message}
-                </p>
                 <input
                   {...register("password")}
                   className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
