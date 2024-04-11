@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import ShopLayout from "../../Components/ShopLayout";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -36,6 +36,10 @@ const schema = yup.object().shape({
 function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<AxiosError | null>(null);
+
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get("email");
+
   const { requester } = useAxios();
 
   const {
@@ -102,6 +106,7 @@ function SignUp() {
                       name="email"
                       id="email"
                       placeholder="Email"
+                      defaultValue={email || ""}
                     />
                     <p className="text-sm text-red-500 font-medium m-auto">
                       {errors.email?.message}
