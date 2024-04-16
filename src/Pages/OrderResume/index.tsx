@@ -1,7 +1,17 @@
 import { BsChevronDoubleLeft } from "react-icons/bs";
 import ShopLayout from "../../Components/ShopLayout";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function OrderResume() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.onpopstate = () => {
+      navigate("/shopping");
+    };
+  });
+
   return (
     <ShopLayout>
       <main className="flex flex-col gap-10 items-center mt-20 pb-20 h-[100%]">

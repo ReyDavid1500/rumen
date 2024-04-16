@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import OrderSummary from "../../Components/OrderSummary";
 import ShopLayout from "../../Components/ShopLayout";
 import {
@@ -12,6 +12,12 @@ import Loader from "../../Components/coreComponents/Loader";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Button from "../../Components/coreComponents/Button";
+
+type UserData = {
+  address: string;
+  phone: string;
+};
 
 type UserInfoData = {
   phone: string;
@@ -21,24 +27,24 @@ type UserInfoData = {
 const schema = yup.object().shape({
   phone: yup
     .string()
-    .required()
+    .required("El teléfono es requerido")
     .min(9, "Tu número debe tener al menos 9 dígitos")
     .max(12, "Tu número no debe ser mayor de 12 dígitos"),
-  address: yup.string().required().min(4).max(300),
+  address: yup
+    .string()
+    .required("La dirección es requerida")
+    .min(4, "Es muy corta!")
+    .max(300),
 });
 
 function SubmitOrder() {
-  const [shippingData, setShippingData] = useState<UserInfoData | null>(null);
   const [payment, setPayment] = useState<string | null>(null);
+  const [isUpdateInfo, setIsUpdateInfo] = useState(false);
+  const [currentUser, setCurrentUser] = useState<UserData | null>(null);
+  const [shippingData, setShippingData] = useState<UserData | null>(null);
 
-  const {
-    loggedUser,
-    shoppingCart,
-    setShoppingCart,
-    setOrder,
-    setIsLoading,
-    isLoading,
-  } = useContext(ShoppingCartContext) as ShoppingCartContextType;
+  const { shoppingCart, setShoppingCart, setOrder, setIsLoading, isLoading } =
+    useContext(ShoppingCartContext) as ShoppingCartContextType;
 
   useFetchUserData();
 
@@ -49,21 +55,42 @@ function SubmitOrder() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<UserInfoData>({ resolver: yupResolver(schema) });
+
+  useEffect(() => {
+    try {
+      if (shippingData && !currentUser) {
+        return;
+      }
+      const getCurrentUser = async () => {
+        const { data } = await requester.get("users");
+        setCurrentUser(data);
+      };
+      getCurrentUser();
+    } catch (err) {
+      console.log(err);
+    }
+  }, [shippingData]);
 
   const handleInputPayment = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPayment(e.target.value);
   };
 
   const shippingDataSubmitHandler = async (userData: UserInfoData) => {
-    console.log(userData);
-    const { data } = await requester.put("/users/user-info", {
-      phone: userData.phone,
-      address: userData.address,
-    });
-    setShippingData(data);
-    console.log(data);
+    try {
+      const { data } = await requester.put("/users/user-info", {
+        phone: userData.phone,
+        address: userData.address,
+      });
+      setShippingData(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      reset();
+      setIsUpdateInfo(false);
+    }
   };
 
   const submitOrderHandler = async () => {
@@ -71,9 +98,9 @@ function SubmitOrder() {
       setIsLoading(true);
       const { data } = await requester.post("/orders", {
         shoppingCartId: shoppingCart?._id,
-        address: shippingData?.address,
+        address: currentUser?.address,
         payment,
-        phone: shippingData?.phone,
+        phone: currentUser?.phone,
       });
       console.log("postOrder", data);
       setOrder(data);
@@ -119,47 +146,65 @@ function SubmitOrder() {
                       type="radio"
                       name="shipping"
                       id="delivery"
-                      value={loggedUser?.address}
+                      value={currentUser?.address}
                     />
                     <label htmlFor="delivery">
                       <p>Despacho a domicilio a tu dirección en Pucón:</p>
-                      <p className="text-center">{loggedUser?.address}</p>
-                      <p className="text-center">{loggedUser?.phone}</p>
                     </label>
                   </div>
-                  <form
-                    onSubmit={handleSubmit(shippingDataSubmitHandler)}
-                    className="flex flex-col justify-center gap-2"
-                  >
-                    <label className="font-bold">
-                      Por favor ingresa tu número de telefono y dirección para
-                      la entrega
-                    </label>
-                    <input
-                      {...register("phone")}
-                      name="phone"
-                      id="phone"
-                      className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
-                      type="text"
-                      placeholder="Teléfono de contacto..."
-                    />
-                    <p className="text-xs text-red-500 font-medium mt-[-8px]">
-                      {errors.phone?.message}
-                    </p>
-                    <textarea
-                      {...register("address")}
-                      className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
-                      name="address"
-                      id="address"
-                      placeholder="Dirección de despacho en Pucón!"
-                    />
-                    <p className="text-xs text-red-500 font-medium mt-[-8px]">
-                      {errors.address?.message}
-                    </p>
-                    <button className="bg-light-orange text-gray-700 font-medium border-2 border-black hover:bg-light-orange/50 rounded-md p-2 w-[40%] m-auto">
-                      Actualizar!
-                    </button>
-                  </form>
+                  <div className="mb-4 flex flex-col gap-2">
+                    {currentUser?.address === undefined ? (
+                      <p>Agrega tus datos para el despacho</p>
+                    ) : (
+                      <>
+                        <p className="">Dirección: {currentUser?.address}</p>
+                        <p className="">Teléfono: {currentUser?.phone}</p>
+                      </>
+                    )}
+                  </div>
+                  <Button
+                    title={
+                      currentUser?.address === undefined
+                        ? "Ingresa tus datos"
+                        : "Actualiza tus datos"
+                    }
+                    onClick={() => setIsUpdateInfo(!isUpdateInfo)}
+                  />
+                  {isUpdateInfo && (
+                    <form
+                      onSubmit={handleSubmit(shippingDataSubmitHandler)}
+                      className="flex flex-col justify-center gap-2"
+                    >
+                      <label className="font-bold">
+                        Por favor ingresa tu número de telefono y dirección para
+                        la entrega
+                      </label>
+                      <input
+                        {...register("phone")}
+                        name="phone"
+                        id="phone"
+                        className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
+                        type="text"
+                        placeholder="Teléfono de contacto..."
+                      />
+                      <p className="text-xs text-red-500 font-medium mt-[-8px]">
+                        {errors.phone?.message}
+                      </p>
+                      <textarea
+                        {...register("address")}
+                        className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
+                        name="address"
+                        id="address"
+                        placeholder="Dirección de despacho en Pucón!"
+                      />
+                      <p className="text-xs text-red-500 font-medium mt-[-8px]">
+                        {errors.address?.message}
+                      </p>
+                      <button className="bg-light-orange text-gray-700 font-medium border-2 border-black hover:bg-light-orange/50 rounded-md p-2 w-[40%] m-auto">
+                        Agregar!
+                      </button>
+                    </form>
+                  )}
                 </div>
               </div>
               <div className="delivery border-2 border-gray-200 bg-white border-b-4 border-b-dark-blue w-[100%] rounded-md p-3 text-xs md:text-xl xl:text-2xl mt-2 md:mt-0">
