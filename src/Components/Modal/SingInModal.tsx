@@ -95,7 +95,7 @@ function SignInModal({ isOpen, onClose, handlerSubmit }: SignInModalProps) {
                   {errors.password?.message}
                 </p>
                 <Link
-                  to="/shopping"
+                  to="/password-recovery"
                   className="text-xs font-bold text-rumen-orange"
                 >
                   Olvidaste tu contraseña?

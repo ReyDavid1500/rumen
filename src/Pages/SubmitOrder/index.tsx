@@ -61,7 +61,7 @@ function SubmitOrder() {
 
   useEffect(() => {
     try {
-      if (shippingData && !currentUser) {
+      if (shippingData) {
         return;
       }
       const getCurrentUser = async () => {

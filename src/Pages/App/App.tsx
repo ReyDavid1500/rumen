@@ -15,6 +15,8 @@ import RumenForm from "../RumenForm";
 import OrderResume from "../OrderResume";
 import ConfirmMessage from "../ConfirmMessage";
 import ConfirmButton from "../ConfirmButton";
+import PasswordRecovery from "../PasswordRecovery";
+import PasswordReset from "../PasswordReset";
 
 function AppRoutes() {
   let routes = useRoutes([
@@ -34,6 +36,8 @@ function AppRoutes() {
     { path: "/order-resume", element: <OrderResume /> },
     { path: "/confirm-email-sent", element: <ConfirmMessage /> },
     { path: "/confirm-email-button", element: <ConfirmButton /> },
+    { path: "/password-recovery", element: <PasswordRecovery /> },
+    { path: "/password-reset", element: <PasswordReset /> },
   ]);
   return routes;
 }
