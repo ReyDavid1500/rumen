@@ -6,6 +6,7 @@ import { IoMdCloseCircle } from "react-icons/io";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import FormInput from "../coreComponents/FormInput";
 
 type SignInModalProps = {
   isOpen: boolean;
@@ -70,12 +71,12 @@ function SignInModal({ isOpen, onClose, handlerSubmit }: SignInModalProps) {
               >
                 <div className="flex flex-row w-full gap-2 items-center">
                   <FaUserAlt className="w-[25px] h-[25px]" />
-                  <input
-                    {...register("username")}
-                    className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
-                    type="text"
+                  <FormInput
+                    register={register}
                     id="username"
+                    name="username"
                     placeholder="Email"
+                    type="text"
                   />
                 </div>
                 <p className="text-sm text-red-500 font-medium m-auto">
@@ -83,12 +84,12 @@ function SignInModal({ isOpen, onClose, handlerSubmit }: SignInModalProps) {
                 </p>
                 <div className="flex flex-row w-full gap-2 items-center">
                   <RiLockPasswordFill className="w-[25px] h-[25px]" />
-                  <input
-                    {...register("password")}
-                    className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
-                    type="password"
+                  <FormInput
+                    register={register}
                     id="password"
+                    name="password"
                     placeholder="Contraseña"
+                    type="password"
                   />
                 </div>
                 <p className="text-sm text-red-500 font-medium m-auto">

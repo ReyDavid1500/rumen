@@ -2,7 +2,6 @@ import { ReactNode, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiTwotoneShopping } from "react-icons/ai";
 import { IoLogOutOutline } from "react-icons/io5";
-import { LuMenu } from "react-icons/lu";
 import {
   ShoppingCartContext,
   ShoppingCartContextType,
@@ -59,23 +58,20 @@ function ShopLayout({ children }: ShopLayoutProps) {
                     Hola!, {loggedIn?.name || loggedUser?.name}
                   </p>
                 </div>
-                <button onClick={handleLogout}>
-                  <IoLogOutOutline className="w-[40px] h-[40px]" />
-                </button>
+                <Link to="/cart" className="relative">
+                  <AiTwotoneShopping className="w-[50px] h-[50px]" />
+                  <span className="absolute text-rumen-orange font-bold top-[18px] left-[19px]">
+                    {shoppingCart?.products.length || 0}
+                  </span>
+                </Link>
               </div>
             ) : (
               ""
             )}
             <div className="flex flex-row items-center w-full justify-end sm:order-2 sm:w-fit">
-              <Link to="/cart" className="relative">
-                <AiTwotoneShopping className="w-[50px] h-[50px]" />
-                <span className="absolute text-rumen-orange font-bold top-[18px] left-[19px]">
-                  {shoppingCart?.products.length || 0}
-                </span>
-              </Link>
-              <Link to="/shopping">
-                <LuMenu className="w-[40px] h-[40px]" />
-              </Link>
+              <button onClick={handleLogout}>
+                <IoLogOutOutline className="w-[40px] h-[40px]" />
+              </button>
             </div>
           </div>
         </section>

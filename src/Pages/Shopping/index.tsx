@@ -64,6 +64,8 @@ function Shopping() {
       setIsSignInOpen(false);
       localStorage.setItem("TOKEN", JSON.stringify(data));
       setLoggedIn(data);
+      userData.password = "";
+      userData.username = "";
     } catch (err) {
       setError(err as Error);
       if (error?.message === "Request failed with status code 401") {

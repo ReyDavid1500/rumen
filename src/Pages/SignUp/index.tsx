@@ -1,4 +1,4 @@
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ShopLayout from "../../Components/ShopLayout";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import { useAxios } from "../../hooks/useAxios";
 import { useState } from "react";
 import Loader from "../../Components/coreComponents/Loader";
 import { AxiosError } from "axios";
+import FormInput from "../../Components/coreComponents/FormInput";
 
 export type SignUpData = {
   name: string;
@@ -36,9 +37,6 @@ const schema = yup.object().shape({
 function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<AxiosError | null>(null);
-
-  const [searchParams] = useSearchParams();
-  const email = searchParams.get("email");
 
   const { requester } = useAxios();
 
@@ -86,51 +84,46 @@ function SignUp() {
               >
                 <div className="flex flex-col justify-between gap-4 sm:flex-row">
                   <div className="sm:w-[50%]">
-                    <input
-                      {...register("name")}
-                      className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
-                      type="text"
-                      name="name"
+                    <FormInput
+                      register={register}
                       id="name"
+                      name="name"
                       placeholder="Nombre Completo"
+                      type="text"
                     />
                     <p className="text-sm text-red-500 font-medium m-auto">
                       {errors.name?.message}
                     </p>
                   </div>
                   <div className="sm:w-[50%]">
-                    <input
-                      {...register("email")}
-                      className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
-                      type="text"
-                      name="email"
+                    <FormInput
+                      register={register}
                       id="email"
+                      name="email"
                       placeholder="Email"
-                      defaultValue={email || ""}
+                      type="text"
                     />
                     <p className="text-sm text-red-500 font-medium m-auto">
                       {errors.email?.message}
                     </p>
                   </div>
                 </div>
-                <input
-                  {...register("password")}
-                  className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
-                  type="password"
-                  name="password"
+                <FormInput
+                  register={register}
                   id="password"
+                  name="password"
                   placeholder="Contraseña"
+                  type="password"
                 />
                 <p className="text-sm text-red-500 font-medium m-auto">
                   {errors.password?.message}
                 </p>
-                <input
-                  {...register("validatePassword")}
-                  className="border-2 border-gray-200 p-2 rounded-lg w-[100%]"
-                  type="password"
+                <FormInput
+                  register={register}
+                  id="password"
                   name="validatePassword"
-                  id="validatePassword"
                   placeholder="Confirma tu contraseña"
+                  type="password"
                 />
                 <p className="text-sm text-red-500 font-medium m-auto">
                   {errors.validatePassword?.message}
