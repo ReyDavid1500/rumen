@@ -120,7 +120,7 @@ function SignUp() {
                 </p>
                 <FormInput
                   register={register}
-                  id="password"
+                  id="validatePassword"
                   name="validatePassword"
                   placeholder="Confirma tu contraseña"
                   type="password"

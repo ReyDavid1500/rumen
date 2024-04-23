@@ -29,7 +29,7 @@ const schema = yup
       .string()
       .min(8, "La contraseña debe tener mas de 8 caracteres")
       .max(32)
-      .required(),
+      .required("La contraseña es requerida"),
   })
   .required();
 
@@ -101,7 +101,10 @@ function SignInModal({ isOpen, onClose, handlerSubmit }: SignInModalProps) {
                 >
                   Olvidaste tu contraseña?
                 </Link>
-                <button className="bg-regular-blue text-white p-2 font-bold rounded-lg hover:bg-regular-blue/50 w-[80%] m-auto text-center">
+                <button
+                  type="submit"
+                  className="bg-regular-blue text-white p-2 font-bold rounded-lg hover:bg-regular-blue/50 w-[80%] m-auto text-center"
+                >
                   Ingresa a tu cuenta
                 </button>
                 <div className="flex flex-row gap-1 items-center">

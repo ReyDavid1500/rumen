@@ -131,7 +131,7 @@ function Shopping() {
         handlerSubmit={signIn}
       />
       <ShopLayout>
-        <div className="md:flex md:flex-row md:justify-between p-4">
+        <div className="md:flex md:flex-row gap-4 p-4">
           <div
             className={
               isLoading
@@ -180,11 +180,15 @@ function Shopping() {
               </>
             )}
           </div>
-          <OrderSummary
-            title="PEDIDO"
-            buttonText="REVISAR PEDIDO"
-            route="/cart"
-          />
+          {currentToken &&
+            shoppingCart?.products &&
+            shoppingCart?.products.length > 0 && (
+              <OrderSummary
+                title="TU PEDIDO!"
+                buttonText="REVISAR PEDIDO"
+                route="/cart"
+              />
+            )}
         </div>
       </ShopLayout>
     </>

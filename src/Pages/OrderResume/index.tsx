@@ -14,7 +14,7 @@ function OrderResume() {
 
   return (
     <ShopLayout>
-      <main className="flex flex-col gap-10 items-center mt-20 pb-20 h-[100%]">
+      <main className="flex flex-col gap-10 items-center mt-20 pb-20 h-[100vh]">
         <p className="text-4xl text-center font-bold mt-20 mb-20 md:text-6xl">
           Gracias por tu compra!!
         </p>

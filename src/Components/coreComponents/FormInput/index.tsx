@@ -7,7 +7,7 @@ type FormInputProps = {
   id: string;
   name: string;
   register: UseFormRegister<any>;
-  handlerChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 function FormInput({
@@ -16,15 +16,17 @@ function FormInput({
   id,
   name,
   register,
-  handlerChange,
+  onChange,
 }: FormInputProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="flex flex-row w-full gap-2 items-center border-2 border-gray-200 rounded-lg focus:border-rumen-orange px-2">
       <input
+        {...register(name)}
+        name={name}
+        id={id}
         className="w-full m-2 outline-none"
-        placeholder={placeholder}
         type={
           (placeholder === "Contraseña" ||
             placeholder === "Confirma tu contraseña") &&
@@ -32,14 +34,16 @@ function FormInput({
             ? type
             : "text"
         }
-        id={id}
-        {...register(name)}
-        name={name}
-        onChange={handlerChange}
+        placeholder={placeholder}
+        onChange={(e) => {
+          onChange && onChange(e);
+          register(name).onChange(e);
+        }}
       />
       {(placeholder === "Contraseña" ||
         placeholder === "Confirma tu contraseña") && (
         <button
+          type="button"
           onClick={(e) => e.preventDefault()}
           onPointerDown={() => setShowPassword(true)}
           onPointerUp={() => setShowPassword(false)}

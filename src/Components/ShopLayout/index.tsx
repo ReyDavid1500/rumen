@@ -37,7 +37,7 @@ function ShopLayout({ children }: ShopLayoutProps) {
   };
   return (
     <>
-      <header className="w-[100%] sticky sm:fixed sm:z-10">
+      <header className="w-[100%] sticky sm:fixed z-10">
         <section className="flex flex-row justify-between p-4 items-center bg-light-green">
           <div className="self-baseline">
             <Link to="/shopping">
@@ -64,15 +64,15 @@ function ShopLayout({ children }: ShopLayoutProps) {
                     {shoppingCart?.products.length || 0}
                   </span>
                 </Link>
+                <div className="flex flex-row items-center w-full justify-end sm:order-2 sm:w-fit">
+                  <button onClick={handleLogout}>
+                    <IoLogOutOutline className="w-[40px] h-[40px]" />
+                  </button>
+                </div>
               </div>
             ) : (
               ""
             )}
-            <div className="flex flex-row items-center w-full justify-end sm:order-2 sm:w-fit">
-              <button onClick={handleLogout}>
-                <IoLogOutOutline className="w-[40px] h-[40px]" />
-              </button>
-            </div>
           </div>
         </section>
       </header>

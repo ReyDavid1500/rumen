@@ -120,7 +120,7 @@ function SubmitOrder() {
       ) : (
         <div className="pl-3 pr-3 m-1 xs:p-0 xs:m-0 md:p-0 md:m-0 md:pl-1 md:pr-1 md:pt-4 h-[100%] md:h-[100%] md:w-[98%]">
           <div className="flex flex-col justify-center items-center md:justify-start md:flex-row md:gap-3 xl:gap-10 xl:justify-around">
-            <section className="flex flex-col min-[420px]:flex-row gap-4 w-full xl:flex-row xl:pr-2 xl:justify-center">
+            <section className="flex flex-col min-[420px]:flex-row gap-4 w-full xl:flex-row xl:pr-2 xl:justify-center self-baseline mt-3">
               <div className="delivery border-2 border-gray-200 border-b-4 border-b-rumen-orange w-[100%] md:w-[100%] rounded-md p-3 text-xs md:text-xl xl:text-2xl bg-white">
                 <div>
                   <h2 className="font-bold mb-4">MODO DE ENTREGA</h2>
@@ -157,8 +157,10 @@ function SubmitOrder() {
                       <p>Agrega tus datos para el despacho</p>
                     ) : (
                       <>
-                        <p className="">Dirección: {currentUser?.address}</p>
-                        <p className="">Teléfono: {currentUser?.phone}</p>
+                        <h4 className="font-bold">Dirección:</h4>
+                        <p className="">{currentUser?.address}</p>
+                        <h4 className="font-bold">Teléfono:</h4>
+                        <p className="">{currentUser?.phone}</p>
                       </>
                     )}
                   </div>
@@ -253,6 +255,7 @@ function SubmitOrder() {
               buttonText="FINALIZAR COMPRA"
               route=""
               handleShoppingCart={submitOrderHandler}
+              containerStyles="pt-2"
             />
           </div>
         </div>
