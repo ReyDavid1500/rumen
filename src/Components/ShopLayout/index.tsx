@@ -1,4 +1,4 @@
-import { ReactNode, useContext } from "react";
+import { PropsWithChildren, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiTwotoneShopping } from "react-icons/ai";
 import { IoLogOutOutline } from "react-icons/io5";
@@ -8,11 +8,7 @@ import {
 } from "../../context/ShoppingCartContext";
 import { NextUIProvider } from "@nextui-org/react";
 
-type ShopLayoutProps = {
-  children: ReactNode;
-};
-
-function ShopLayout({ children }: ShopLayoutProps) {
+function ShopLayout({ children }: PropsWithChildren) {
   const {
     shoppingCart,
     setLoggedUser,
